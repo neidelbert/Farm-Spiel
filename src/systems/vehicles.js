@@ -1,14 +1,14 @@
 import { POINTS } from "../data/worldData.js";
 
 const DEFAULT_SPEEDS = {
-  scrap_truck: 210,
-  flatbed: 185,
-  post_van: 235,
-  delivery_van: 220,
-  builder_van: 210,
-  animal_transport: 190,
-  tractor: 125,
-  combine: 95,
+  scrap_truck: 78,
+  flatbed: 68,
+  post_van: 88,
+  delivery_van: 82,
+  builder_van: 78,
+  animal_transport: 70,
+  tractor: 46,
+  combine: 35,
 };
 
 export class VehicleSystem {
@@ -20,20 +20,12 @@ export class VehicleSystem {
   spawn({ id, type, eventId, route, speed, label }) {
     const start = route[0] || POINTS.spawn;
     const vehicle = {
-      id,
-      type,
-      label: label || type,
-      eventId,
-      x: start.x,
-      y: start.y,
-      route: route.map(p => ({...p})),
-      routeIndex: 1,
-      speed: speed || DEFAULT_SPEEDS[type] || 180,
-      waitingUntil: null,
-      waitStartedAt: null,
-      waitDuration: 0,
-      currentTag: null,
-      heading: 0,
+      id, type, label: label || type, eventId,
+      x: start.x, y: start.y,
+      route: route.map(p => ({...p})), routeIndex: 1,
+      speed: speed || DEFAULT_SPEEDS[type] || 72,
+      waitingUntil: null, waitStartedAt: null, waitDuration: 0,
+      currentTag: null, heading: 0,
     };
     this.state.vehicles.push(vehicle);
     this.events.emit("vehicle:spawn", vehicle);
@@ -45,48 +37,29 @@ export class VehicleSystem {
       if (v.waitingUntil) {
         if (now >= v.waitingUntil) {
           const tag = v.currentTag;
-          v.waitingUntil = null;
-          v.waitStartedAt = null;
-          v.waitDuration = 0;
-          v.currentTag = null;
+          v.waitingUntil = null; v.waitStartedAt = null; v.waitDuration = 0; v.currentTag = null;
           if (tag) this.events.emit("vehicle:leaveWaypoint", { vehicle:v, tag });
           v.routeIndex += 1;
         }
         continue;
       }
-
       const target = v.route[v.routeIndex];
-      if (!target) {
-        this.finish(v);
-        continue;
-      }
-
-      const dx = target.x - v.x;
-      const dy = target.y - v.y;
+      if (!target) { this.finish(v); continue; }
+      const dx = target.x - v.x, dy = target.y - v.y;
       const dist = Math.hypot(dx,dy);
       v.heading = Math.atan2(dy,dx);
       const step = v.speed * dt;
-
-      if (dist <= Math.max(step, 4)) {
-        v.x = target.x;
-        v.y = target.y;
-        if (target.tag) {
-          v.currentTag = target.tag;
-          this.events.emit("vehicle:arriveWaypoint", { vehicle:v, tag:target.tag });
-        }
-
+      if (dist <= Math.max(step, 1.5)) {
+        v.x = target.x; v.y = target.y;
+        if (target.tag) { v.currentTag = target.tag; this.events.emit("vehicle:arriveWaypoint", { vehicle:v, tag:target.tag }); }
         if (target.waitMs) {
-          v.waitStartedAt = now;
-          v.waitDuration = target.waitMs;
-          v.waitingUntil = now + target.waitMs;
+          v.waitStartedAt = now; v.waitDuration = target.waitMs; v.waitingUntil = now + target.waitMs;
         } else {
           if (target.tag) this.events.emit("vehicle:leaveWaypoint", { vehicle:v, tag:target.tag });
-          v.currentTag = null;
-          v.routeIndex += 1;
+          v.currentTag = null; v.routeIndex += 1;
         }
       } else {
-        v.x += (dx/dist) * step;
-        v.y += (dy/dist) * step;
+        v.x += (dx/dist) * step; v.y += (dy/dist) * step;
       }
     }
   }
@@ -96,11 +69,7 @@ export class VehicleSystem {
     if (index >= 0) this.state.vehicles.splice(index,1);
     this.events.emit("vehicle:complete", vehicle);
   }
-
-  hasEvent(eventId) {
-    return this.state.vehicles.some(v => v.eventId === eventId);
-  }
-
+  hasEvent(eventId) { return this.state.vehicles.some(v => v.eventId === eventId); }
   waitProgress(vehicle) {
     if (!vehicle.waitingUntil || !vehicle.waitDuration) return 0;
     return Math.max(0, Math.min(1, (Date.now()-vehicle.waitStartedAt)/vehicle.waitDuration));
@@ -108,22 +77,24 @@ export class VehicleSystem {
 }
 
 export function routeTo(target, { tag, waitMs=0 } = {}) {
-  const p = POINTS;
-  const common = [
-    {x:p.spawn.x,y:p.spawn.y},
-    {x:p.roadNorth.x,y:p.roadNorth.y},
-    {x:p.millJunction.x,y:p.millJunction.y},
-    {x:p.loading.x,y:p.loading.y},
-  ];
+  const p=POINTS;
+  const north=[p.spawn,p.roadNorth,p.mountainRoad,p.millJunction,p.farmEntry,p.loading].map(q=>({x:q.x,y:q.y}));
+  let tail=[];
+  if (near(target,p.loading)) tail=[];
+  else if (near(target,p.coop)) tail=[{x:680,y:615},{x:p.coop.x,y:p.coop.y}];
+  else if (near(target,p.cowpen)) tail=[{x:690,y:690},{x:p.cowpen.x,y:p.cowpen.y}];
+  else if (near(target,p.bakery)) tail=[{x:610,y:790},{x:p.villageNorth.x,y:p.villageNorth.y},{x:p.bakery.x,y:p.bakery.y}];
+  else if (near(target,p.harbor)) tail=[{x:610,y:790},{x:p.villageNorth.x,y:p.villageNorth.y},{x:610,y:1180},{x:p.harbor.x,y:p.harbor.y}];
+  else if (near(target,p.silo)) tail=[{x:560,y:650},{x:p.silo.x,y:p.silo.y}];
+  else if (near(target,p.garage)) tail=[{x:p.garage.x,y:p.garage.y}];
+  else tail=[{x:target.x,y:target.y}];
 
-  const targetPoint = {...target, tag, waitMs};
-  if (target.x === p.loading.x && target.y === p.loading.y) {
-    return [...common.slice(0,-1), targetPoint, ...common.slice(0,-1).reverse(), {x:p.spawn.x,y:p.spawn.y}];
-  }
-
-  return [...common, targetPoint, ...common.reverse(), {x:p.spawn.x,y:p.spawn.y}];
+  const outbound=[...north, ...tail];
+  const destinationIndex=outbound.length-1;
+  outbound[destinationIndex]={...outbound[destinationIndex],tag,waitMs};
+  const back=outbound.slice(0,-1).reverse().map(q=>({x:q.x,y:q.y}));
+  return [...outbound,...back,{x:p.spawn.x,y:p.spawn.y}];
 }
 
-export function farmMachineRoute(points) {
-  return points.map(p => ({...p}));
-}
+export function farmMachineRoute(points) { return points.map(p=>({...p})); }
+function near(a,b){ return Math.abs(a.x-b.x)<2 && Math.abs(a.y-b.y)<2; }
