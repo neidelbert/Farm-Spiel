@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no" />
+  <meta name="theme-color" content="#233728" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <title>Farm-Spiel</title>
+  <link rel="stylesheet" href="./styles/main.css" />
+</head>
+<body>
+  <main id="app" aria-label="Farm-Spiel">
+    <canvas id="game" aria-label="Spielwelt"></canvas>
+
+    <header class="hud" aria-label="Spielstatus">
+      <div class="hud-level">
+        <span class="level-badge">★ <span id="hudLevel">1</span></span>
+        <div class="xp-track" aria-label="Erfahrung"><div id="hudXp" class="xp-fill"></div></div>
+      </div>
+      <div class="money-pill"><span class="coin">$</span><span id="hudMoney">0</span></div>
+      <button id="menuBtn" class="icon-btn" type="button" aria-label="Menü öffnen">☰</button>
+    </header>
+
+    <button id="devBadge" class="dev-badge hidden" type="button" aria-label="Entwicklermenü öffnen">DEV</button>
+
+    <section id="sheet" class="sheet hidden" aria-label="Aktion">
+      <div class="sheet-handle"></div>
+      <div class="sheet-topline">
+        <div>
+          <div id="sheetEyebrow" class="eyebrow"></div>
+          <h2 id="sheetTitle"></h2>
+        </div>
+        <button id="sheetClose" class="close-btn" type="button" aria-label="Schließen">×</button>
+      </div>
+      <div id="sheetBody" class="sheet-body"></div>
+      <div id="sheetActions" class="sheet-actions"></div>
+    </section>
+
+    <section id="menu" class="modal hidden" aria-label="Menü">
+      <div class="modal-card">
+        <div class="eyebrow">Farm-Spiel</div>
+        <h2>Menü</h2>
+        <p class="muted">Version <span id="versionLabel">0.1.0</span></p>
+        <div class="menu-grid">
+          <button type="button" data-menu="resume">Weiterspielen</button>
+          <button type="button" data-menu="save">Spiel speichern</button>
+          <button type="button" data-menu="dev">DEV-Modus an/aus</button>
+          <button type="button" class="danger" data-menu="reset">Spielstand zurücksetzen</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="devPanel" class="dev-panel hidden" aria-label="Entwicklermodus">
+      <div class="dev-head">
+        <div><div class="eyebrow">Testwerkzeuge</div><strong>DEV MODE</strong></div>
+        <button id="devClose" class="close-btn" type="button" aria-label="Entwicklermenü schließen">×</button>
+      </div>
+      <div class="dev-grid">
+        <button data-dev="money">+1.000 $</button>
+        <button data-dev="xp">+100 XP</button>
+        <button data-dev="grow">Feld fertig</button>
+        <button data-dev="finish">Timer fertig</button>
+        <button data-dev="sunny">Sonne</button>
+        <button data-dev="rain">Regen</button>
+        <button data-dev="fog">Nebel</button>
+        <button data-dev="speed">Zeit 20×</button>
+        <button data-dev="normal">Zeit 1×</button>
+        <button data-dev="debug">Hitboxen</button>
+      </div>
+      <pre id="devStats">FPS: --</pre>
+    </section>
+
+    <section id="boot" class="boot" aria-live="polite">
+      <div class="boot-card">
+        <div class="boot-mark">🌾</div>
+        <h1>Farm-Spiel</h1>
+        <p id="bootText">Spielwelt wird gestartet …</p>
+      </div>
+    </section>
+
+    <div id="toastRoot" class="toast-root" aria-live="polite" aria-atomic="false"></div>
+  </main>
+
+  <script type="module" src="./src/main.js"></script>
+</body>
+</html>
