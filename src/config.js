@@ -1,21 +1,23 @@
 export const CONFIG = Object.freeze({
   name: "Farm-Spiel",
   version: "0.1.0",
+  build: "visual-reference-1",
   saveKey: "farm-spiel-save-v1",
   backupKey: "farm-spiel-save-v1-backup",
   autosaveMs: 15000,
 
   world: {
-    width: 2600,
-    height: 4200,
+    width: 941,
+    height: 1672,
+    image: "./assets/world/master_world.webp",
   },
 
   camera: {
-    startX: 1320,
-    startY: 2100,
-    startZoom: 0.72,
-    minZoom: 0.42,
-    maxZoom: 1.75,
+    startX: 500,
+    startY: 650,
+    startZoom: 1.05,
+    minZoom: 0.52,
+    maxZoom: 1.72,
     inertia: 7.5,
   },
 

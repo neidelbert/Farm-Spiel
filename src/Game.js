@@ -106,26 +106,26 @@ export class Game {
       actions.push({label:"Geschenk annehmen",onClick:()=>this.startFriendGift()});
     } else if(this.state.missionId==="first_seed") {
       if(this.state.missionStep===0) actions.push({label:"Hofkatalog öffnen",onClick:()=>this.openCatalog()});
-      else if(this.state.missionStep===1) actions.push({label:"Zum Feld",onClick:()=>{this.ui.closeSheet();this.camera.focus(1240,2450);}});
+      else if(this.state.missionStep===1) actions.push({label:"Zum Feld",onClick:()=>{this.ui.closeSheet();this.camera.focus(POINTS.field.x,POINTS.field.y);}});
     } else if(this.state.missionId==="first_harvest") {
-      actions.push({label:"Zum Feld",onClick:()=>{this.ui.closeSheet();this.camera.focus(1240,2450);}});
+      actions.push({label:"Zum Feld",onClick:()=>{this.ui.closeSheet();this.camera.focus(POINTS.field.x,POINTS.field.y);}});
     } else if(this.state.missionId==="first_order") {
       const can=this.state.silo.items.wheat>=5;
       actions.push({label:can?"5 Weizen liefern · +35 $":"5 Weizen benötigt",disabled:!can,onClick:()=>this.startFirstOrder()});
     } else if(this.state.missionId==="storage_upgrade") {
-      actions.push({label:"Zum Silo",onClick:()=>{this.ui.closeSheet();this.camera.focus(880,2220);}});
+      actions.push({label:"Zum Silo",onClick:()=>{this.ui.closeSheet();this.camera.focus(POINTS.silo.x,POINTS.silo.y);}});
     } else if(this.state.missionId==="miller_intro") {
       if(this.state.missionStep===0) actions.push({label:"Müller empfangen",onClick:()=>this.startMillerIntro()});
-      else actions.push({label:"Zur Mühle",onClick:()=>{this.ui.closeSheet();this.camera.focus(920,1280);}});
+      else actions.push({label:"Zur Mühle",onClick:()=>{this.ui.closeSheet();this.camera.focus(171,500);}});
     } else if(this.state.missionId==="workshop_chickens") {
-      actions.push({label:"Zur Werkstatt",onClick:()=>{this.ui.closeSheet();this.camera.focus(1640,1950);}});
+      actions.push({label:"Zur Werkstatt",onClick:()=>{this.ui.closeSheet();this.camera.focus(POINTS.garage.x,POINTS.garage.y);}});
     } else if(this.state.missionId==="eggs_baker") {
       const canBaker=this.state.barn.items.eggs>=2&&this.state.barn.items.flour>=1;
-      actions.push({label:canBaker?"Zum Bäcker":"Zum Hühnergehege",onClick:()=>{this.ui.closeSheet();this.camera.focus(canBaker?1660:1780,canBaker?3160:2420);}});
+      actions.push({label:canBaker?"Zum Bäcker":"Zum Hühnergehege",onClick:()=>{this.ui.closeSheet();this.camera.focus(canBaker?POINTS.bakery.x:POINTS.coop.x,canBaker?POINTS.bakery.y:POINTS.coop.y);}});
     } else if(this.state.missionId==="cows_milk") {
       const canBaker=this.state.barn.items.milk>=1&&this.state.barn.items.flour>=1;
       if(!this.state.cows.unlocked) actions.push({label:"2 Kühe übernehmen",onClick:()=>this.startCowDelivery()});
-      else actions.push({label:canBaker?"Zum Bäcker":"Zur Kuhweide",onClick:()=>{this.ui.closeSheet();this.camera.focus(canBaker?1660:1900,canBaker?3160:2820);}});
+      else actions.push({label:canBaker?"Zum Bäcker":"Zur Kuhweide",onClick:()=>{this.ui.closeSheet();this.camera.focus(canBaker?POINTS.bakery.x:POINTS.cowpen.x,canBaker?POINTS.bakery.y:POINTS.cowpen.y);}});
     }
 
     const doneAchievements = Object.values(this.state.achievements || {}).filter(Boolean).length;
@@ -219,9 +219,9 @@ export class Game {
     const p=POINTS;
     const route=farmMachineRoute([
       {x:p.garage.x,y:p.garage.y},
-      {x:1500,y:2200},
+      {x:540,y:675},
       {x:p.field.x,y:p.field.y,tag:"sow",waitMs:CONFIG.timings.sowWaitMs},
-      {x:1500,y:2200},
+      {x:540,y:675},
       {x:p.garage.x,y:p.garage.y},
     ]);
     this.vehicles.spawn({id:uid("tractor"),type:"tractor",eventId:"sow_wheat",route});
@@ -234,11 +234,11 @@ export class Game {
     const p=POINTS;
     const route=farmMachineRoute([
       {x:p.garage.x,y:p.garage.y},
-      {x:1500,y:2200},
+      {x:540,y:675},
       {x:p.field.x,y:p.field.y,tag:"harvest",waitMs:CONFIG.timings.harvestWaitMs},
-      {x:1080,y:2300},
+      {x:450,y:650},
       {x:p.silo.x,y:p.silo.y,tag:"unload_wheat",waitMs:CONFIG.timings.unloadWaitMs},
-      {x:1250,y:2050},
+      {x:560,y:630},
       {x:p.garage.x,y:p.garage.y},
     ]);
     this.vehicles.spawn({id:uid("combine"),type:"combine",eventId:"first_harvest",route});

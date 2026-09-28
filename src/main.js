@@ -101,18 +101,20 @@ window.addEventListener("unhandledrejection", e => {
   if (state.settings.dev) ui.toast("⚠ Ein Hintergrundfehler wurde abgefangen.",5000);
 });
 
-ui.setBoot(`Version ${CONFIG.version} wird gestartet …`);
+ui.setBoot(`Version ${CONFIG.version} · Spielwelt wird geladen …`);
 ui.updateHUD(state);
-game.start();
 
-setTimeout(() => {
+async function startGame(){
+  try { await renderer.ready; } catch(error) { console.warn(error); }
+  game.start();
   ui.hideBoot();
   if (!state.tutorialComplete) {
     ui.toast("🏡 Tippe auf das Hofhaus – dein erster Auftrag wartet.",3600);
   } else {
     ui.toast("Willkommen zurück auf deinem Hof.");
   }
-}, 550);
+}
+startGame();
 
 // Expose a tiny read-only-ish handle for debugging in browser devtools.
 window.FarmSpiel = { version: CONFIG.version, state, game, camera };
