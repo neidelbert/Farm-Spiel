@@ -1,0 +1,5620 @@
+{
+  "project": "Farm-Spiel",
+  "catalog_version": "1.0",
+  "total_assets": 200,
+  "size_rules": {
+    "ground_and_roads": "1500 px",
+    "buildings_fields_pens_animals_vehicles": "1200 px",
+    "medium_objects": "600–800 px",
+    "small_objects": "200–300 px"
+  },
+  "status_legend": {
+    "PLAN": "noch zu erstellen",
+    "IN_PROGRESS": "in Arbeit",
+    "READY": "freigegeben",
+    "REWORK": "neu erstellen"
+  },
+  "assets": [
+    {
+      "no": 1,
+      "id": "ground_meadow_light_01",
+      "name": "Wiese hell – Basis",
+      "category": "ground",
+      "master_width_px": 1500,
+      "pack": "01_ground",
+      "needs_hitbox": false,
+      "states_or_animation": false,
+      "status": "GENERATED_BASE",
+      "notes": "",
+      "src": "assets/world/ground_meadow_light_01.webp",
+      "width": 1500,
+      "height": 1500,
+      "source_width_px": 1500,
+      "source_height_px": 1500,
+      "upscaled": false,
+      "production": "tiled_generated_material",
+      "anchor": [
+        0.5,
+        0.93
+      ],
+      "footprint": [
+        0.64,
+        0.28
+      ],
+      "animation_implementation": "none"
+    },
+    {
+      "no": 2,
+      "id": "ground_meadow_dark_01",
+      "name": "Wiese dunkel – Basis",
+      "category": "ground",
+      "master_width_px": 1500,
+      "pack": "01_ground",
+      "needs_hitbox": false,
+      "states_or_animation": false,
+      "status": "GENERATED_BASE",
+      "notes": "",
+      "src": "assets/world/ground_meadow_dark_01.webp",
+      "width": 1500,
+      "height": 1500,
+      "source_width_px": 1500,
+      "source_height_px": 1500,
+      "upscaled": false,
+      "production": "tiled_generated_material",
+      "anchor": [
+        0.5,
+        0.93
+      ],
+      "footprint": [
+        0.64,
+        0.28
+      ],
+      "animation_implementation": "none"
+    },
+    {
+      "no": 3,
+      "id": "ground_meadow_flowers_01",
+      "name": "Blumenwiese",
+      "category": "ground",
+      "master_width_px": 1500,
+      "pack": "01_ground",
+      "needs_hitbox": false,
+      "states_or_animation": false,
+      "status": "GENERATED_BASE",
+      "notes": "",
+      "src": "assets/world/ground_meadow_flowers_01.webp",
+      "width": 1500,
+      "height": 1500,
+      "source_width_px": 1500,
+      "source_height_px": 1500,
+      "upscaled": false,
+      "production": "tiled_generated_material",
+      "anchor": [
+        0.5,
+        0.93
+      ],
+      "footprint": [
+        0.64,
+        0.28
+      ],
+      "animation_implementation": "none"
+    },
+    {
+      "no": 4,
+      "id": "ground_forest_floor_01",
+      "name": "Waldboden",
+      "category": "ground",
+      "master_width_px": 1500,
+      "pack": "01_ground",
+      "needs_hitbox": false,
+      "states_or_animation": false,
+      "status": "GENERATED_BASE",
+      "notes": "",
+      "src": "assets/world/ground_forest_floor_01.webp",
+      "width": 1500,
+      "height": 1500,
+      "source_width_px": 1500,
+      "source_height_px": 1500,
+      "upscaled": false,
+      "production": "tiled_generated_material",
+      "anchor": [
+        0.5,
+        0.93
+      ],
+      "footprint": [
+        0.64,
+        0.28
+      ],
+      "animation_implementation": "none"
+    },
+    {
+      "no": 5,
+      "id": "ground_farmyard_dirt_01",
+      "name": "Hofboden Erde",
+      "category": "ground",
+      "master_width_px": 1500,
+      "pack": "01_ground",
+      "needs_hitbox": false,
+      "states_or_animation": false,
+      "status": "GENERATED_BASE",
+      "notes": "",
+      "src": "assets/world/ground_farmyard_dirt_01.webp",
+      "width": 1500,
+      "height": 1500,
+      "source_width_px": 1500,
+      "source_height_px": 1500,
+      "upscaled": false,
+      "production": "tiled_generated_material",
+      "anchor": [
+        0.5,
+        0.93
+      ],
+      "footprint": [
+        0.64,
+        0.28
+      ],
+      "animation_implementation": "none"
+    },
+    {
+      "no": 6,
+      "id": "ground_dirt_open_01",
+      "name": "Offene Erde",
+      "category": "ground",
+      "master_width_px": 1500,
+      "pack": "01_ground",
+      "needs_hitbox": false,
+      "states_or_animation": false,
+      "status": "GENERATED_BASE",
+      "notes": "",
+      "src": "assets/world/ground_dirt_open_01.webp",
+      "width": 1500,
+      "height": 1500,
+      "source_width_px": 1500,
+      "source_height_px": 1500,
+      "upscaled": false,
+      "production": "tiled_generated_material",
+      "anchor": [
+        0.5,
+        0.93
+      ],
+      "footprint": [
+        0.64,
+        0.28
+      ],
+      "animation_implementation": "none"
+    },
+    {
+      "no": 7,
+      "id": "ground_mountain_grass_01",
+      "name": "Bergwiese",
+      "category": "ground",
+      "master_width_px": 1500,
+      "pack": "01_ground",
+      "needs_hitbox": false,
+      "states_or_animation": false,
+      "status": "GENERATED_BASE",
+      "notes": "",
+      "src": "assets/world/ground_mountain_grass_01.webp",
+      "width": 1500,
+      "height": 1500,
+      "source_width_px": 1500,
+      "source_height_px": 1500,
+      "upscaled": false,
+      "production": "tiled_generated_material",
+      "anchor": [
+        0.5,
+        0.93
+      ],
+      "footprint": [
+        0.64,
+        0.28
+      ],
+      "animation_implementation": "none"
+    },
+    {
+      "no": 8,
+      "id": "ground_rocky_01",
+      "name": "Felsiger Boden",
+      "category": "ground",
+      "master_width_px": 1500,
+      "pack": "01_ground",
+      "needs_hitbox": false,
+      "states_or_animation": false,
+      "status": "GENERATED_BASE",
+      "notes": "",
+      "src": "assets/world/ground_rocky_01.webp",
+      "width": 1500,
+      "height": 1500,
+      "source_width_px": 1500,
+      "source_height_px": 1500,
+      "upscaled": false,
+      "production": "tiled_generated_material",
+      "anchor": [
+        0.5,
+        0.93
+      ],
+      "footprint": [
+        0.64,
+        0.28
+      ],
+      "animation_implementation": "none"
+    },
+    {
+      "no": 9,
+      "id": "ground_village_paving_01",
+      "name": "Dorfpflaster",
+      "category": "ground",
+      "master_width_px": 1500,
+      "pack": "01_ground",
+      "needs_hitbox": false,
+      "states_or_animation": false,
+      "status": "GENERATED_BASE",
+      "notes": "",
+      "src": "assets/world/ground_village_paving_01.webp",
+      "width": 1500,
+      "height": 1500,
+      "source_width_px": 1500,
+      "source_height_px": 1500,
+      "upscaled": false,
+      "production": "tiled_generated_material",
+      "anchor": [
+        0.5,
+        0.93
+      ],
+      "footprint": [
+        0.64,
+        0.28
+      ],
+      "animation_implementation": "none"
+    },
+    {
+      "no": 10,
+      "id": "ground_harbor_wood_01",
+      "name": "Hafen-Holzboden",
+      "category": "ground",
+      "master_width_px": 1500,
+      "pack": "01_ground",
+      "needs_hitbox": false,
+      "states_or_animation": false,
+      "status": "GENERATED_BASE",
+      "notes": "",
+      "src": "assets/world/ground_harbor_wood_01.webp",
+      "width": 1500,
+      "height": 1500,
+      "source_width_px": 1500,
+      "source_height_px": 1500,
+      "upscaled": false,
+      "production": "tiled_generated_material",
+      "anchor": [
+        0.5,
+        0.93
+      ],
+      "footprint": [
+        0.64,
+        0.28
+      ],
+      "animation_implementation": "none"
+    },
+    {
+      "no": 11,
+      "id": "ground_sand_beach_01",
+      "name": "Sandstrand",
+      "category": "ground",
+      "master_width_px": 1500,
+      "pack": "01_ground",
+      "needs_hitbox": false,
+      "states_or_animation": false,
+      "status": "GENERATED_BASE",
+      "notes": "",
+      "src": "assets/world/ground_sand_beach_01.webp",
+      "width": 1500,
+      "height": 1500,
+      "source_width_px": 1500,
+      "source_height_px": 1500,
+      "upscaled": false,
+      "production": "tiled_generated_material",
+      "anchor": [
+        0.5,
+        0.93
+      ],
+      "footprint": [
+        0.64,
+        0.28
+      ],
+      "animation_implementation": "none"
+    },
+    {
+      "no": 12,
+      "id": "ground_coast_rock_01",
+      "name": "Felsige Küste",
+      "category": "ground",
+      "master_width_px": 1500,
+      "pack": "01_ground",
+      "needs_hitbox": false,
+      "states_or_animation": false,
+      "status": "GENERATED_BASE",
+      "notes": "",
+      "src": "assets/world/ground_coast_rock_01.webp",
+      "width": 1500,
+      "height": 1500,
+      "source_width_px": 1500,
+      "source_height_px": 1500,
+      "upscaled": false,
+      "production": "tiled_generated_material",
+      "anchor": [
+        0.5,
+        0.93
+      ],
+      "footprint": [
+        0.64,
+        0.28
+      ],
+      "animation_implementation": "none"
+    },
+    {
+      "no": 13,
+      "id": "road_dirt_straight_01",
+      "name": "Erdstraße gerade A",
+      "category": "road",
+      "master_width_px": 1500,
+      "pack": "02_roads",
+      "needs_hitbox": false,
+      "states_or_animation": false,
+      "status": "GENERATED_BASE",
+      "notes": "",
+      "src": "assets/world/road_dirt_straight_01.webp",
+      "width": 1500,
+      "height": 1500,
+      "source_width_px": 1500,
+      "source_height_px": 1500,
+      "upscaled": false,
+      "production": "vector_path_with_generated_material",
+      "anchor": [
+        0.5,
+        0.93
+      ],
+      "footprint": [
+        0.64,
+        0.28
+      ],
+      "animation_implementation": "none"
+    },
+    {
+      "no": 14,
+      "id": "road_dirt_straight_02",
+      "name": "Erdstraße gerade B",
+      "category": "road",
+      "master_width_px": 1500,
+      "pack": "02_roads",
+      "needs_hitbox": false,
+      "states_or_animation": false,
+      "status": "GENERATED_BASE",
+      "notes": "",
+      "src": "assets/world/road_dirt_straight_02.webp",
+      "width": 1500,
+      "height": 1500,
+      "source_width_px": 1500,
+      "source_height_px": 1500,
+      "upscaled": false,
+      "production": "vector_path_with_generated_material",
+      "anchor": [
+        0.5,
+        0.93
+      ],
+      "footprint": [
+        0.64,
+        0.28
+      ],
+      "animation_implementation": "none"
+    },
+    {
+      "no": 15,
+      "id": "road_dirt_wide_01",
+      "name": "Breite Hauptstraße",
+      "category": "road",
+      "master_width_px": 1500,
+      "pack": "02_roads",
+      "needs_hitbox": false,
+      "states_or_animation": false,
+      "status": "GENERATED_BASE",
+      "notes": "",
+      "src": "assets/world/road_dirt_wide_01.webp",
+      "width": 1500,
+      "height": 1500,
+      "source_width_px": 1500,
+      "source_height_px": 1500,
+      "upscaled": false,
+      "production": "vector_path_with_generated_material",
+      "anchor": [
+        0.5,
+        0.93
+      ],
+      "footprint": [
+        0.64,
+        0.28
+      ],
+      "animation_implementation": "none"
+    },
+    {
+      "no": 16,
+      "id": "road_farm_straight_01",
+      "name": "Hofweg gerade",
+      "category": "road",
+      "master_width_px": 1500,
+      "pack": "02_roads",
+      "needs_hitbox": false,
+      "states_or_animation": false,
+      "status": "GENERATED_BASE",
+      "notes": "",
+      "src": "assets/world/road_farm_straight_01.webp",
+      "width": 1500,
+      "height": 1500,
+      "source_width_px": 1500,
+      "source_height_px": 1500,
+      "upscaled": false,
+      "production": "vector_path_with_generated_material",
+      "anchor": [
+        0.5,
+        0.93
+      ],
+      "footprint": [
+        0.64,
+        0.28
+      ],
+      "animation_implementation": "none"
+    },
+    {
+      "no": 17,
+      "id": "road_forest_straight_01",
+      "name": "Waldweg gerade",
+      "category": "road",
+      "master_width_px": 1500,
+      "pack": "02_roads",
+      "needs_hitbox": false,
+      "states_or_animation": false,
+      "status": "GENERATED_BASE",
+      "notes": "",
+      "src": "assets/world/road_forest_straight_01.webp",
+      "width": 1500,
+      "height": 1500,
+      "source_width_px": 1500,
+      "source_height_px": 1500,
+      "upscaled": false,
+      "production": "vector_path_with_generated_material",
+      "anchor": [
+        0.5,
+        0.93
+      ],
+      "footprint": [
+        0.64,
+        0.28
+      ],
+      "animation_implementation": "none"
+    },
+    {
+      "no": 18,
+      "id": "road_mine_straight_01",
+      "name": "Minenweg gerade",
+      "category": "road",
+      "master_width_px": 1500,
+      "pack": "02_roads",
+      "needs_hitbox": false,
+      "states_or_animation": false,
+      "status": "GENERATED_BASE",
+      "notes": "",
+      "src": "assets/world/road_mine_straight_01.webp",
+      "width": 1500,
+      "height": 1500,
+      "source_width_px": 1500,
+      "source_height_px": 1500,
+      "upscaled": false,
+      "production": "vector_path_with_generated_material",
+      "anchor": [
+        0.5,
+        0.93
+      ],
+      "footprint": [
+        0.64,
+        0.28
+      ],
+      "animation_implementation": "none"
+    },
+    {
+      "no": 19,
+      "id": "road_village_straight_01",
+      "name": "Dorfstraße gerade",
+      "category": "road",
+      "master_width_px": 1500,
+      "pack": "02_roads",
+      "needs_hitbox": false,
+      "states_or_animation": false,
+      "status": "GENERATED_BASE",
+      "notes": "",
+      "src": "assets/world/road_village_straight_01.webp",
+      "width": 1500,
+      "height": 1500,
+      "source_width_px": 1500,
+      "source_height_px": 1500,
+      "upscaled": false,
+      "production": "vector_path_with_generated_material",
+      "anchor": [
+        0.5,
+        0.93
+      ],
+      "footprint": [
+        0.64,
+        0.28
+      ],
+      "animation_implementation": "none"
+    },
+    {
+      "no": 20,
+      "id": "road_curve_left_large_01",
+      "name": "Große Linkskurve",
+      "category": "road",
+      "master_width_px": 1500,
+      "pack": "02_roads",
+      "needs_hitbox": false,
+      "states_or_animation": false,
+      "status": "GENERATED_BASE",
+      "notes": "",
+      "src": "assets/world/road_curve_left_large_01.webp",
+      "width": 1500,
+      "height": 1500,
+      "source_width_px": 1500,
+      "source_height_px": 1500,
+      "upscaled": false,
+      "production": "vector_path_with_generated_material",
+      "anchor": [
+        0.5,
+        0.93
+      ],
+      "footprint": [
+        0.64,
+        0.28
+      ],
+      "animation_implementation": "none"
+    },
+    {
+      "no": 21,
+      "id": "road_curve_right_large_01",
+      "name": "Große Rechtskurve",
+      "category": "road",
+      "master_width_px": 1500,
+      "pack": "02_roads",
+      "needs_hitbox": false,
+      "states_or_animation": false,
+      "status": "GENERATED_BASE",
+      "notes": "",
+      "src": "assets/world/road_curve_right_large_01.webp",
+      "width": 1500,
+      "height": 1500,
+      "source_width_px": 1500,
+      "source_height_px": 1500,
+      "upscaled": false,
+      "production": "vector_path_with_generated_material",
+      "anchor": [
+        0.5,
+        0.93
+      ],
+      "footprint": [
+        0.64,
+        0.28
+      ],
+      "animation_implementation": "none"
+    },
+    {
+      "no": 22,
+      "id": "road_curve_left_small_01",
+      "name": "Kleine Linkskurve",
+      "category": "road",
+      "master_width_px": 1500,
+      "pack": "02_roads",
+      "needs_hitbox": false,
+      "states_or_animation": false,
+      "status": "GENERATED_BASE",
+      "notes": "",
+      "src": "assets/world/road_curve_left_small_01.webp",
+      "width": 1500,
+      "height": 1500,
+      "source_width_px": 1500,
+      "source_height_px": 1500,
+      "upscaled": false,
+      "production": "vector_path_with_generated_material",
+      "anchor": [
+        0.5,
+        0.93
+      ],
+      "footprint": [
+        0.64,
+        0.28
+      ],
+      "animation_implementation": "none"
+    },
+    {
+      "no": 23,
+      "id": "road_curve_right_small_01",
+      "name": "Kleine Rechtskurve",
+      "category": "road",
+      "master_width_px": 1500,
+      "pack": "02_roads",
+      "needs_hitbox": false,
+      "states_or_animation": false,
+      "status": "GENERATED_BASE",
+      "notes": "",
+      "src": "assets/world/road_curve_right_small_01.webp",
+      "width": 1500,
+      "height": 1500,
+      "source_width_px": 1500,
+      "source_height_px": 1500,
+      "upscaled": false,
+      "production": "vector_path_with_generated_material",
+      "anchor": [
+        0.5,
+        0.93
+      ],
+      "footprint": [
+        0.64,
+        0.28
+      ],
+      "animation_implementation": "none"
+    },
+    {
+      "no": 24,
+      "id": "road_s_curve_01",
+      "name": "S-Kurve",
+      "category": "road",
+      "master_width_px": 1500,
+      "pack": "02_roads",
+      "needs_hitbox": false,
+      "states_or_animation": false,
+      "status": "GENERATED_BASE",
+      "notes": "",
+      "src": "assets/world/road_s_curve_01.webp",
+      "width": 1500,
+      "height": 1500,
+      "source_width_px": 1500,
+      "source_height_px": 1500,
+      "upscaled": false,
+      "production": "vector_path_with_generated_material",
+      "anchor": [
+        0.5,
+        0.93
+      ],
+      "footprint": [
+        0.64,
+        0.28
+      ],
+      "animation_implementation": "none"
+    },
+    {
+      "no": 25,
+      "id": "road_t_junction_01",
+      "name": "T-Kreuzung",
+      "category": "road",
+      "master_width_px": 1500,
+      "pack": "02_roads",
+      "needs_hitbox": false,
+      "states_or_animation": false,
+      "status": "GENERATED_BASE",
+      "notes": "",
+      "src": "assets/world/road_t_junction_01.webp",
+      "width": 1500,
+      "height": 1500,
+      "source_width_px": 1500,
+      "source_height_px": 1500,
+      "upscaled": false,
+      "production": "vector_path_with_generated_material",
+      "anchor": [
+        0.5,
+        0.93
+      ],
+      "footprint": [
+        0.64,
+        0.28
+      ],
+      "animation_implementation": "none"
+    },
+    {
+      "no": 26,
+      "id": "road_y_junction_01",
+      "name": "Y-Kreuzung",
+      "category": "road",
+      "master_width_px": 1500,
+      "pack": "02_roads",
+      "needs_hitbox": false,
+      "states_or_animation": false,
+      "status": "GENERATED_BASE",
+      "notes": "",
+      "src": "assets/world/road_y_junction_01.webp",
+      "width": 1500,
+      "height": 1500,
+      "source_width_px": 1500,
+      "source_height_px": 1500,
+      "upscaled": false,
+      "production": "vector_path_with_generated_material",
+      "anchor": [
+        0.5,
+        0.93
+      ],
+      "footprint": [
+        0.64,
+        0.28
+      ],
+      "animation_implementation": "none"
+    },
+    {
+      "no": 27,
+      "id": "road_cross_junction_01",
+      "name": "Vierwege-Kreuzung",
+      "category": "road",
+      "master_width_px": 1500,
+      "pack": "02_roads",
+      "needs_hitbox": false,
+      "states_or_animation": false,
+      "status": "GENERATED_BASE",
+      "notes": "",
+      "src": "assets/world/road_cross_junction_01.webp",
+      "width": 1500,
+      "height": 1500,
+      "source_width_px": 1500,
+      "source_height_px": 1500,
+      "upscaled": false,
+      "production": "vector_path_with_generated_material",
+      "anchor": [
+        0.5,
+        0.93
+      ],
+      "footprint": [
+        0.64,
+        0.28
+      ],
+      "animation_implementation": "none"
+    },
+    {
+      "no": 28,
+      "id": "road_farm_entry_01",
+      "name": "Hofeinfahrt",
+      "category": "road",
+      "master_width_px": 1500,
+      "pack": "02_roads",
+      "needs_hitbox": false,
+      "states_or_animation": false,
+      "status": "GENERATED_BASE",
+      "notes": "",
+      "src": "assets/world/road_farm_entry_01.webp",
+      "width": 1500,
+      "height": 1500,
+      "source_width_px": 1500,
+      "source_height_px": 1500,
+      "upscaled": false,
+      "production": "vector_path_with_generated_material",
+      "anchor": [
+        0.5,
+        0.93
+      ],
+      "footprint": [
+        0.64,
+        0.28
+      ],
+      "animation_implementation": "none"
+    },
+    {
+      "no": 29,
+      "id": "road_mine_entry_01",
+      "name": "Mineneinfahrt",
+      "category": "road",
+      "master_width_px": 1500,
+      "pack": "02_roads",
+      "needs_hitbox": false,
+      "states_or_animation": false,
+      "status": "GENERATED_BASE",
+      "notes": "",
+      "src": "assets/world/road_mine_entry_01.webp",
+      "width": 1500,
+      "height": 1500,
+      "source_width_px": 1500,
+      "source_height_px": 1500,
+      "upscaled": false,
+      "production": "vector_path_with_generated_material",
+      "anchor": [
+        0.5,
+        0.93
+      ],
+      "footprint": [
+        0.64,
+        0.28
+      ],
+      "animation_implementation": "none"
+    },
+    {
+      "no": 30,
+      "id": "road_village_entry_01",
+      "name": "Dorfeinfahrt",
+      "category": "road",
+      "master_width_px": 1500,
+      "pack": "02_roads",
+      "needs_hitbox": false,
+      "states_or_animation": false,
+      "status": "GENERATED_BASE",
+      "notes": "",
+      "src": "assets/world/road_village_entry_01.webp",
+      "width": 1500,
+      "height": 1500,
+      "source_width_px": 1500,
+      "source_height_px": 1500,
+      "upscaled": false,
+      "production": "vector_path_with_generated_material",
+      "anchor": [
+        0.5,
+        0.93
+      ],
+      "footprint": [
+        0.64,
+        0.28
+      ],
+      "animation_implementation": "none"
+    },
+    {
+      "no": 31,
+      "id": "road_harbor_entry_01",
+      "name": "Hafeneinfahrt",
+      "category": "road",
+      "master_width_px": 1500,
+      "pack": "02_roads",
+      "needs_hitbox": false,
+      "states_or_animation": false,
+      "status": "GENERATED_BASE",
+      "notes": "",
+      "src": "assets/world/road_harbor_entry_01.webp",
+      "width": 1500,
+      "height": 1500,
+      "source_width_px": 1500,
+      "source_height_px": 1500,
+      "upscaled": false,
+      "production": "vector_path_with_generated_material",
+      "anchor": [
+        0.5,
+        0.93
+      ],
+      "footprint": [
+        0.64,
+        0.28
+      ],
+      "animation_implementation": "none"
+    },
+    {
+      "no": 32,
+      "id": "road_edge_left_01",
+      "name": "Straßenrand links",
+      "category": "road",
+      "master_width_px": 1500,
+      "pack": "02_roads",
+      "needs_hitbox": false,
+      "states_or_animation": false,
+      "status": "GENERATED_BASE",
+      "notes": "",
+      "src": "assets/world/road_edge_left_01.webp",
+      "width": 1500,
+      "height": 1500,
+      "source_width_px": 1500,
+      "source_height_px": 1500,
+      "upscaled": false,
+      "production": "vector_path_with_generated_material",
+      "anchor": [
+        0.5,
+        0.93
+      ],
+      "footprint": [
+        0.64,
+        0.28
+      ],
+      "animation_implementation": "none"
+    },
+    {
+      "no": 33,
+      "id": "road_edge_right_01",
+      "name": "Straßenrand rechts",
+      "category": "road",
+      "master_width_px": 1500,
+      "pack": "02_roads",
+      "needs_hitbox": false,
+      "states_or_animation": false,
+      "status": "GENERATED_BASE",
+      "notes": "",
+      "src": "assets/world/road_edge_right_01.webp",
+      "width": 1500,
+      "height": 1500,
+      "source_width_px": 1500,
+      "source_height_px": 1500,
+      "upscaled": false,
+      "production": "vector_path_with_generated_material",
+      "anchor": [
+        0.5,
+        0.93
+      ],
+      "footprint": [
+        0.64,
+        0.28
+      ],
+      "animation_implementation": "none"
+    },
+    {
+      "no": 34,
+      "id": "road_turnaround_01",
+      "name": "Wende-/Ladeplatz",
+      "category": "road",
+      "master_width_px": 1500,
+      "pack": "02_roads",
+      "needs_hitbox": false,
+      "states_or_animation": false,
+      "status": "GENERATED_BASE",
+      "notes": "",
+      "src": "assets/world/road_turnaround_01.webp",
+      "width": 1500,
+      "height": 1500,
+      "source_width_px": 1500,
+      "source_height_px": 1500,
+      "upscaled": false,
+      "production": "vector_path_with_generated_material",
+      "anchor": [
+        0.5,
+        0.93
+      ],
+      "footprint": [
+        0.64,
+        0.28
+      ],
+      "animation_implementation": "none"
+    },
+    {
+      "no": 35,
+      "id": "water_stream_straight_01",
+      "name": "Schmaler Bach gerade",
+      "category": "water",
+      "master_width_px": 1500,
+      "pack": "03_water",
+      "needs_hitbox": false,
+      "states_or_animation": true,
+      "status": "GENERATED_BASE",
+      "notes": "",
+      "src": "assets/world/water_stream_straight_01.webp",
+      "width": 1500,
+      "height": 1500,
+      "source_width_px": 1500,
+      "source_height_px": 1500,
+      "upscaled": false,
+      "production": "vector_path_with_generated_material",
+      "anchor": [
+        0.5,
+        0.93
+      ],
+      "footprint": [
+        0.64,
+        0.28
+      ],
+      "animation_implementation": "runtime_or_variant"
+    },
+    {
+      "no": 36,
+      "id": "water_stream_curve_01",
+      "name": "Schmaler Bach Kurve",
+      "category": "water",
+      "master_width_px": 1500,
+      "pack": "03_water",
+      "needs_hitbox": false,
+      "states_or_animation": true,
+      "status": "GENERATED_BASE",
+      "notes": "",
+      "src": "assets/world/water_stream_curve_01.webp",
+      "width": 1500,
+      "height": 1500,
+      "source_width_px": 1500,
+      "source_height_px": 1500,
+      "upscaled": false,
+      "production": "vector_path_with_generated_material",
+      "anchor": [
+        0.5,
+        0.93
+      ],
+      "footprint": [
+        0.64,
+        0.28
+      ],
+      "animation_implementation": "runtime_or_variant"
+    },
+    {
+      "no": 37,
+      "id": "water_river_straight_01",
+      "name": "Fluss gerade",
+      "category": "water",
+      "master_width_px": 1500,
+      "pack": "03_water",
+      "needs_hitbox": false,
+      "states_or_animation": true,
+      "status": "GENERATED_BASE",
+      "notes": "",
+      "src": "assets/world/water_river_straight_01.webp",
+      "width": 1500,
+      "height": 1500,
+      "source_width_px": 1500,
+      "source_height_px": 1500,
+      "upscaled": false,
+      "production": "vector_path_with_generated_material",
+      "anchor": [
+        0.5,
+        0.93
+      ],
+      "footprint": [
+        0.64,
+        0.28
+      ],
+      "animation_implementation": "runtime_or_variant"
+    },
+    {
+      "no": 38,
+      "id": "water_river_curve_left_01",
+      "name": "Fluss Linkskurve",
+      "category": "water",
+      "master_width_px": 1500,
+      "pack": "03_water",
+      "needs_hitbox": false,
+      "states_or_animation": true,
+      "status": "GENERATED_BASE",
+      "notes": "",
+      "src": "assets/world/water_river_curve_left_01.webp",
+      "width": 1500,
+      "height": 1500,
+      "source_width_px": 1500,
+      "source_height_px": 1500,
+      "upscaled": false,
+      "production": "vector_path_with_generated_material",
+      "anchor": [
+        0.5,
+        0.93
+      ],
+      "footprint": [
+        0.64,
+        0.28
+      ],
+      "animation_implementation": "runtime_or_variant"
+    },
+    {
+      "no": 39,
+      "id": "water_river_curve_right_01",
+      "name": "Fluss Rechtskurve",
+      "category": "water",
+      "master_width_px": 1500,
+      "pack": "03_water",
+      "needs_hitbox": false,
+      "states_or_animation": true,
+      "status": "GENERATED_BASE",
+      "notes": "",
+      "src": "assets/world/water_river_curve_right_01.webp",
+      "width": 1500,
+      "height": 1500,
+      "source_width_px": 1500,
+      "source_height_px": 1500,
+      "upscaled": false,
+      "production": "vector_path_with_generated_material",
+      "anchor": [
+        0.5,
+        0.93
+      ],
+      "footprint": [
+        0.64,
+        0.28
+      ],
+      "animation_implementation": "runtime_or_variant"
+    },
+    {
+      "no": 40,
+      "id": "water_river_wide_01",
+      "name": "Breiter Fluss",
+      "category": "water",
+      "master_width_px": 1500,
+      "pack": "03_water",
+      "needs_hitbox": false,
+      "states_or_animation": true,
+      "status": "GENERATED_BASE",
+      "notes": "",
+      "src": "assets/world/water_river_wide_01.webp",
+      "width": 1500,
+      "height": 1500,
+      "source_width_px": 1500,
+      "source_height_px": 1500,
+      "upscaled": false,
+      "production": "vector_path_with_generated_material",
+      "anchor": [
+        0.5,
+        0.93
+      ],
+      "footprint": [
+        0.64,
+        0.28
+      ],
+      "animation_implementation": "runtime_or_variant"
+    },
+    {
+      "no": 41,
+      "id": "water_river_fork_01",
+      "name": "Flussgabelung",
+      "category": "water",
+      "master_width_px": 1500,
+      "pack": "03_water",
+      "needs_hitbox": false,
+      "states_or_animation": true,
+      "status": "GENERATED_BASE",
+      "notes": "",
+      "src": "assets/world/water_river_fork_01.webp",
+      "width": 1500,
+      "height": 1500,
+      "source_width_px": 1500,
+      "source_height_px": 1500,
+      "upscaled": false,
+      "production": "vector_path_with_generated_material",
+      "anchor": [
+        0.5,
+        0.93
+      ],
+      "footprint": [
+        0.64,
+        0.28
+      ],
+      "animation_implementation": "runtime_or_variant"
+    },
+    {
+      "no": 42,
+      "id": "water_pool_mountain_01",
+      "name": "Bergpool",
+      "category": "water",
+      "master_width_px": 1500,
+      "pack": "03_water",
+      "needs_hitbox": false,
+      "states_or_animation": true,
+      "status": "GENERATED_BASE",
+      "notes": "",
+      "src": "assets/world/water_pool_mountain_01.webp",
+      "width": 1500,
+      "height": 1500,
+      "source_width_px": 1500,
+      "source_height_px": 1500,
+      "upscaled": false,
+      "production": "vector_path_with_generated_material",
+      "anchor": [
+        0.5,
+        0.93
+      ],
+      "footprint": [
+        0.64,
+        0.28
+      ],
+      "animation_implementation": "runtime_or_variant"
+    },
+    {
+      "no": 43,
+      "id": "water_pool_mill_01",
+      "name": "Mühlenbecken",
+      "category": "water",
+      "master_width_px": 1500,
+      "pack": "03_water",
+      "needs_hitbox": false,
+      "states_or_animation": true,
+      "status": "GENERATED_BASE",
+      "notes": "",
+      "src": "assets/world/water_pool_mill_01.webp",
+      "width": 1500,
+      "height": 1500,
+      "source_width_px": 1500,
+      "source_height_px": 1500,
+      "upscaled": false,
+      "production": "vector_path_with_generated_material",
+      "anchor": [
+        0.5,
+        0.93
+      ],
+      "footprint": [
+        0.64,
+        0.28
+      ],
+      "animation_implementation": "runtime_or_variant"
+    },
+    {
+      "no": 44,
+      "id": "water_waterfall_large_01",
+      "name": "Großer Wasserfall",
+      "category": "water",
+      "master_width_px": 800,
+      "pack": "03_water",
+      "needs_hitbox": false,
+      "states_or_animation": true,
+      "status": "GENERATED_BASE",
+      "notes": "",
+      "src": "assets/world/water_waterfall_large_01.webp",
+      "width": 800,
+      "height": 783,
+      "source_width_px": 382,
+      "source_height_px": 374,
+      "upscaled": true,
+      "production": "generated_sprite",
+      "anchor": [
+        0.5,
+        0.93
+      ],
+      "footprint": [
+        0.64,
+        0.28
+      ],
+      "animation_implementation": "runtime_or_variant"
+    },
+    {
+      "no": 45,
+      "id": "water_waterfall_medium_01",
+      "name": "Mittlerer Wasserfall",
+      "category": "water",
+      "master_width_px": 800,
+      "pack": "03_water",
+      "needs_hitbox": false,
+      "states_or_animation": true,
+      "status": "GENERATED_BASE",
+      "notes": "",
+      "src": "assets/world/water_waterfall_medium_01.webp",
+      "width": 800,
+      "height": 783,
+      "source_width_px": 382,
+      "source_height_px": 374,
+      "upscaled": true,
+      "production": "generated_sprite",
+      "anchor": [
+        0.5,
+        0.93
+      ],
+      "footprint": [
+        0.64,
+        0.28
+      ],
+      "animation_implementation": "runtime_or_variant"
+    },
+    {
+      "no": 46,
+      "id": "water_waterfall_small_01",
+      "name": "Kleine Kaskade",
+      "category": "water",
+      "master_width_px": 800,
+      "pack": "03_water",
+      "needs_hitbox": false,
+      "states_or_animation": true,
+      "status": "GENERATED_BASE",
+      "notes": "",
+      "src": "assets/world/water_waterfall_small_01.webp",
+      "width": 800,
+      "height": 783,
+      "source_width_px": 382,
+      "source_height_px": 374,
+      "upscaled": true,
+      "production": "generated_sprite",
+      "anchor": [
+        0.5,
+        0.93
+      ],
+      "footprint": [
+        0.64,
+        0.28
+      ],
+      "animation_implementation": "runtime_or_variant"
+    },
+    {
+      "no": 47,
+      "id": "water_rapids_01",
+      "name": "Stromschnellen",
+      "category": "water",
+      "master_width_px": 800,
+      "pack": "03_water",
+      "needs_hitbox": false,
+      "states_or_animation": true,
+      "status": "GENERATED_BASE",
+      "notes": "",
+      "src": "assets/world/water_rapids_01.webp",
+      "width": 800,
+      "height": 661,
+      "source_width_px": 322,
+      "source_height_px": 266,
+      "upscaled": true,
+      "production": "generated_sprite",
+      "anchor": [
+        0.5,
+        0.93
+      ],
+      "footprint": [
+        0.64,
+        0.28
+      ],
+      "animation_implementation": "runtime_or_variant"
+    },
+    {
+      "no": 48,
+      "id": "water_sea_base_01",
+      "name": "Meer – Basis",
+      "category": "water",
+      "master_width_px": 1500,
+      "pack": "03_water",
+      "needs_hitbox": false,
+      "states_or_animation": true,
+      "status": "GENERATED_BASE",
+      "notes": "",
+      "src": "assets/world/water_sea_base_01.webp",
+      "width": 1500,
+      "height": 1500,
+      "source_width_px": 1500,
+      "source_height_px": 1500,
+      "upscaled": false,
+      "production": "tiled_generated_material",
+      "anchor": [
+        0.5,
+        0.93
+      ],
+      "footprint": [
+        0.64,
+        0.28
+      ],
+      "animation_implementation": "runtime_or_variant"
+    },
+    {
+      "no": 49,
+      "id": "bridge_stone_large_01",
+      "name": "Große Steinbrücke",
+      "category": "bridge_rock",
+      "master_width_px": 1200,
+      "pack": "04_bridges_rocks",
+      "needs_hitbox": true,
+      "states_or_animation": false,
+      "status": "GENERATED_BASE",
+      "notes": "",
+      "src": "assets/world/bridge_stone_large_01.webp",
+      "width": 1200,
+      "height": 768,
+      "source_width_px": 400,
+      "source_height_px": 256,
+      "upscaled": true,
+      "production": "generated_sprite",
+      "anchor": [
+        0.5,
+        0.93
+      ],
+      "footprint": [
+        0.64,
+        0.28
+      ],
+      "animation_implementation": "none"
+    },
+    {
+      "no": 50,
+      "id": "bridge_stone_small_01",
+      "name": "Kleine Steinbrücke",
+      "category": "bridge_rock",
+      "master_width_px": 1200,
+      "pack": "04_bridges_rocks",
+      "needs_hitbox": true,
+      "states_or_animation": false,
+      "status": "GENERATED_BASE",
+      "notes": "",
+      "src": "assets/world/bridge_stone_small_01.webp",
+      "width": 1200,
+      "height": 768,
+      "source_width_px": 400,
+      "source_height_px": 256,
+      "upscaled": true,
+      "production": "generated_sprite",
+      "anchor": [
+        0.5,
+        0.93
+      ],
+      "footprint": [
+        0.64,
+        0.28
+      ],
+      "animation_implementation": "none"
+    },
+    {
+      "no": 51,
+      "id": "bridge_wood_01",
+      "name": "Holzbrücke",
+      "category": "bridge_rock",
+      "master_width_px": 1200,
+      "pack": "04_bridges_rocks",
+      "needs_hitbox": true,
+      "states_or_animation": false,
+      "status": "GENERATED_BASE",
+      "notes": "",
+      "src": "assets/world/bridge_wood_01.webp",
+      "width": 1200,
+      "height": 774,
+      "source_width_px": 451,
+      "source_height_px": 291,
+      "upscaled": true,
+      "production": "generated_sprite",
+      "anchor": [
+        0.5,
+        0.93
+      ],
+      "footprint": [
+        0.64,
+        0.28
+      ],
+      "animation_implementation": "none"
+    },
+    {
+      "no": 52,
+      "id": "bridge_farm_01",
+      "name": "Hof-/Feldbrücke",
+      "category": "bridge_rock",
+      "master_width_px": 1200,
+      "pack": "04_bridges_rocks",
+      "needs_hitbox": true,
+      "states_or_animation": false,
+      "status": "GENERATED_BASE",
+      "notes": "",
+      "src": "assets/world/bridge_farm_01.webp",
+      "width": 1200,
+      "height": 813,
+      "source_width_px": 499,
+      "source_height_px": 338,
+      "upscaled": true,
+      "production": "generated_sprite",
+      "anchor": [
+        0.5,
+        0.93
+      ],
+      "footprint": [
+        0.64,
+        0.28
+      ],
+      "animation_implementation": "none"
+    },
+    {
+      "no": 53,
+      "id": "cliff_mountain_large_01",
+      "name": "Große Bergwand",
+      "category": "bridge_rock",
+      "master_width_px": 800,
+      "pack": "04_bridges_rocks",
+      "needs_hitbox": false,
+      "states_or_animation": false,
+      "status": "GENERATED_BASE",
+      "notes": "",
+      "src": "assets/world/cliff_mountain_large_01.webp",
+      "width": 800,
+      "height": 574,
+      "source_width_px": 530,
+      "source_height_px": 380,
+      "upscaled": true,
+      "production": "generated_sprite",
+      "anchor": [
+        0.5,
+        0.93
+      ],
+      "footprint": [
+        0.64,
+        0.28
+      ],
+      "animation_implementation": "none"
+    },
+    {
+      "no": 54,
+      "id": "cliff_mountain_medium_01",
+      "name": "Mittlere Bergwand",
+      "category": "bridge_rock",
+      "master_width_px": 800,
+      "pack": "04_bridges_rocks",
+      "needs_hitbox": false,
+      "states_or_animation": false,
+      "status": "GENERATED_BASE",
+      "notes": "",
+      "src": "assets/world/cliff_mountain_medium_01.webp",
+      "width": 800,
+      "height": 606,
+      "source_width_px": 475,
+      "source_height_px": 360,
+      "upscaled": true,
+      "production": "generated_sprite",
+      "anchor": [
+        0.5,
+        0.93
+      ],
+      "footprint": [
+        0.64,
+        0.28
+      ],
+      "animation_implementation": "none"
+    },
+    {
+      "no": 55,
+      "id": "cliff_river_bank_01",
+      "name": "Felsiges Flussufer",
+      "category": "bridge_rock",
+      "master_width_px": 800,
+      "pack": "04_bridges_rocks",
+      "needs_hitbox": false,
+      "states_or_animation": false,
+      "status": "GENERATED_BASE",
+      "notes": "",
+      "src": "assets/world/cliff_river_bank_01.webp",
+      "width": 800,
+      "height": 554,
+      "source_width_px": 468,
+      "source_height_px": 324,
+      "upscaled": true,
+      "production": "generated_sprite",
+      "anchor": [
+        0.5,
+        0.93
+      ],
+      "footprint": [
+        0.64,
+        0.28
+      ],
+      "animation_implementation": "none"
+    },
+    {
+      "no": 56,
+      "id": "cliff_coast_01",
+      "name": "Küstenklippe",
+      "category": "bridge_rock",
+      "master_width_px": 800,
+      "pack": "04_bridges_rocks",
+      "needs_hitbox": false,
+      "states_or_animation": false,
+      "status": "GENERATED_BASE",
+      "notes": "",
+      "src": "assets/world/cliff_coast_01.webp",
+      "width": 800,
+      "height": 696,
+      "source_width_px": 417,
+      "source_height_px": 363,
+      "upscaled": true,
+      "production": "generated_sprite",
+      "anchor": [
+        0.5,
+        0.93
+      ],
+      "footprint": [
+        0.64,
+        0.28
+      ],
+      "animation_implementation": "none"
+    },
+    {
+      "no": 57,
+      "id": "rock_cluster_large_01",
+      "name": "Große Felsgruppe",
+      "category": "bridge_rock",
+      "master_width_px": 800,
+      "pack": "04_bridges_rocks",
+      "needs_hitbox": false,
+      "states_or_animation": false,
+      "status": "GENERATED_BASE",
+      "notes": "",
+      "src": "assets/world/rock_cluster_large_01.webp",
+      "width": 800,
+      "height": 578,
+      "source_width_px": 439,
+      "source_height_px": 317,
+      "upscaled": true,
+      "production": "generated_sprite",
+      "anchor": [
+        0.5,
+        0.93
+      ],
+      "footprint": [
+        0.64,
+        0.28
+      ],
+      "animation_implementation": "none"
+    },
+    {
+      "no": 58,
+      "id": "rock_cluster_medium_01",
+      "name": "Mittlere Felsgruppe",
+      "category": "bridge_rock",
+      "master_width_px": 600,
+      "pack": "04_bridges_rocks",
+      "needs_hitbox": false,
+      "states_or_animation": false,
+      "status": "GENERATED_BASE",
+      "notes": "",
+      "src": "assets/world/rock_cluster_medium_01.webp",
+      "width": 600,
+      "height": 433,
+      "source_width_px": 439,
+      "source_height_px": 317,
+      "upscaled": true,
+      "production": "generated_sprite",
+      "anchor": [
+        0.5,
+        0.93
+      ],
+      "footprint": [
+        0.64,
+        0.28
+      ],
+      "animation_implementation": "none"
+    },
+    {
+      "no": 59,
+      "id": "rock_single_large_01",
+      "name": "Großer Einzelstein",
+      "category": "bridge_rock",
+      "master_width_px": 600,
+      "pack": "04_bridges_rocks",
+      "needs_hitbox": false,
+      "states_or_animation": false,
+      "status": "GENERATED_BASE",
+      "notes": "",
+      "src": "assets/world/rock_single_large_01.webp",
+      "width": 600,
+      "height": 571,
+      "source_width_px": 368,
+      "source_height_px": 350,
+      "upscaled": true,
+      "production": "generated_sprite",
+      "anchor": [
+        0.5,
+        0.93
+      ],
+      "footprint": [
+        0.64,
+        0.28
+      ],
+      "animation_implementation": "none"
+    },
+    {
+      "no": 60,
+      "id": "rock_single_small_01",
+      "name": "Kleiner Einzelstein",
+      "category": "bridge_rock",
+      "master_width_px": 300,
+      "pack": "04_bridges_rocks",
+      "needs_hitbox": false,
+      "states_or_animation": false,
+      "status": "GENERATED_BASE",
+      "notes": "",
+      "src": "assets/world/rock_single_small_01.webp",
+      "width": 300,
+      "height": 285,
+      "source_width_px": 368,
+      "source_height_px": 350,
+      "upscaled": false,
+      "production": "generated_sprite",
+      "anchor": [
+        0.5,
+        0.93
+      ],
+      "footprint": [
+        0.64,
+        0.28
+      ],
+      "animation_implementation": "none"
+    },
+    {
+      "no": 61,
+      "id": "tree_pine_tall_01",
+      "name": "Tanne hoch",
+      "category": "vegetation",
+      "master_width_px": 800,
+      "pack": "05_vegetation",
+      "needs_hitbox": false,
+      "states_or_animation": false,
+      "status": "GENERATED_BASE",
+      "notes": "",
+      "src": "assets/world/tree_pine_tall_01.webp",
+      "width": 800,
+      "height": 1017,
+      "source_width_px": 339,
+      "source_height_px": 431,
+      "upscaled": true,
+      "production": "generated_sprite",
+      "anchor": [
+        0.5,
+        0.93
+      ],
+      "footprint": [
+        0.64,
+        0.28
+      ],
+      "animation_implementation": "none"
+    },
+    {
+      "no": 62,
+      "id": "tree_pine_tall_02",
+      "name": "Tanne hoch Variante",
+      "category": "vegetation",
+      "master_width_px": 800,
+      "pack": "05_vegetation",
+      "needs_hitbox": false,
+      "states_or_animation": false,
+      "status": "GENERATED_BASE",
+      "notes": "",
+      "src": "assets/world/tree_pine_tall_02.webp",
+      "width": 800,
+      "height": 1878,
+      "source_width_px": 190,
+      "source_height_px": 446,
+      "upscaled": true,
+      "production": "generated_sprite",
+      "anchor": [
+        0.5,
+        0.93
+      ],
+      "footprint": [
+        0.64,
+        0.28
+      ],
+      "animation_implementation": "none"
+    },
+    {
+      "no": 63,
+      "id": "tree_pine_medium_01",
+      "name": "Tanne mittel",
+      "category": "vegetation",
+      "master_width_px": 700,
+      "pack": "05_vegetation",
+      "needs_hitbox": false,
+      "states_or_animation": false,
+      "status": "GENERATED_BASE",
+      "notes": "",
+      "src": "assets/world/tree_pine_medium_01.webp",
+      "width": 700,
+      "height": 1045,
+      "source_width_px": 260,
+      "source_height_px": 388,
+      "upscaled": true,
+      "production": "generated_sprite",
+      "anchor": [
+        0.5,
+        0.93
+      ],
+      "footprint": [
+        0.64,
+        0.28
+      ],
+      "animation_implementation": "none"
+    },
+    {
+      "no": 64,
+      "id": "tree_pine_small_01",
+      "name": "Tanne klein",
+      "category": "vegetation",
+      "master_width_px": 600,
+      "pack": "05_vegetation",
+      "needs_hitbox": false,
+      "states_or_animation": false,
+      "status": "GENERATED_BASE",
+      "notes": "",
+      "src": "assets/world/tree_pine_small_01.webp",
+      "width": 600,
+      "height": 861,
+      "source_width_px": 175,
+      "source_height_px": 251,
+      "upscaled": true,
+      "production": "generated_sprite",
+      "anchor": [
+        0.5,
+        0.93
+      ],
+      "footprint": [
+        0.64,
+        0.28
+      ],
+      "animation_implementation": "none"
+    },
+    {
+      "no": 65,
+      "id": "tree_pine_wide_01",
+      "name": "Tanne breit",
+      "category": "vegetation",
+      "master_width_px": 800,
+      "pack": "05_vegetation",
+      "needs_hitbox": false,
+      "states_or_animation": false,
+      "status": "GENERATED_BASE",
+      "notes": "",
+      "src": "assets/world/tree_pine_wide_01.webp",
+      "width": 800,
+      "height": 848,
+      "source_width_px": 384,
+      "source_height_px": 407,
+      "upscaled": true,
+      "production": "generated_sprite",
+      "anchor": [
+        0.5,
+        0.93
+      ],
+      "footprint": [
+        0.64,
+        0.28
+      ],
+      "animation_implementation": "none"
+    },
+    {
+      "no": 66,
+      "id": "tree_deciduous_large_01",
+      "name": "Laubbaum groß",
+      "category": "vegetation",
+      "master_width_px": 800,
+      "pack": "05_vegetation",
+      "needs_hitbox": false,
+      "states_or_animation": false,
+      "status": "GENERATED_BASE",
+      "notes": "",
+      "src": "assets/world/tree_deciduous_large_01.webp",
+      "width": 800,
+      "height": 860,
+      "source_width_px": 388,
+      "source_height_px": 417,
+      "upscaled": true,
+      "production": "generated_sprite",
+      "anchor": [
+        0.5,
+        0.93
+      ],
+      "footprint": [
+        0.64,
+        0.28
+      ],
+      "animation_implementation": "none"
+    },
+    {
+      "no": 67,
+      "id": "tree_deciduous_medium_01",
+      "name": "Laubbaum mittel",
+      "category": "vegetation",
+      "master_width_px": 700,
+      "pack": "05_vegetation",
+      "needs_hitbox": false,
+      "states_or_animation": false,
+      "status": "GENERATED_BASE",
+      "notes": "",
+      "src": "assets/world/tree_deciduous_medium_01.webp",
+      "width": 700,
+      "height": 721,
+      "source_width_px": 368,
+      "source_height_px": 379,
+      "upscaled": true,
+      "production": "generated_sprite",
+      "anchor": [
+        0.5,
+        0.93
+      ],
+      "footprint": [
+        0.64,
+        0.28
+      ],
+      "animation_implementation": "none"
+    },
+    {
+      "no": 68,
+      "id": "tree_orchard_apple_01",
+      "name": "Apfelbaum",
+      "category": "vegetation",
+      "master_width_px": 700,
+      "pack": "05_vegetation",
+      "needs_hitbox": false,
+      "states_or_animation": false,
+      "status": "GENERATED_BASE",
+      "notes": "",
+      "src": "assets/world/tree_orchard_apple_01.webp",
+      "width": 700,
+      "height": 732,
+      "source_width_px": 377,
+      "source_height_px": 394,
+      "upscaled": true,
+      "production": "generated_sprite",
+      "anchor": [
+        0.5,
+        0.93
+      ],
+      "footprint": [
+        0.64,
+        0.28
+      ],
+      "animation_implementation": "none"
+    },
+    {
+      "no": 69,
+      "id": "tree_orchard_apple_02",
+      "name": "Apfelbaum Variante",
+      "category": "vegetation",
+      "master_width_px": 700,
+      "pack": "05_vegetation",
+      "needs_hitbox": false,
+      "states_or_animation": false,
+      "status": "GENERATED_BASE",
+      "notes": "",
+      "src": "assets/world/tree_orchard_apple_02.webp",
+      "width": 700,
+      "height": 705,
+      "source_width_px": 396,
+      "source_height_px": 399,
+      "upscaled": true,
+      "production": "generated_sprite",
+      "anchor": [
+        0.5,
+        0.93
+      ],
+      "footprint": [
+        0.64,
+        0.28
+      ],
+      "animation_implementation": "none"
+    },
+    {
+      "no": 70,
+      "id": "bush_green_01",
+      "name": "Busch grün",
+      "category": "vegetation",
+      "master_width_px": 400,
+      "pack": "05_vegetation",
+      "needs_hitbox": false,
+      "states_or_animation": false,
+      "status": "GENERATED_BASE",
+      "notes": "",
+      "src": "assets/world/bush_green_01.webp",
+      "width": 400,
+      "height": 325,
+      "source_width_px": 365,
+      "source_height_px": 297,
+      "upscaled": true,
+      "production": "generated_sprite",
+      "anchor": [
+        0.5,
+        0.93
+      ],
+      "footprint": [
+        0.64,
+        0.28
+      ],
+      "animation_implementation": "none"
+    },
+    {
+      "no": 71,
+      "id": "bush_flower_pink_01",
+      "name": "Blütenbusch rosa",
+      "category": "vegetation",
+      "master_width_px": 400,
+      "pack": "05_vegetation",
+      "needs_hitbox": false,
+      "states_or_animation": false,
+      "status": "GENERATED_BASE",
+      "notes": "",
+      "src": "assets/world/bush_flower_pink_01.webp",
+      "width": 400,
+      "height": 334,
+      "source_width_px": 387,
+      "source_height_px": 323,
+      "upscaled": true,
+      "production": "generated_sprite",
+      "anchor": [
+        0.5,
+        0.93
+      ],
+      "footprint": [
+        0.64,
+        0.28
+      ],
+      "animation_implementation": "none"
+    },
+    {
+      "no": 72,
+      "id": "bush_flower_white_01",
+      "name": "Blütenbusch weiß",
+      "category": "vegetation",
+      "master_width_px": 400,
+      "pack": "05_vegetation",
+      "needs_hitbox": false,
+      "states_or_animation": false,
+      "status": "GENERATED_BASE",
+      "notes": "",
+      "src": "assets/world/bush_flower_white_01.webp",
+      "width": 400,
+      "height": 342,
+      "source_width_px": 385,
+      "source_height_px": 329,
+      "upscaled": true,
+      "production": "generated_sprite",
+      "anchor": [
+        0.5,
+        0.93
+      ],
+      "footprint": [
+        0.64,
+        0.28
+      ],
+      "animation_implementation": "none"
+    },
+    {
+      "no": 73,
+      "id": "grass_tuft_01",
+      "name": "Grasbüschel A",
+      "category": "vegetation",
+      "master_width_px": 250,
+      "pack": "05_vegetation",
+      "needs_hitbox": false,
+      "states_or_animation": false,
+      "status": "GENERATED_BASE",
+      "notes": "",
+      "src": "assets/world/grass_tuft_01.webp",
+      "width": 250,
+      "height": 239,
+      "source_width_px": 389,
+      "source_height_px": 372,
+      "upscaled": false,
+      "production": "generated_sprite",
+      "anchor": [
+        0.5,
+        0.93
+      ],
+      "footprint": [
+        0.64,
+        0.28
+      ],
+      "animation_implementation": "none"
+    },
+    {
+      "no": 74,
+      "id": "grass_tuft_02",
+      "name": "Grasbüschel B",
+      "category": "vegetation",
+      "master_width_px": 250,
+      "pack": "05_vegetation",
+      "needs_hitbox": false,
+      "states_or_animation": false,
+      "status": "GENERATED_BASE",
+      "notes": "",
+      "src": "assets/world/grass_tuft_02.webp",
+      "width": 250,
+      "height": 179,
+      "source_width_px": 430,
+      "source_height_px": 308,
+      "upscaled": false,
+      "production": "generated_sprite",
+      "anchor": [
+        0.5,
+        0.93
+      ],
+      "footprint": [
+        0.64,
+        0.28
+      ],
+      "animation_implementation": "none"
+    },
+    {
+      "no": 75,
+      "id": "flowers_wild_01",
+      "name": "Wildblumen A",
+      "category": "vegetation",
+      "master_width_px": 250,
+      "pack": "05_vegetation",
+      "needs_hitbox": false,
+      "states_or_animation": false,
+      "status": "GENERATED_BASE",
+      "notes": "",
+      "src": "assets/world/flowers_wild_01.webp",
+      "width": 250,
+      "height": 210,
+      "source_width_px": 383,
+      "source_height_px": 321,
+      "upscaled": false,
+      "production": "generated_sprite",
+      "anchor": [
+        0.5,
+        0.93
+      ],
+      "footprint": [
+        0.64,
+        0.28
+      ],
+      "animation_implementation": "none"
+    },
+    {
+      "no": 76,
+      "id": "flowers_wild_02",
+      "name": "Wildblumen B",
+      "category": "vegetation",
+      "master_width_px": 250,
+      "pack": "05_vegetation",
+      "needs_hitbox": false,
+      "states_or_animation": false,
+      "status": "GENERATED_BASE",
+      "notes": "",
+      "src": "assets/world/flowers_wild_02.webp",
+      "width": 250,
+      "height": 170,
+      "source_width_px": 348,
+      "source_height_px": 236,
+      "upscaled": false,
+      "production": "generated_sprite",
+      "anchor": [
+        0.5,
+        0.93
+      ],
+      "footprint": [
+        0.64,
+        0.28
+      ],
+      "animation_implementation": "none"
+    },
+    {
+      "no": 77,
+      "id": "flowers_sunflower_01",
+      "name": "Sonnenblumen-Gruppe",
+      "category": "vegetation",
+      "master_width_px": 300,
+      "pack": "05_vegetation",
+      "needs_hitbox": false,
+      "states_or_animation": false,
+      "status": "GENERATED_BASE",
+      "notes": "",
+      "src": "assets/world/flowers_sunflower_01.webp",
+      "width": 300,
+      "height": 277,
+      "source_width_px": 401,
+      "source_height_px": 370,
+      "upscaled": false,
+      "production": "generated_sprite",
+      "anchor": [
+        0.5,
+        0.93
+      ],
+      "footprint": [
+        0.64,
+        0.28
+      ],
+      "animation_implementation": "none"
+    },
+    {
+      "no": 78,
+      "id": "reeds_01",
+      "name": "Schilf",
+      "category": "vegetation",
+      "master_width_px": 300,
+      "pack": "05_vegetation",
+      "needs_hitbox": false,
+      "states_or_animation": false,
+      "status": "GENERATED_BASE",
+      "notes": "",
+      "src": "assets/world/reeds_01.webp",
+      "width": 300,
+      "height": 301,
+      "source_width_px": 390,
+      "source_height_px": 391,
+      "upscaled": false,
+      "production": "generated_sprite",
+      "anchor": [
+        0.5,
+        0.93
+      ],
+      "footprint": [
+        0.64,
+        0.28
+      ],
+      "animation_implementation": "none"
+    },
+    {
+      "no": 79,
+      "id": "tree_stump_01",
+      "name": "Baumstumpf",
+      "category": "vegetation",
+      "master_width_px": 300,
+      "pack": "05_vegetation",
+      "needs_hitbox": false,
+      "states_or_animation": false,
+      "status": "GENERATED_BASE",
+      "notes": "",
+      "src": "assets/world/tree_stump_01.webp",
+      "width": 300,
+      "height": 244,
+      "source_width_px": 390,
+      "source_height_px": 317,
+      "upscaled": false,
+      "production": "generated_sprite",
+      "anchor": [
+        0.5,
+        0.93
+      ],
+      "footprint": [
+        0.64,
+        0.28
+      ],
+      "animation_implementation": "none"
+    },
+    {
+      "no": 80,
+      "id": "fallen_log_01",
+      "name": "Gefallener Stamm",
+      "category": "vegetation",
+      "master_width_px": 600,
+      "pack": "05_vegetation",
+      "needs_hitbox": false,
+      "states_or_animation": false,
+      "status": "GENERATED_BASE",
+      "notes": "",
+      "src": "assets/world/fallen_log_01.webp",
+      "width": 600,
+      "height": 402,
+      "source_width_px": 388,
+      "source_height_px": 260,
+      "upscaled": true,
+      "production": "generated_sprite",
+      "anchor": [
+        0.5,
+        0.93
+      ],
+      "footprint": [
+        0.64,
+        0.28
+      ],
+      "animation_implementation": "none"
+    },
+    {
+      "no": 81,
+      "id": "building_farmhouse_lv1",
+      "name": "Hofhaus Level 1",
+      "category": "building_farm",
+      "master_width_px": 1200,
+      "pack": "06_farm_buildings",
+      "needs_hitbox": true,
+      "states_or_animation": true,
+      "status": "GENERATED_BASE",
+      "notes": "",
+      "src": "assets/world/building_farmhouse_lv1.webp",
+      "width": 1200,
+      "height": 1175,
+      "source_width_px": 1213,
+      "source_height_px": 1188,
+      "upscaled": false,
+      "production": "generated_sprite",
+      "anchor": [
+        0.5,
+        0.93
+      ],
+      "footprint": [
+        0.64,
+        0.28
+      ],
+      "animation_implementation": "runtime_or_variant"
+    },
+    {
+      "no": 82,
+      "id": "building_farmhouse_lv2",
+      "name": "Hofhaus Level 2",
+      "category": "building_farm",
+      "master_width_px": 1200,
+      "pack": "06_farm_buildings",
+      "needs_hitbox": true,
+      "states_or_animation": true,
+      "status": "GENERATED_BASE",
+      "notes": "",
+      "src": "assets/world/building_farmhouse_lv2.webp",
+      "width": 1200,
+      "height": 883,
+      "source_width_px": 628,
+      "source_height_px": 462,
+      "upscaled": true,
+      "production": "generated_sprite",
+      "anchor": [
+        0.5,
+        0.93
+      ],
+      "footprint": [
+        0.64,
+        0.28
+      ],
+      "animation_implementation": "runtime_or_variant"
+    },
+    {
+      "no": 83,
+      "id": "building_barn_lv1",
+      "name": "Scheune Level 1",
+      "category": "building_farm",
+      "master_width_px": 1200,
+      "pack": "06_farm_buildings",
+      "needs_hitbox": true,
+      "states_or_animation": true,
+      "status": "GENERATED_BASE",
+      "notes": "",
+      "src": "assets/world/building_barn_lv1.webp",
+      "width": 1200,
+      "height": 1144,
+      "source_width_px": 1228,
+      "source_height_px": 1171,
+      "upscaled": false,
+      "production": "generated_sprite",
+      "anchor": [
+        0.5,
+        0.93
+      ],
+      "footprint": [
+        0.64,
+        0.28
+      ],
+      "animation_implementation": "runtime_or_variant"
+    },
+    {
+      "no": 84,
+      "id": "building_barn_lv2",
+      "name": "Scheune Level 2",
+      "category": "building_farm",
+      "master_width_px": 1200,
+      "pack": "06_farm_buildings",
+      "needs_hitbox": true,
+      "states_or_animation": true,
+      "status": "GENERATED_BASE",
+      "notes": "",
+      "src": "assets/world/building_barn_lv2.webp",
+      "width": 1200,
+      "height": 975,
+      "source_width_px": 602,
+      "source_height_px": 489,
+      "upscaled": true,
+      "production": "generated_sprite",
+      "anchor": [
+        0.5,
+        0.93
+      ],
+      "footprint": [
+        0.64,
+        0.28
+      ],
+      "animation_implementation": "runtime_or_variant"
+    },
+    {
+      "no": 85,
+      "id": "building_barn_lv3",
+      "name": "Scheune Level 3",
+      "category": "building_farm",
+      "master_width_px": 1200,
+      "pack": "06_farm_buildings",
+      "needs_hitbox": true,
+      "states_or_animation": true,
+      "status": "GENERATED_BASE",
+      "notes": "",
+      "src": "assets/world/building_barn_lv3.webp",
+      "width": 1200,
+      "height": 925,
+      "source_width_px": 685,
+      "source_height_px": 528,
+      "upscaled": true,
+      "production": "generated_sprite",
+      "anchor": [
+        0.5,
+        0.93
+      ],
+      "footprint": [
+        0.64,
+        0.28
+      ],
+      "animation_implementation": "runtime_or_variant"
+    },
+    {
+      "no": 86,
+      "id": "building_silo_lv1",
+      "name": "Silo Level 1",
+      "category": "building_farm",
+      "master_width_px": 1200,
+      "pack": "06_farm_buildings",
+      "needs_hitbox": true,
+      "states_or_animation": true,
+      "status": "GENERATED_BASE",
+      "notes": "",
+      "src": "assets/world/building_silo_lv1.webp",
+      "width": 1200,
+      "height": 1850,
+      "source_width_px": 253,
+      "source_height_px": 390,
+      "upscaled": true,
+      "production": "generated_sprite",
+      "anchor": [
+        0.5,
+        0.93
+      ],
+      "footprint": [
+        0.64,
+        0.28
+      ],
+      "animation_implementation": "runtime_or_variant"
+    },
+    {
+      "no": 87,
+      "id": "building_silo_lv2",
+      "name": "Silo Level 2",
+      "category": "building_farm",
+      "master_width_px": 1200,
+      "pack": "06_farm_buildings",
+      "needs_hitbox": true,
+      "states_or_animation": true,
+      "status": "GENERATED_BASE",
+      "notes": "",
+      "src": "assets/world/building_silo_lv2.webp",
+      "width": 1200,
+      "height": 1833,
+      "source_width_px": 328,
+      "source_height_px": 501,
+      "upscaled": true,
+      "production": "generated_sprite",
+      "anchor": [
+        0.5,
+        0.93
+      ],
+      "footprint": [
+        0.64,
+        0.28
+      ],
+      "animation_implementation": "runtime_or_variant"
+    },
+    {
+      "no": 88,
+      "id": "building_silo_lv3",
+      "name": "Silo Level 3",
+      "category": "building_farm",
+      "master_width_px": 1200,
+      "pack": "06_farm_buildings",
+      "needs_hitbox": true,
+      "states_or_animation": true,
+      "status": "GENERATED_BASE",
+      "notes": "",
+      "src": "assets/world/building_silo_lv3.webp",
+      "width": 1200,
+      "height": 1142,
+      "source_width_px": 541,
+      "source_height_px": 515,
+      "upscaled": true,
+      "production": "generated_sprite",
+      "anchor": [
+        0.5,
+        0.93
+      ],
+      "footprint": [
+        0.64,
+        0.28
+      ],
+      "animation_implementation": "runtime_or_variant"
+    },
+    {
+      "no": 89,
+      "id": "building_garage_lv1",
+      "name": "Garage/Werkstatt Level 1",
+      "category": "building_farm",
+      "master_width_px": 1200,
+      "pack": "06_farm_buildings",
+      "needs_hitbox": true,
+      "states_or_animation": true,
+      "status": "GENERATED_BASE",
+      "notes": "",
+      "src": "assets/world/building_garage_lv1.webp",
+      "width": 1200,
+      "height": 900,
+      "source_width_px": 456,
+      "source_height_px": 342,
+      "upscaled": true,
+      "production": "generated_sprite",
+      "anchor": [
+        0.5,
+        0.93
+      ],
+      "footprint": [
+        0.64,
+        0.28
+      ],
+      "animation_implementation": "runtime_or_variant"
+    },
+    {
+      "no": 90,
+      "id": "building_garage_lv2",
+      "name": "Garage/Werkstatt Level 2",
+      "category": "building_farm",
+      "master_width_px": 1200,
+      "pack": "06_farm_buildings",
+      "needs_hitbox": true,
+      "states_or_animation": true,
+      "status": "GENERATED_BASE",
+      "notes": "",
+      "src": "assets/world/building_garage_lv2.webp",
+      "width": 1200,
+      "height": 758,
+      "source_width_px": 754,
+      "source_height_px": 476,
+      "upscaled": true,
+      "production": "generated_sprite",
+      "anchor": [
+        0.5,
+        0.93
+      ],
+      "footprint": [
+        0.64,
+        0.28
+      ],
+      "animation_implementation": "runtime_or_variant"
+    },
+    {
+      "no": 91,
+      "id": "building_garage_lv3",
+      "name": "Garage/Werkstatt Level 3",
+      "category": "building_farm",
+      "master_width_px": 1200,
+      "pack": "06_farm_buildings",
+      "needs_hitbox": true,
+      "states_or_animation": true,
+      "status": "GENERATED_BASE",
+      "notes": "",
+      "src": "assets/world/building_garage_lv3.webp",
+      "width": 1200,
+      "height": 737,
+      "source_width_px": 785,
+      "source_height_px": 482,
+      "upscaled": true,
+      "production": "generated_sprite",
+      "anchor": [
+        0.5,
+        0.93
+      ],
+      "footprint": [
+        0.64,
+        0.28
+      ],
+      "animation_implementation": "runtime_or_variant"
+    },
+    {
+      "no": 92,
+      "id": "building_loading_shed_01",
+      "name": "Lade-Unterstand",
+      "category": "building_farm",
+      "master_width_px": 1200,
+      "pack": "06_farm_buildings",
+      "needs_hitbox": true,
+      "states_or_animation": false,
+      "status": "GENERATED_BASE",
+      "notes": "",
+      "src": "assets/world/building_loading_shed_01.webp",
+      "width": 1200,
+      "height": 853,
+      "source_width_px": 709,
+      "source_height_px": 504,
+      "upscaled": true,
+      "production": "generated_sprite",
+      "anchor": [
+        0.5,
+        0.93
+      ],
+      "footprint": [
+        0.64,
+        0.28
+      ],
+      "animation_implementation": "none"
+    },
+    {
+      "no": 93,
+      "id": "building_small_shed_01",
+      "name": "Kleiner Hofschuppen",
+      "category": "building_farm",
+      "master_width_px": 1200,
+      "pack": "06_farm_buildings",
+      "needs_hitbox": true,
+      "states_or_animation": false,
+      "status": "GENERATED_BASE",
+      "notes": "",
+      "src": "assets/world/building_small_shed_01.webp",
+      "width": 1200,
+      "height": 1137,
+      "source_width_px": 587,
+      "source_height_px": 556,
+      "upscaled": true,
+      "production": "generated_sprite",
+      "anchor": [
+        0.5,
+        0.93
+      ],
+      "footprint": [
+        0.64,
+        0.28
+      ],
+      "animation_implementation": "none"
+    },
+    {
+      "no": 94,
+      "id": "building_machine_shelter_01",
+      "name": "Maschinenunterstand",
+      "category": "building_farm",
+      "master_width_px": 1200,
+      "pack": "06_farm_buildings",
+      "needs_hitbox": true,
+      "states_or_animation": false,
+      "status": "GENERATED_BASE",
+      "notes": "",
+      "src": "assets/world/building_machine_shelter_01.webp",
+      "width": 1200,
+      "height": 1012,
+      "source_width_px": 639,
+      "source_height_px": 539,
+      "upscaled": true,
+      "production": "generated_sprite",
+      "anchor": [
+        0.5,
+        0.93
+      ],
+      "footprint": [
+        0.64,
+        0.28
+      ],
+      "animation_implementation": "none"
+    },
+    {
+      "no": 95,
+      "id": "building_storage_small_01",
+      "name": "Kleines Lagerhaus",
+      "category": "building_farm",
+      "master_width_px": 1200,
+      "pack": "06_farm_buildings",
+      "needs_hitbox": true,
+      "states_or_animation": false,
+      "status": "GENERATED_BASE",
+      "notes": "",
+      "src": "assets/world/building_storage_small_01.webp",
+      "width": 1200,
+      "height": 1035,
+      "source_width_px": 676,
+      "source_height_px": 583,
+      "upscaled": true,
+      "production": "generated_sprite",
+      "anchor": [
+        0.5,
+        0.93
+      ],
+      "footprint": [
+        0.64,
+        0.28
+      ],
+      "animation_implementation": "none"
+    },
+    {
+      "no": 96,
+      "id": "building_farm_mailbox_01",
+      "name": "Hofbriefkasten/Katalog",
+      "category": "building_farm",
+      "master_width_px": 1200,
+      "pack": "06_farm_buildings",
+      "needs_hitbox": true,
+      "states_or_animation": false,
+      "status": "GENERATED_BASE",
+      "notes": "",
+      "src": "assets/world/building_farm_mailbox_01.webp",
+      "width": 1200,
+      "height": 1891,
+      "source_width_px": 351,
+      "source_height_px": 553,
+      "upscaled": true,
+      "production": "generated_sprite",
+      "anchor": [
+        0.5,
+        0.93
+      ],
+      "footprint": [
+        0.64,
+        0.28
+      ],
+      "animation_implementation": "none"
+    },
+    {
+      "no": 97,
+      "id": "building_mine_01",
+      "name": "Mine",
+      "category": "building_industry",
+      "master_width_px": 1200,
+      "pack": "07_industry",
+      "needs_hitbox": true,
+      "states_or_animation": false,
+      "status": "GENERATED_BASE",
+      "notes": "",
+      "src": "assets/world/building_mine_01.webp",
+      "width": 1200,
+      "height": 1132,
+      "source_width_px": 391,
+      "source_height_px": 369,
+      "upscaled": true,
+      "production": "generated_sprite",
+      "anchor": [
+        0.5,
+        0.93
+      ],
+      "footprint": [
+        0.64,
+        0.28
+      ],
+      "animation_implementation": "none"
+    },
+    {
+      "no": 98,
+      "id": "building_sawmill_01",
+      "name": "Sägewerk",
+      "category": "building_industry",
+      "master_width_px": 1200,
+      "pack": "07_industry",
+      "needs_hitbox": true,
+      "states_or_animation": false,
+      "status": "GENERATED_BASE",
+      "notes": "",
+      "src": "assets/world/building_sawmill_01.webp",
+      "width": 1200,
+      "height": 1052,
+      "source_width_px": 397,
+      "source_height_px": 348,
+      "upscaled": true,
+      "production": "generated_sprite",
+      "anchor": [
+        0.5,
+        0.93
+      ],
+      "footprint": [
+        0.64,
+        0.28
+      ],
+      "animation_implementation": "none"
+    },
+    {
+      "no": 99,
+      "id": "building_mill_01",
+      "name": "Alte Mühle",
+      "category": "building_industry",
+      "master_width_px": 1200,
+      "pack": "07_industry",
+      "needs_hitbox": true,
+      "states_or_animation": false,
+      "status": "GENERATED_BASE",
+      "notes": "",
+      "src": "assets/world/building_mill_01.webp",
+      "width": 1200,
+      "height": 1076,
+      "source_width_px": 436,
+      "source_height_px": 391,
+      "upscaled": true,
+      "production": "generated_sprite",
+      "anchor": [
+        0.5,
+        0.93
+      ],
+      "footprint": [
+        0.64,
+        0.28
+      ],
+      "animation_implementation": "none"
+    },
+    {
+      "no": 100,
+      "id": "building_mill_wheel_01",
+      "name": "Mühlenrad",
+      "category": "building_industry",
+      "master_width_px": 800,
+      "pack": "07_industry",
+      "needs_hitbox": true,
+      "states_or_animation": true,
+      "status": "GENERATED_BASE",
+      "notes": "",
+      "src": "assets/world/building_mill_wheel_01.webp",
+      "width": 800,
+      "height": 875,
+      "source_width_px": 331,
+      "source_height_px": 362,
+      "upscaled": true,
+      "production": "generated_sprite",
+      "anchor": [
+        0.5,
+        0.93
+      ],
+      "footprint": [
+        0.64,
+        0.28
+      ],
+      "animation_implementation": "runtime_or_variant"
+    },
+    {
+      "no": 101,
+      "id": "building_mine_scaffold_01",
+      "name": "Minen-Holzgerüst",
+      "category": "building_industry",
+      "master_width_px": 800,
+      "pack": "07_industry",
+      "needs_hitbox": true,
+      "states_or_animation": false,
+      "status": "GENERATED_BASE",
+      "notes": "",
+      "src": "assets/world/building_mine_scaffold_01.webp",
+      "width": 800,
+      "height": 1187,
+      "source_width_px": 254,
+      "source_height_px": 377,
+      "upscaled": true,
+      "production": "generated_sprite",
+      "anchor": [
+        0.5,
+        0.93
+      ],
+      "footprint": [
+        0.64,
+        0.28
+      ],
+      "animation_implementation": "none"
+    },
+    {
+      "no": 102,
+      "id": "building_mine_tracks_01",
+      "name": "Minen-Schienenbereich",
+      "category": "building_industry",
+      "master_width_px": 800,
+      "pack": "07_industry",
+      "needs_hitbox": true,
+      "states_or_animation": false,
+      "status": "GENERATED_BASE",
+      "notes": "",
+      "src": "assets/world/building_mine_tracks_01.webp",
+      "width": 800,
+      "height": 480,
+      "source_width_px": 423,
+      "source_height_px": 254,
+      "upscaled": true,
+      "production": "generated_sprite",
+      "anchor": [
+        0.5,
+        0.93
+      ],
+      "footprint": [
+        0.64,
+        0.28
+      ],
+      "animation_implementation": "none"
+    },
+    {
+      "no": 103,
+      "id": "building_sawmill_open_shed_01",
+      "name": "Sägewerk Holzhalle",
+      "category": "building_industry",
+      "master_width_px": 800,
+      "pack": "07_industry",
+      "needs_hitbox": true,
+      "states_or_animation": false,
+      "status": "GENERATED_BASE",
+      "notes": "",
+      "src": "assets/world/building_sawmill_open_shed_01.webp",
+      "width": 800,
+      "height": 459,
+      "source_width_px": 579,
+      "source_height_px": 332,
+      "upscaled": true,
+      "production": "generated_sprite",
+      "anchor": [
+        0.5,
+        0.93
+      ],
+      "footprint": [
+        0.64,
+        0.28
+      ],
+      "animation_implementation": "none"
+    },
+    {
+      "no": 104,
+      "id": "building_mill_dock_01",
+      "name": "Mühlen-Arbeitssteg",
+      "category": "building_industry",
+      "master_width_px": 800,
+      "pack": "07_industry",
+      "needs_hitbox": true,
+      "states_or_animation": false,
+      "status": "GENERATED_BASE",
+      "notes": "",
+      "src": "assets/world/building_mill_dock_01.webp",
+      "width": 800,
+      "height": 577,
+      "source_width_px": 424,
+      "source_height_px": 306,
+      "upscaled": true,
+      "production": "generated_sprite",
+      "anchor": [
+        0.5,
+        0.93
+      ],
+      "footprint": [
+        0.64,
+        0.28
+      ],
+      "animation_implementation": "none"
+    },
+    {
+      "no": 105,
+      "id": "building_mine_cart_station_01",
+      "name": "Lorenstation",
+      "category": "building_industry",
+      "master_width_px": 800,
+      "pack": "07_industry",
+      "needs_hitbox": true,
+      "states_or_animation": false,
+      "status": "GENERATED_BASE",
+      "notes": "",
+      "src": "assets/world/building_mine_cart_station_01.webp",
+      "width": 800,
+      "height": 604,
+      "source_width_px": 401,
+      "source_height_px": 303,
+      "upscaled": true,
+      "production": "generated_sprite",
+      "anchor": [
+        0.5,
+        0.93
+      ],
+      "footprint": [
+        0.64,
+        0.28
+      ],
+      "animation_implementation": "none"
+    },
+    {
+      "no": 106,
+      "id": "building_church_01",
+      "name": "Kirche",
+      "category": "building_village",
+      "master_width_px": 1200,
+      "pack": "08_village",
+      "needs_hitbox": true,
+      "states_or_animation": false,
+      "status": "GENERATED_BASE",
+      "notes": "",
+      "src": "assets/world/building_church_01.webp",
+      "width": 1200,
+      "height": 1344,
+      "source_width_px": 383,
+      "source_height_px": 429,
+      "upscaled": true,
+      "production": "generated_sprite",
+      "anchor": [
+        0.5,
+        0.93
+      ],
+      "footprint": [
+        0.64,
+        0.28
+      ],
+      "animation_implementation": "none"
+    },
+    {
+      "no": 107,
+      "id": "building_bakery_01",
+      "name": "Bäckerei",
+      "category": "building_village",
+      "master_width_px": 1200,
+      "pack": "08_village",
+      "needs_hitbox": true,
+      "states_or_animation": false,
+      "status": "GENERATED_BASE",
+      "notes": "",
+      "src": "assets/world/building_bakery_01.webp",
+      "width": 1200,
+      "height": 1143,
+      "source_width_px": 381,
+      "source_height_px": 363,
+      "upscaled": true,
+      "production": "generated_sprite",
+      "anchor": [
+        0.5,
+        0.93
+      ],
+      "footprint": [
+        0.64,
+        0.28
+      ],
+      "animation_implementation": "none"
+    },
+    {
+      "no": 108,
+      "id": "building_market_house_01",
+      "name": "Markthaus",
+      "category": "building_village",
+      "master_width_px": 1200,
+      "pack": "08_village",
+      "needs_hitbox": true,
+      "states_or_animation": false,
+      "status": "GENERATED_BASE",
+      "notes": "",
+      "src": "assets/world/building_market_house_01.webp",
+      "width": 1200,
+      "height": 1138,
+      "source_width_px": 423,
+      "source_height_px": 401,
+      "upscaled": true,
+      "production": "generated_sprite",
+      "anchor": [
+        0.5,
+        0.93
+      ],
+      "footprint": [
+        0.64,
+        0.28
+      ],
+      "animation_implementation": "none"
+    },
+    {
+      "no": 109,
+      "id": "building_shop_01",
+      "name": "Dorfladen",
+      "category": "building_village",
+      "master_width_px": 1200,
+      "pack": "08_village",
+      "needs_hitbox": true,
+      "states_or_animation": false,
+      "status": "GENERATED_BASE",
+      "notes": "",
+      "src": "assets/world/building_shop_01.webp",
+      "width": 1200,
+      "height": 1158,
+      "source_width_px": 369,
+      "source_height_px": 356,
+      "upscaled": true,
+      "production": "generated_sprite",
+      "anchor": [
+        0.5,
+        0.93
+      ],
+      "footprint": [
+        0.64,
+        0.28
+      ],
+      "animation_implementation": "none"
+    },
+    {
+      "no": 110,
+      "id": "building_tavern_01",
+      "name": "Gasthaus",
+      "category": "building_village",
+      "master_width_px": 1200,
+      "pack": "08_village",
+      "needs_hitbox": true,
+      "states_or_animation": false,
+      "status": "GENERATED_BASE",
+      "notes": "",
+      "src": "assets/world/building_tavern_01.webp",
+      "width": 1200,
+      "height": 1084,
+      "source_width_px": 415,
+      "source_height_px": 375,
+      "upscaled": true,
+      "production": "generated_sprite",
+      "anchor": [
+        0.5,
+        0.93
+      ],
+      "footprint": [
+        0.64,
+        0.28
+      ],
+      "animation_implementation": "none"
+    },
+    {
+      "no": 111,
+      "id": "building_house_01",
+      "name": "Wohnhaus A",
+      "category": "building_village",
+      "master_width_px": 1200,
+      "pack": "08_village",
+      "needs_hitbox": true,
+      "states_or_animation": false,
+      "status": "GENERATED_BASE",
+      "notes": "",
+      "src": "assets/world/building_house_01.webp",
+      "width": 1200,
+      "height": 1156,
+      "source_width_px": 385,
+      "source_height_px": 371,
+      "upscaled": true,
+      "production": "generated_sprite",
+      "anchor": [
+        0.5,
+        0.93
+      ],
+      "footprint": [
+        0.64,
+        0.28
+      ],
+      "animation_implementation": "none"
+    },
+    {
+      "no": 112,
+      "id": "building_house_02",
+      "name": "Wohnhaus B",
+      "category": "building_village",
+      "master_width_px": 1200,
+      "pack": "08_village",
+      "needs_hitbox": true,
+      "states_or_animation": false,
+      "status": "GENERATED_BASE",
+      "notes": "",
+      "src": "assets/world/building_house_02.webp",
+      "width": 1200,
+      "height": 1083,
+      "source_width_px": 401,
+      "source_height_px": 362,
+      "upscaled": true,
+      "production": "generated_sprite",
+      "anchor": [
+        0.5,
+        0.93
+      ],
+      "footprint": [
+        0.64,
+        0.28
+      ],
+      "animation_implementation": "none"
+    },
+    {
+      "no": 113,
+      "id": "building_house_03",
+      "name": "Wohnhaus C",
+      "category": "building_village",
+      "master_width_px": 1200,
+      "pack": "08_village",
+      "needs_hitbox": true,
+      "states_or_animation": false,
+      "status": "GENERATED_BASE",
+      "notes": "",
+      "src": "assets/world/building_house_03.webp",
+      "width": 1200,
+      "height": 1081,
+      "source_width_px": 425,
+      "source_height_px": 383,
+      "upscaled": true,
+      "production": "generated_sprite",
+      "anchor": [
+        0.5,
+        0.93
+      ],
+      "footprint": [
+        0.64,
+        0.28
+      ],
+      "animation_implementation": "none"
+    },
+    {
+      "no": 114,
+      "id": "building_house_04",
+      "name": "Wohnhaus D",
+      "category": "building_village",
+      "master_width_px": 1200,
+      "pack": "08_village",
+      "needs_hitbox": true,
+      "states_or_animation": false,
+      "status": "GENERATED_BASE",
+      "notes": "",
+      "src": "assets/world/building_house_04.webp",
+      "width": 1200,
+      "height": 1215,
+      "source_width_px": 390,
+      "source_height_px": 395,
+      "upscaled": true,
+      "production": "generated_sprite",
+      "anchor": [
+        0.5,
+        0.93
+      ],
+      "footprint": [
+        0.64,
+        0.28
+      ],
+      "animation_implementation": "none"
+    },
+    {
+      "no": 115,
+      "id": "building_house_05",
+      "name": "Wohnhaus E",
+      "category": "building_village",
+      "master_width_px": 1200,
+      "pack": "08_village",
+      "needs_hitbox": true,
+      "states_or_animation": false,
+      "status": "GENERATED_BASE",
+      "notes": "",
+      "src": "assets/world/building_house_05.webp",
+      "width": 1200,
+      "height": 1076,
+      "source_width_px": 417,
+      "source_height_px": 374,
+      "upscaled": true,
+      "production": "generated_sprite",
+      "anchor": [
+        0.5,
+        0.93
+      ],
+      "footprint": [
+        0.64,
+        0.28
+      ],
+      "animation_implementation": "none"
+    },
+    {
+      "no": 116,
+      "id": "building_market_stall_red_01",
+      "name": "Marktstand rot/weiß",
+      "category": "building_village",
+      "master_width_px": 800,
+      "pack": "08_village",
+      "needs_hitbox": true,
+      "states_or_animation": false,
+      "status": "GENERATED_BASE",
+      "notes": "",
+      "src": "assets/world/building_market_stall_red_01.webp",
+      "width": 800,
+      "height": 718,
+      "source_width_px": 418,
+      "source_height_px": 375,
+      "upscaled": true,
+      "production": "generated_sprite",
+      "anchor": [
+        0.5,
+        0.93
+      ],
+      "footprint": [
+        0.64,
+        0.28
+      ],
+      "animation_implementation": "none"
+    },
+    {
+      "no": 117,
+      "id": "building_market_stall_green_01",
+      "name": "Marktstand grün/weiß",
+      "category": "building_village",
+      "master_width_px": 800,
+      "pack": "08_village",
+      "needs_hitbox": true,
+      "states_or_animation": false,
+      "status": "GENERATED_BASE",
+      "notes": "",
+      "src": "assets/world/building_market_stall_green_01.webp",
+      "width": 800,
+      "height": 775,
+      "source_width_px": 388,
+      "source_height_px": 376,
+      "upscaled": true,
+      "production": "generated_sprite",
+      "anchor": [
+        0.5,
+        0.93
+      ],
+      "footprint": [
+        0.64,
+        0.28
+      ],
+      "animation_implementation": "none"
+    },
+    {
+      "no": 118,
+      "id": "building_village_fountain_01",
+      "name": "Dorfbrunnen",
+      "category": "building_village",
+      "master_width_px": 800,
+      "pack": "08_village",
+      "needs_hitbox": true,
+      "states_or_animation": false,
+      "status": "GENERATED_BASE",
+      "notes": "",
+      "src": "assets/world/building_village_fountain_01.webp",
+      "width": 800,
+      "height": 666,
+      "source_width_px": 376,
+      "source_height_px": 313,
+      "upscaled": true,
+      "production": "generated_sprite",
+      "anchor": [
+        0.5,
+        0.93
+      ],
+      "footprint": [
+        0.64,
+        0.28
+      ],
+      "animation_implementation": "none"
+    },
+    {
+      "no": 119,
+      "id": "building_village_small_house_01",
+      "name": "Kleines Dorfhaus",
+      "category": "building_village",
+      "master_width_px": 1200,
+      "pack": "08_village",
+      "needs_hitbox": true,
+      "states_or_animation": false,
+      "status": "GENERATED_BASE",
+      "notes": "",
+      "src": "assets/world/building_village_small_house_01.webp",
+      "width": 1200,
+      "height": 1042,
+      "source_width_px": 371,
+      "source_height_px": 322,
+      "upscaled": true,
+      "production": "generated_sprite",
+      "anchor": [
+        0.5,
+        0.93
+      ],
+      "footprint": [
+        0.64,
+        0.28
+      ],
+      "animation_implementation": "none"
+    },
+    {
+      "no": 120,
+      "id": "building_harbor_warehouse_01",
+      "name": "Hafenlager",
+      "category": "harbor",
+      "master_width_px": 1200,
+      "pack": "09_harbor",
+      "needs_hitbox": true,
+      "states_or_animation": false,
+      "status": "GENERATED_BASE",
+      "notes": "",
+      "src": "assets/world/building_harbor_warehouse_01.webp",
+      "width": 1200,
+      "height": 1145,
+      "source_width_px": 396,
+      "source_height_px": 378,
+      "upscaled": true,
+      "production": "generated_sprite",
+      "anchor": [
+        0.5,
+        0.93
+      ],
+      "footprint": [
+        0.64,
+        0.28
+      ],
+      "animation_implementation": "none"
+    },
+    {
+      "no": 121,
+      "id": "building_fishery_01",
+      "name": "Fischerei",
+      "category": "harbor",
+      "master_width_px": 1200,
+      "pack": "09_harbor",
+      "needs_hitbox": true,
+      "states_or_animation": false,
+      "status": "GENERATED_BASE",
+      "notes": "",
+      "src": "assets/world/building_fishery_01.webp",
+      "width": 1200,
+      "height": 822,
+      "source_width_px": 499,
+      "source_height_px": 342,
+      "upscaled": true,
+      "production": "generated_sprite",
+      "anchor": [
+        0.5,
+        0.93
+      ],
+      "footprint": [
+        0.64,
+        0.28
+      ],
+      "animation_implementation": "none"
+    },
+    {
+      "no": 122,
+      "id": "building_lighthouse_01",
+      "name": "Leuchtturm",
+      "category": "harbor",
+      "master_width_px": 1200,
+      "pack": "09_harbor",
+      "needs_hitbox": true,
+      "states_or_animation": false,
+      "status": "GENERATED_BASE",
+      "notes": "",
+      "src": "assets/world/building_lighthouse_01.webp",
+      "width": 1200,
+      "height": 1582,
+      "source_width_px": 317,
+      "source_height_px": 418,
+      "upscaled": true,
+      "production": "generated_sprite",
+      "anchor": [
+        0.5,
+        0.93
+      ],
+      "footprint": [
+        0.64,
+        0.28
+      ],
+      "animation_implementation": "none"
+    },
+    {
+      "no": 123,
+      "id": "building_lighthouse_house_01",
+      "name": "Leuchtturmhaus",
+      "category": "harbor",
+      "master_width_px": 1200,
+      "pack": "09_harbor",
+      "needs_hitbox": true,
+      "states_or_animation": false,
+      "status": "GENERATED_BASE",
+      "notes": "",
+      "src": "assets/world/building_lighthouse_house_01.webp",
+      "width": 1200,
+      "height": 1134,
+      "source_width_px": 397,
+      "source_height_px": 375,
+      "upscaled": true,
+      "production": "generated_sprite",
+      "anchor": [
+        0.5,
+        0.93
+      ],
+      "footprint": [
+        0.64,
+        0.28
+      ],
+      "animation_implementation": "none"
+    },
+    {
+      "no": 124,
+      "id": "harbor_pier_large_01",
+      "name": "Großer Hafensteg",
+      "category": "harbor",
+      "master_width_px": 800,
+      "pack": "09_harbor",
+      "needs_hitbox": true,
+      "states_or_animation": false,
+      "status": "GENERATED_BASE",
+      "notes": "",
+      "src": "assets/world/harbor_pier_large_01.webp",
+      "width": 800,
+      "height": 450,
+      "source_width_px": 501,
+      "source_height_px": 282,
+      "upscaled": true,
+      "production": "generated_sprite",
+      "anchor": [
+        0.5,
+        0.93
+      ],
+      "footprint": [
+        0.64,
+        0.28
+      ],
+      "animation_implementation": "none"
+    },
+    {
+      "no": 125,
+      "id": "harbor_pier_small_01",
+      "name": "Kleiner Hafensteg",
+      "category": "harbor",
+      "master_width_px": 800,
+      "pack": "09_harbor",
+      "needs_hitbox": true,
+      "states_or_animation": false,
+      "status": "GENERATED_BASE",
+      "notes": "",
+      "src": "assets/world/harbor_pier_small_01.webp",
+      "width": 800,
+      "height": 595,
+      "source_width_px": 386,
+      "source_height_px": 287,
+      "upscaled": true,
+      "production": "generated_sprite",
+      "anchor": [
+        0.5,
+        0.93
+      ],
+      "footprint": [
+        0.64,
+        0.28
+      ],
+      "animation_implementation": "none"
+    },
+    {
+      "no": 126,
+      "id": "harbor_loading_platform_01",
+      "name": "Hafen-Ladeplattform",
+      "category": "harbor",
+      "master_width_px": 800,
+      "pack": "09_harbor",
+      "needs_hitbox": true,
+      "states_or_animation": false,
+      "status": "GENERATED_BASE",
+      "notes": "",
+      "src": "assets/world/harbor_loading_platform_01.webp",
+      "width": 800,
+      "height": 734,
+      "source_width_px": 325,
+      "source_height_px": 298,
+      "upscaled": true,
+      "production": "generated_sprite",
+      "anchor": [
+        0.5,
+        0.93
+      ],
+      "footprint": [
+        0.64,
+        0.28
+      ],
+      "animation_implementation": "none"
+    },
+    {
+      "no": 127,
+      "id": "harbor_crane_small_01",
+      "name": "Kleiner Hafenkran",
+      "category": "harbor",
+      "master_width_px": 800,
+      "pack": "09_harbor",
+      "needs_hitbox": true,
+      "states_or_animation": false,
+      "status": "GENERATED_BASE",
+      "notes": "",
+      "src": "assets/world/harbor_crane_small_01.webp",
+      "width": 800,
+      "height": 849,
+      "source_width_px": 356,
+      "source_height_px": 378,
+      "upscaled": true,
+      "production": "generated_sprite",
+      "anchor": [
+        0.5,
+        0.93
+      ],
+      "footprint": [
+        0.64,
+        0.28
+      ],
+      "animation_implementation": "none"
+    },
+    {
+      "no": 128,
+      "id": "harbor_breakwater_01",
+      "name": "Wellenbrecher",
+      "category": "harbor",
+      "master_width_px": 800,
+      "pack": "09_harbor",
+      "needs_hitbox": true,
+      "states_or_animation": false,
+      "status": "GENERATED_BASE",
+      "notes": "",
+      "src": "assets/world/harbor_breakwater_01.webp",
+      "width": 800,
+      "height": 454,
+      "source_width_px": 550,
+      "source_height_px": 312,
+      "upscaled": true,
+      "production": "generated_sprite",
+      "anchor": [
+        0.5,
+        0.93
+      ],
+      "footprint": [
+        0.64,
+        0.28
+      ],
+      "animation_implementation": "none"
+    },
+    {
+      "no": 129,
+      "id": "harbor_rock_islet_01",
+      "name": "Felsinsel klein",
+      "category": "harbor",
+      "master_width_px": 800,
+      "pack": "09_harbor",
+      "needs_hitbox": true,
+      "states_or_animation": false,
+      "status": "GENERATED_BASE",
+      "notes": "",
+      "src": "assets/world/harbor_rock_islet_01.webp",
+      "width": 800,
+      "height": 551,
+      "source_width_px": 444,
+      "source_height_px": 306,
+      "upscaled": true,
+      "production": "generated_sprite",
+      "anchor": [
+        0.5,
+        0.93
+      ],
+      "footprint": [
+        0.64,
+        0.28
+      ],
+      "animation_implementation": "none"
+    },
+    {
+      "no": 130,
+      "id": "harbor_mooring_posts_01",
+      "name": "Anlegepfähle",
+      "category": "harbor",
+      "master_width_px": 600,
+      "pack": "09_harbor",
+      "needs_hitbox": true,
+      "states_or_animation": false,
+      "status": "GENERATED_BASE",
+      "notes": "",
+      "src": "assets/world/harbor_mooring_posts_01.webp",
+      "width": 600,
+      "height": 822,
+      "source_width_px": 230,
+      "source_height_px": 315,
+      "upscaled": true,
+      "production": "generated_sprite",
+      "anchor": [
+        0.5,
+        0.93
+      ],
+      "footprint": [
+        0.64,
+        0.28
+      ],
+      "animation_implementation": "none"
+    },
+    {
+      "no": 131,
+      "id": "field_empty_01",
+      "name": "Leeres Feld",
+      "category": "field",
+      "master_width_px": 1200,
+      "pack": "10_fields",
+      "needs_hitbox": true,
+      "states_or_animation": true,
+      "status": "GENERATED_BASE",
+      "notes": "",
+      "src": "assets/world/field_empty_01.webp",
+      "width": 1200,
+      "height": 700,
+      "source_width_px": 1200,
+      "source_height_px": 700,
+      "upscaled": false,
+      "production": "assembled_scene",
+      "anchor": [
+        0.5,
+        0.93
+      ],
+      "footprint": [
+        0.64,
+        0.28
+      ],
+      "animation_implementation": "runtime_or_variant"
+    },
+    {
+      "no": 132,
+      "id": "field_prepared_01",
+      "name": "Vorbereitetes Feld",
+      "category": "field",
+      "master_width_px": 1200,
+      "pack": "10_fields",
+      "needs_hitbox": true,
+      "states_or_animation": true,
+      "status": "GENERATED_BASE",
+      "notes": "",
+      "src": "assets/world/field_prepared_01.webp",
+      "width": 1200,
+      "height": 700,
+      "source_width_px": 1200,
+      "source_height_px": 700,
+      "upscaled": false,
+      "production": "assembled_scene",
+      "anchor": [
+        0.5,
+        0.93
+      ],
+      "footprint": [
+        0.64,
+        0.28
+      ],
+      "animation_implementation": "runtime_or_variant"
+    },
+    {
+      "no": 133,
+      "id": "field_seeded_01",
+      "name": "Gesätes Feld",
+      "category": "field",
+      "master_width_px": 1200,
+      "pack": "10_fields",
+      "needs_hitbox": true,
+      "states_or_animation": true,
+      "status": "GENERATED_BASE",
+      "notes": "",
+      "src": "assets/world/field_seeded_01.webp",
+      "width": 1200,
+      "height": 700,
+      "source_width_px": 1200,
+      "source_height_px": 700,
+      "upscaled": false,
+      "production": "assembled_scene",
+      "anchor": [
+        0.5,
+        0.93
+      ],
+      "footprint": [
+        0.64,
+        0.28
+      ],
+      "animation_implementation": "runtime_or_variant"
+    },
+    {
+      "no": 134,
+      "id": "field_wheat_stage_01",
+      "name": "Weizen – Keimlinge",
+      "category": "field",
+      "master_width_px": 1200,
+      "pack": "10_fields",
+      "needs_hitbox": true,
+      "states_or_animation": true,
+      "status": "GENERATED_BASE",
+      "notes": "",
+      "src": "assets/world/field_wheat_stage_01.webp",
+      "width": 1200,
+      "height": 700,
+      "source_width_px": 1200,
+      "source_height_px": 700,
+      "upscaled": false,
+      "production": "assembled_scene",
+      "anchor": [
+        0.5,
+        0.93
+      ],
+      "footprint": [
+        0.64,
+        0.28
+      ],
+      "animation_implementation": "runtime_or_variant"
+    },
+    {
+      "no": 135,
+      "id": "field_wheat_stage_02",
+      "name": "Weizen – jung",
+      "category": "field",
+      "master_width_px": 1200,
+      "pack": "10_fields",
+      "needs_hitbox": true,
+      "states_or_animation": true,
+      "status": "GENERATED_BASE",
+      "notes": "",
+      "src": "assets/world/field_wheat_stage_02.webp",
+      "width": 1200,
+      "height": 700,
+      "source_width_px": 1200,
+      "source_height_px": 700,
+      "upscaled": false,
+      "production": "assembled_scene",
+      "anchor": [
+        0.5,
+        0.93
+      ],
+      "footprint": [
+        0.64,
+        0.28
+      ],
+      "animation_implementation": "runtime_or_variant"
+    },
+    {
+      "no": 136,
+      "id": "field_wheat_stage_03",
+      "name": "Weizen – mittel",
+      "category": "field",
+      "master_width_px": 1200,
+      "pack": "10_fields",
+      "needs_hitbox": true,
+      "states_or_animation": true,
+      "status": "GENERATED_BASE",
+      "notes": "",
+      "src": "assets/world/field_wheat_stage_03.webp",
+      "width": 1200,
+      "height": 700,
+      "source_width_px": 1200,
+      "source_height_px": 700,
+      "upscaled": false,
+      "production": "assembled_scene",
+      "anchor": [
+        0.5,
+        0.93
+      ],
+      "footprint": [
+        0.64,
+        0.28
+      ],
+      "animation_implementation": "runtime_or_variant"
+    },
+    {
+      "no": 137,
+      "id": "field_wheat_stage_04",
+      "name": "Weizen – fast reif",
+      "category": "field",
+      "master_width_px": 1200,
+      "pack": "10_fields",
+      "needs_hitbox": true,
+      "states_or_animation": true,
+      "status": "GENERATED_BASE",
+      "notes": "",
+      "src": "assets/world/field_wheat_stage_04.webp",
+      "width": 1200,
+      "height": 700,
+      "source_width_px": 1200,
+      "source_height_px": 700,
+      "upscaled": false,
+      "production": "assembled_scene",
+      "anchor": [
+        0.5,
+        0.93
+      ],
+      "footprint": [
+        0.64,
+        0.28
+      ],
+      "animation_implementation": "runtime_or_variant"
+    },
+    {
+      "no": 138,
+      "id": "field_wheat_ready_01",
+      "name": "Weizen – erntereif",
+      "category": "field",
+      "master_width_px": 1200,
+      "pack": "10_fields",
+      "needs_hitbox": true,
+      "states_or_animation": true,
+      "status": "GENERATED_BASE",
+      "notes": "",
+      "src": "assets/world/field_wheat_ready_01.webp",
+      "width": 1200,
+      "height": 700,
+      "source_width_px": 1200,
+      "source_height_px": 700,
+      "upscaled": false,
+      "production": "assembled_scene",
+      "anchor": [
+        0.5,
+        0.93
+      ],
+      "footprint": [
+        0.64,
+        0.28
+      ],
+      "animation_implementation": "runtime_or_variant"
+    },
+    {
+      "no": 139,
+      "id": "field_wheat_harvested_01",
+      "name": "Weizen – abgeerntet",
+      "category": "field",
+      "master_width_px": 1200,
+      "pack": "10_fields",
+      "needs_hitbox": true,
+      "states_or_animation": true,
+      "status": "GENERATED_BASE",
+      "notes": "",
+      "src": "assets/world/field_wheat_harvested_01.webp",
+      "width": 1200,
+      "height": 700,
+      "source_width_px": 1200,
+      "source_height_px": 700,
+      "upscaled": false,
+      "production": "assembled_scene",
+      "anchor": [
+        0.5,
+        0.93
+      ],
+      "footprint": [
+        0.64,
+        0.28
+      ],
+      "animation_implementation": "runtime_or_variant"
+    },
+    {
+      "no": 140,
+      "id": "field_vegetable_01",
+      "name": "Gemüsefeld A",
+      "category": "field",
+      "master_width_px": 1200,
+      "pack": "10_fields",
+      "needs_hitbox": true,
+      "states_or_animation": true,
+      "status": "GENERATED_BASE",
+      "notes": "",
+      "src": "assets/world/field_vegetable_01.webp",
+      "width": 1200,
+      "height": 700,
+      "source_width_px": 1200,
+      "source_height_px": 700,
+      "upscaled": false,
+      "production": "assembled_scene",
+      "anchor": [
+        0.5,
+        0.93
+      ],
+      "footprint": [
+        0.64,
+        0.28
+      ],
+      "animation_implementation": "runtime_or_variant"
+    },
+    {
+      "no": 141,
+      "id": "field_vegetable_02",
+      "name": "Gemüsefeld B",
+      "category": "field",
+      "master_width_px": 1200,
+      "pack": "10_fields",
+      "needs_hitbox": true,
+      "states_or_animation": true,
+      "status": "GENERATED_BASE",
+      "notes": "",
+      "src": "assets/world/field_vegetable_02.webp",
+      "width": 1200,
+      "height": 700,
+      "source_width_px": 1200,
+      "source_height_px": 700,
+      "upscaled": false,
+      "production": "assembled_scene",
+      "anchor": [
+        0.5,
+        0.93
+      ],
+      "footprint": [
+        0.64,
+        0.28
+      ],
+      "animation_implementation": "runtime_or_variant"
+    },
+    {
+      "no": 142,
+      "id": "field_sunflower_01",
+      "name": "Sonnenblumenfeld",
+      "category": "field",
+      "master_width_px": 1200,
+      "pack": "10_fields",
+      "needs_hitbox": true,
+      "states_or_animation": true,
+      "status": "GENERATED_BASE",
+      "notes": "",
+      "src": "assets/world/field_sunflower_01.webp",
+      "width": 1200,
+      "height": 700,
+      "source_width_px": 1200,
+      "source_height_px": 700,
+      "upscaled": false,
+      "production": "assembled_scene",
+      "anchor": [
+        0.5,
+        0.93
+      ],
+      "footprint": [
+        0.64,
+        0.28
+      ],
+      "animation_implementation": "runtime_or_variant"
+    },
+    {
+      "no": 143,
+      "id": "field_flower_01",
+      "name": "Blumenfeld",
+      "category": "field",
+      "master_width_px": 1200,
+      "pack": "10_fields",
+      "needs_hitbox": true,
+      "states_or_animation": true,
+      "status": "GENERATED_BASE",
+      "notes": "",
+      "src": "assets/world/field_flower_01.webp",
+      "width": 1200,
+      "height": 700,
+      "source_width_px": 1200,
+      "source_height_px": 700,
+      "upscaled": false,
+      "production": "assembled_scene",
+      "anchor": [
+        0.5,
+        0.93
+      ],
+      "footprint": [
+        0.64,
+        0.28
+      ],
+      "animation_implementation": "runtime_or_variant"
+    },
+    {
+      "no": 144,
+      "id": "field_grass_reserved_01",
+      "name": "Leere Feldreserve/Wiese",
+      "category": "field",
+      "master_width_px": 1200,
+      "pack": "10_fields",
+      "needs_hitbox": true,
+      "states_or_animation": true,
+      "status": "GENERATED_BASE",
+      "notes": "",
+      "src": "assets/world/field_grass_reserved_01.webp",
+      "width": 1200,
+      "height": 700,
+      "source_width_px": 1200,
+      "source_height_px": 700,
+      "upscaled": false,
+      "production": "assembled_scene",
+      "anchor": [
+        0.5,
+        0.93
+      ],
+      "footprint": [
+        0.64,
+        0.28
+      ],
+      "animation_implementation": "runtime_or_variant"
+    },
+    {
+      "no": 145,
+      "id": "field_orchard_plot_01",
+      "name": "Obstgartenfläche",
+      "category": "field",
+      "master_width_px": 1200,
+      "pack": "10_fields",
+      "needs_hitbox": true,
+      "states_or_animation": true,
+      "status": "GENERATED_BASE",
+      "notes": "",
+      "src": "assets/world/field_orchard_plot_01.webp",
+      "width": 1200,
+      "height": 700,
+      "source_width_px": 1200,
+      "source_height_px": 700,
+      "upscaled": false,
+      "production": "assembled_scene",
+      "anchor": [
+        0.5,
+        0.93
+      ],
+      "footprint": [
+        0.64,
+        0.28
+      ],
+      "animation_implementation": "runtime_or_variant"
+    },
+    {
+      "no": 146,
+      "id": "field_fodder_01",
+      "name": "Futterpflanzenfeld",
+      "category": "field",
+      "master_width_px": 1200,
+      "pack": "10_fields",
+      "needs_hitbox": true,
+      "states_or_animation": true,
+      "status": "GENERATED_BASE",
+      "notes": "",
+      "src": "assets/world/field_fodder_01.webp",
+      "width": 1200,
+      "height": 700,
+      "source_width_px": 1200,
+      "source_height_px": 700,
+      "upscaled": false,
+      "production": "assembled_scene",
+      "anchor": [
+        0.5,
+        0.93
+      ],
+      "footprint": [
+        0.64,
+        0.28
+      ],
+      "animation_implementation": "runtime_or_variant"
+    },
+    {
+      "no": 147,
+      "id": "pen_chicken_empty_01",
+      "name": "Hühnergehege leer",
+      "category": "animal_pen",
+      "master_width_px": 1200,
+      "pack": "11_animal_pens",
+      "needs_hitbox": true,
+      "states_or_animation": true,
+      "status": "GENERATED_BASE",
+      "notes": "",
+      "src": "assets/world/pen_chicken_empty_01.webp",
+      "width": 1200,
+      "height": 800,
+      "source_width_px": 1200,
+      "source_height_px": 800,
+      "upscaled": false,
+      "production": "assembled_scene",
+      "anchor": [
+        0.5,
+        0.93
+      ],
+      "footprint": [
+        0.64,
+        0.28
+      ],
+      "animation_implementation": "runtime_or_variant"
+    },
+    {
+      "no": 148,
+      "id": "pen_chicken_active_01",
+      "name": "Hühnergehege aktiv",
+      "category": "animal_pen",
+      "master_width_px": 1200,
+      "pack": "11_animal_pens",
+      "needs_hitbox": true,
+      "states_or_animation": true,
+      "status": "GENERATED_BASE",
+      "notes": "",
+      "src": "assets/world/pen_chicken_active_01.webp",
+      "width": 1200,
+      "height": 800,
+      "source_width_px": 1200,
+      "source_height_px": 800,
+      "upscaled": false,
+      "production": "assembled_scene",
+      "anchor": [
+        0.5,
+        0.93
+      ],
+      "footprint": [
+        0.64,
+        0.28
+      ],
+      "animation_implementation": "runtime_or_variant"
+    },
+    {
+      "no": 149,
+      "id": "pen_sheep_empty_01",
+      "name": "Schafweide leer",
+      "category": "animal_pen",
+      "master_width_px": 1200,
+      "pack": "11_animal_pens",
+      "needs_hitbox": true,
+      "states_or_animation": true,
+      "status": "GENERATED_BASE",
+      "notes": "",
+      "src": "assets/world/pen_sheep_empty_01.webp",
+      "width": 1200,
+      "height": 800,
+      "source_width_px": 1200,
+      "source_height_px": 800,
+      "upscaled": false,
+      "production": "assembled_scene",
+      "anchor": [
+        0.5,
+        0.93
+      ],
+      "footprint": [
+        0.64,
+        0.28
+      ],
+      "animation_implementation": "runtime_or_variant"
+    },
+    {
+      "no": 150,
+      "id": "pen_sheep_active_01",
+      "name": "Schafweide aktiv",
+      "category": "animal_pen",
+      "master_width_px": 1200,
+      "pack": "11_animal_pens",
+      "needs_hitbox": true,
+      "states_or_animation": true,
+      "status": "GENERATED_BASE",
+      "notes": "",
+      "src": "assets/world/pen_sheep_active_01.webp",
+      "width": 1200,
+      "height": 800,
+      "source_width_px": 1200,
+      "source_height_px": 800,
+      "upscaled": false,
+      "production": "assembled_scene",
+      "anchor": [
+        0.5,
+        0.93
+      ],
+      "footprint": [
+        0.64,
+        0.28
+      ],
+      "animation_implementation": "runtime_or_variant"
+    },
+    {
+      "no": 151,
+      "id": "pen_cow_empty_01",
+      "name": "Kuhweide leer",
+      "category": "animal_pen",
+      "master_width_px": 1200,
+      "pack": "11_animal_pens",
+      "needs_hitbox": true,
+      "states_or_animation": true,
+      "status": "GENERATED_BASE",
+      "notes": "",
+      "src": "assets/world/pen_cow_empty_01.webp",
+      "width": 1200,
+      "height": 800,
+      "source_width_px": 1200,
+      "source_height_px": 800,
+      "upscaled": false,
+      "production": "assembled_scene",
+      "anchor": [
+        0.5,
+        0.93
+      ],
+      "footprint": [
+        0.64,
+        0.28
+      ],
+      "animation_implementation": "runtime_or_variant"
+    },
+    {
+      "no": 152,
+      "id": "pen_cow_active_01",
+      "name": "Kuhweide aktiv",
+      "category": "animal_pen",
+      "master_width_px": 1200,
+      "pack": "11_animal_pens",
+      "needs_hitbox": true,
+      "states_or_animation": true,
+      "status": "GENERATED_BASE",
+      "notes": "",
+      "src": "assets/world/pen_cow_active_01.webp",
+      "width": 1200,
+      "height": 800,
+      "source_width_px": 1200,
+      "source_height_px": 800,
+      "upscaled": false,
+      "production": "assembled_scene",
+      "anchor": [
+        0.5,
+        0.93
+      ],
+      "footprint": [
+        0.64,
+        0.28
+      ],
+      "animation_implementation": "runtime_or_variant"
+    },
+    {
+      "no": 153,
+      "id": "pen_horse_empty_01",
+      "name": "Pferdepaddock leer",
+      "category": "animal_pen",
+      "master_width_px": 1200,
+      "pack": "11_animal_pens",
+      "needs_hitbox": true,
+      "states_or_animation": true,
+      "status": "GENERATED_BASE",
+      "notes": "",
+      "src": "assets/world/pen_horse_empty_01.webp",
+      "width": 1200,
+      "height": 800,
+      "source_width_px": 1200,
+      "source_height_px": 800,
+      "upscaled": false,
+      "production": "assembled_scene",
+      "anchor": [
+        0.5,
+        0.93
+      ],
+      "footprint": [
+        0.64,
+        0.28
+      ],
+      "animation_implementation": "runtime_or_variant"
+    },
+    {
+      "no": 154,
+      "id": "pen_horse_active_01",
+      "name": "Pferdepaddock aktiv",
+      "category": "animal_pen",
+      "master_width_px": 1200,
+      "pack": "11_animal_pens",
+      "needs_hitbox": true,
+      "states_or_animation": true,
+      "status": "GENERATED_BASE",
+      "notes": "",
+      "src": "assets/world/pen_horse_active_01.webp",
+      "width": 1200,
+      "height": 800,
+      "source_width_px": 1200,
+      "source_height_px": 800,
+      "upscaled": false,
+      "production": "assembled_scene",
+      "anchor": [
+        0.5,
+        0.93
+      ],
+      "footprint": [
+        0.64,
+        0.28
+      ],
+      "animation_implementation": "runtime_or_variant"
+    },
+    {
+      "no": 155,
+      "id": "pen_feed_station_01",
+      "name": "Futterstation",
+      "category": "animal_pen",
+      "master_width_px": 1200,
+      "pack": "11_animal_pens",
+      "needs_hitbox": true,
+      "states_or_animation": true,
+      "status": "GENERATED_BASE",
+      "notes": "",
+      "src": "assets/world/pen_feed_station_01.webp",
+      "width": 1200,
+      "height": 1026,
+      "source_width_px": 359,
+      "source_height_px": 307,
+      "upscaled": true,
+      "production": "generated_sprite",
+      "anchor": [
+        0.5,
+        0.93
+      ],
+      "footprint": [
+        0.64,
+        0.28
+      ],
+      "animation_implementation": "runtime_or_variant"
+    },
+    {
+      "no": 156,
+      "id": "pen_water_trough_01",
+      "name": "Tiertränke",
+      "category": "animal_pen",
+      "master_width_px": 1200,
+      "pack": "11_animal_pens",
+      "needs_hitbox": true,
+      "states_or_animation": true,
+      "status": "GENERATED_BASE",
+      "notes": "",
+      "src": "assets/world/pen_water_trough_01.webp",
+      "width": 1200,
+      "height": 828,
+      "source_width_px": 439,
+      "source_height_px": 303,
+      "upscaled": true,
+      "production": "generated_sprite",
+      "anchor": [
+        0.5,
+        0.93
+      ],
+      "footprint": [
+        0.64,
+        0.28
+      ],
+      "animation_implementation": "runtime_or_variant"
+    },
+    {
+      "no": 157,
+      "id": "animal_chicken_white_01",
+      "name": "Huhn weiß",
+      "category": "animal",
+      "master_width_px": 1200,
+      "pack": "12_animals",
+      "needs_hitbox": true,
+      "states_or_animation": true,
+      "status": "GENERATED_BASE",
+      "notes": "",
+      "src": "assets/world/animal_chicken_white_01.webp",
+      "width": 1200,
+      "height": 1629,
+      "source_width_px": 266,
+      "source_height_px": 361,
+      "upscaled": true,
+      "production": "generated_sprite",
+      "anchor": [
+        0.5,
+        0.93
+      ],
+      "footprint": [
+        0.64,
+        0.28
+      ],
+      "animation_implementation": "runtime_or_variant"
+    },
+    {
+      "no": 158,
+      "id": "animal_chicken_brown_01",
+      "name": "Huhn braun",
+      "category": "animal",
+      "master_width_px": 1200,
+      "pack": "12_animals",
+      "needs_hitbox": true,
+      "states_or_animation": true,
+      "status": "GENERATED_BASE",
+      "notes": "",
+      "src": "assets/world/animal_chicken_brown_01.webp",
+      "width": 1200,
+      "height": 1465,
+      "source_width_px": 312,
+      "source_height_px": 381,
+      "upscaled": true,
+      "production": "generated_sprite",
+      "anchor": [
+        0.5,
+        0.93
+      ],
+      "footprint": [
+        0.64,
+        0.28
+      ],
+      "animation_implementation": "runtime_or_variant"
+    },
+    {
+      "no": 159,
+      "id": "animal_chicken_red_01",
+      "name": "Huhn rotbraun",
+      "category": "animal",
+      "master_width_px": 1200,
+      "pack": "12_animals",
+      "needs_hitbox": true,
+      "states_or_animation": true,
+      "status": "GENERATED_BASE",
+      "notes": "",
+      "src": "assets/world/animal_chicken_red_01.webp",
+      "width": 1200,
+      "height": 1419,
+      "source_width_px": 323,
+      "source_height_px": 382,
+      "upscaled": true,
+      "production": "generated_sprite",
+      "anchor": [
+        0.5,
+        0.93
+      ],
+      "footprint": [
+        0.64,
+        0.28
+      ],
+      "animation_implementation": "runtime_or_variant"
+    },
+    {
+      "no": 160,
+      "id": "animal_sheep_white_01",
+      "name": "Schaf weiß",
+      "category": "animal",
+      "master_width_px": 1200,
+      "pack": "12_animals",
+      "needs_hitbox": true,
+      "states_or_animation": true,
+      "status": "GENERATED_BASE",
+      "notes": "",
+      "src": "assets/world/animal_sheep_white_01.webp",
+      "width": 1200,
+      "height": 1032,
+      "source_width_px": 329,
+      "source_height_px": 283,
+      "upscaled": true,
+      "production": "generated_sprite",
+      "anchor": [
+        0.5,
+        0.93
+      ],
+      "footprint": [
+        0.64,
+        0.28
+      ],
+      "animation_implementation": "runtime_or_variant"
+    },
+    {
+      "no": 161,
+      "id": "animal_sheep_gray_01",
+      "name": "Schaf grau",
+      "category": "animal",
+      "master_width_px": 1200,
+      "pack": "12_animals",
+      "needs_hitbox": true,
+      "states_or_animation": true,
+      "status": "GENERATED_BASE",
+      "notes": "",
+      "src": "assets/world/animal_sheep_gray_01.webp",
+      "width": 1200,
+      "height": 1216,
+      "source_width_px": 364,
+      "source_height_px": 369,
+      "upscaled": true,
+      "production": "generated_sprite",
+      "anchor": [
+        0.5,
+        0.93
+      ],
+      "footprint": [
+        0.64,
+        0.28
+      ],
+      "animation_implementation": "runtime_or_variant"
+    },
+    {
+      "no": 162,
+      "id": "animal_cow_blackwhite_01",
+      "name": "Kuh schwarz/weiß",
+      "category": "animal",
+      "master_width_px": 1200,
+      "pack": "12_animals",
+      "needs_hitbox": true,
+      "states_or_animation": true,
+      "status": "GENERATED_BASE",
+      "notes": "",
+      "src": "assets/world/animal_cow_blackwhite_01.webp",
+      "width": 1200,
+      "height": 1075,
+      "source_width_px": 383,
+      "source_height_px": 343,
+      "upscaled": true,
+      "production": "generated_sprite",
+      "anchor": [
+        0.5,
+        0.93
+      ],
+      "footprint": [
+        0.64,
+        0.28
+      ],
+      "animation_implementation": "runtime_or_variant"
+    },
+    {
+      "no": 163,
+      "id": "animal_cow_brownwhite_01",
+      "name": "Kuh braun/weiß",
+      "category": "animal",
+      "master_width_px": 1200,
+      "pack": "12_animals",
+      "needs_hitbox": true,
+      "states_or_animation": true,
+      "status": "GENERATED_BASE",
+      "notes": "",
+      "src": "assets/world/animal_cow_brownwhite_01.webp",
+      "width": 1200,
+      "height": 1244,
+      "source_width_px": 381,
+      "source_height_px": 395,
+      "upscaled": true,
+      "production": "generated_sprite",
+      "anchor": [
+        0.5,
+        0.93
+      ],
+      "footprint": [
+        0.64,
+        0.28
+      ],
+      "animation_implementation": "runtime_or_variant"
+    },
+    {
+      "no": 164,
+      "id": "animal_cow_brown_01",
+      "name": "Kuh braun",
+      "category": "animal",
+      "master_width_px": 1200,
+      "pack": "12_animals",
+      "needs_hitbox": true,
+      "states_or_animation": true,
+      "status": "GENERATED_BASE",
+      "notes": "",
+      "src": "assets/world/animal_cow_brown_01.webp",
+      "width": 1200,
+      "height": 1235,
+      "source_width_px": 378,
+      "source_height_px": 389,
+      "upscaled": true,
+      "production": "generated_sprite",
+      "anchor": [
+        0.5,
+        0.93
+      ],
+      "footprint": [
+        0.64,
+        0.28
+      ],
+      "animation_implementation": "runtime_or_variant"
+    },
+    {
+      "no": 165,
+      "id": "animal_horse_brown_01",
+      "name": "Pferd braun",
+      "category": "animal",
+      "master_width_px": 1200,
+      "pack": "12_animals",
+      "needs_hitbox": true,
+      "states_or_animation": true,
+      "status": "GENERATED_BASE",
+      "notes": "",
+      "src": "assets/world/animal_horse_brown_01.webp",
+      "width": 1200,
+      "height": 1240,
+      "source_width_px": 359,
+      "source_height_px": 371,
+      "upscaled": true,
+      "production": "generated_sprite",
+      "anchor": [
+        0.5,
+        0.93
+      ],
+      "footprint": [
+        0.64,
+        0.28
+      ],
+      "animation_implementation": "runtime_or_variant"
+    },
+    {
+      "no": 166,
+      "id": "animal_horse_black_01",
+      "name": "Pferd schwarz",
+      "category": "animal",
+      "master_width_px": 1200,
+      "pack": "12_animals",
+      "needs_hitbox": true,
+      "states_or_animation": true,
+      "status": "GENERATED_BASE",
+      "notes": "",
+      "src": "assets/world/animal_horse_black_01.webp",
+      "width": 1200,
+      "height": 1350,
+      "source_width_px": 360,
+      "source_height_px": 405,
+      "upscaled": true,
+      "production": "generated_sprite",
+      "anchor": [
+        0.5,
+        0.93
+      ],
+      "footprint": [
+        0.64,
+        0.28
+      ],
+      "animation_implementation": "runtime_or_variant"
+    },
+    {
+      "no": 167,
+      "id": "animal_horse_white_01",
+      "name": "Pferd hell",
+      "category": "animal",
+      "master_width_px": 1200,
+      "pack": "12_animals",
+      "needs_hitbox": true,
+      "states_or_animation": true,
+      "status": "GENERATED_BASE",
+      "notes": "",
+      "src": "assets/world/animal_horse_white_01.webp",
+      "width": 1200,
+      "height": 1347,
+      "source_width_px": 358,
+      "source_height_px": 402,
+      "upscaled": true,
+      "production": "generated_sprite",
+      "anchor": [
+        0.5,
+        0.93
+      ],
+      "footprint": [
+        0.64,
+        0.28
+      ],
+      "animation_implementation": "runtime_or_variant"
+    },
+    {
+      "no": 168,
+      "id": "animal_rabbit_white_01",
+      "name": "Kaninchen weiß",
+      "category": "animal",
+      "master_width_px": 1200,
+      "pack": "12_animals",
+      "needs_hitbox": true,
+      "states_or_animation": true,
+      "status": "GENERATED_BASE",
+      "notes": "",
+      "src": "assets/world/animal_rabbit_white_01.webp",
+      "width": 1200,
+      "height": 1260,
+      "source_width_px": 319,
+      "source_height_px": 335,
+      "upscaled": true,
+      "production": "generated_sprite",
+      "anchor": [
+        0.5,
+        0.93
+      ],
+      "footprint": [
+        0.64,
+        0.28
+      ],
+      "animation_implementation": "runtime_or_variant"
+    },
+    {
+      "no": 169,
+      "id": "animal_rabbit_brown_01",
+      "name": "Kaninchen braun",
+      "category": "animal",
+      "master_width_px": 1200,
+      "pack": "12_animals",
+      "needs_hitbox": true,
+      "states_or_animation": true,
+      "status": "GENERATED_BASE",
+      "notes": "",
+      "src": "assets/world/animal_rabbit_brown_01.webp",
+      "width": 1200,
+      "height": 1487,
+      "source_width_px": 293,
+      "source_height_px": 363,
+      "upscaled": true,
+      "production": "generated_sprite",
+      "anchor": [
+        0.5,
+        0.93
+      ],
+      "footprint": [
+        0.64,
+        0.28
+      ],
+      "animation_implementation": "runtime_or_variant"
+    },
+    {
+      "no": 170,
+      "id": "vehicle_tractor_old_01",
+      "name": "Alter Traktor",
+      "category": "vehicle",
+      "master_width_px": 1200,
+      "pack": "13_vehicles",
+      "needs_hitbox": true,
+      "states_or_animation": true,
+      "status": "GENERATED_BASE",
+      "notes": "",
+      "src": "assets/world/vehicle_tractor_old_01.webp",
+      "width": 1200,
+      "height": 901,
+      "source_width_px": 426,
+      "source_height_px": 320,
+      "upscaled": true,
+      "production": "generated_sprite",
+      "anchor": [
+        0.5,
+        0.93
+      ],
+      "footprint": [
+        0.64,
+        0.28
+      ],
+      "animation_implementation": "runtime_or_variant"
+    },
+    {
+      "no": 171,
+      "id": "vehicle_tractor_restored_01",
+      "name": "Restaurierter Traktor",
+      "category": "vehicle",
+      "master_width_px": 1200,
+      "pack": "13_vehicles",
+      "needs_hitbox": true,
+      "states_or_animation": true,
+      "status": "GENERATED_BASE",
+      "notes": "",
+      "src": "assets/world/vehicle_tractor_restored_01.webp",
+      "width": 1200,
+      "height": 909,
+      "source_width_px": 429,
+      "source_height_px": 325,
+      "upscaled": true,
+      "production": "generated_sprite",
+      "anchor": [
+        0.5,
+        0.93
+      ],
+      "footprint": [
+        0.64,
+        0.28
+      ],
+      "animation_implementation": "runtime_or_variant"
+    },
+    {
+      "no": 172,
+      "id": "vehicle_combine_old_01",
+      "name": "Alter Mähdrescher",
+      "category": "vehicle",
+      "master_width_px": 1200,
+      "pack": "13_vehicles",
+      "needs_hitbox": true,
+      "states_or_animation": true,
+      "status": "GENERATED_BASE",
+      "notes": "",
+      "src": "assets/world/vehicle_combine_old_01.webp",
+      "width": 1200,
+      "height": 796,
+      "source_width_px": 514,
+      "source_height_px": 341,
+      "upscaled": true,
+      "production": "generated_sprite",
+      "anchor": [
+        0.5,
+        0.93
+      ],
+      "footprint": [
+        0.64,
+        0.28
+      ],
+      "animation_implementation": "runtime_or_variant"
+    },
+    {
+      "no": 173,
+      "id": "vehicle_combine_restored_01",
+      "name": "Restaurierter Mähdrescher",
+      "category": "vehicle",
+      "master_width_px": 1200,
+      "pack": "13_vehicles",
+      "needs_hitbox": true,
+      "states_or_animation": true,
+      "status": "GENERATED_BASE",
+      "notes": "",
+      "src": "assets/world/vehicle_combine_restored_01.webp",
+      "width": 1200,
+      "height": 715,
+      "source_width_px": 552,
+      "source_height_px": 329,
+      "upscaled": true,
+      "production": "generated_sprite",
+      "anchor": [
+        0.5,
+        0.93
+      ],
+      "footprint": [
+        0.64,
+        0.28
+      ],
+      "animation_implementation": "runtime_or_variant"
+    },
+    {
+      "no": 174,
+      "id": "vehicle_seed_drill_01",
+      "name": "Sämaschine",
+      "category": "vehicle",
+      "master_width_px": 1200,
+      "pack": "13_vehicles",
+      "needs_hitbox": true,
+      "states_or_animation": true,
+      "status": "GENERATED_BASE",
+      "notes": "",
+      "src": "assets/world/vehicle_seed_drill_01.webp",
+      "width": 1200,
+      "height": 782,
+      "source_width_px": 459,
+      "source_height_px": 299,
+      "upscaled": true,
+      "production": "generated_sprite",
+      "anchor": [
+        0.5,
+        0.93
+      ],
+      "footprint": [
+        0.64,
+        0.28
+      ],
+      "animation_implementation": "runtime_or_variant"
+    },
+    {
+      "no": 175,
+      "id": "vehicle_farm_trailer_01",
+      "name": "Landwirtschaftsanhänger",
+      "category": "vehicle",
+      "master_width_px": 1200,
+      "pack": "13_vehicles",
+      "needs_hitbox": true,
+      "states_or_animation": true,
+      "status": "GENERATED_BASE",
+      "notes": "",
+      "src": "assets/world/vehicle_farm_trailer_01.webp",
+      "width": 1200,
+      "height": 793,
+      "source_width_px": 483,
+      "source_height_px": 319,
+      "upscaled": true,
+      "production": "generated_sprite",
+      "anchor": [
+        0.5,
+        0.93
+      ],
+      "footprint": [
+        0.64,
+        0.28
+      ],
+      "animation_implementation": "runtime_or_variant"
+    },
+    {
+      "no": 176,
+      "id": "vehicle_fertilizer_spreader_01",
+      "name": "Düngerstreuer",
+      "category": "vehicle",
+      "master_width_px": 1200,
+      "pack": "13_vehicles",
+      "needs_hitbox": true,
+      "states_or_animation": true,
+      "status": "GENERATED_BASE",
+      "notes": "",
+      "src": "assets/world/vehicle_fertilizer_spreader_01.webp",
+      "width": 1200,
+      "height": 968,
+      "source_width_px": 393,
+      "source_height_px": 317,
+      "upscaled": true,
+      "production": "generated_sprite",
+      "anchor": [
+        0.5,
+        0.93
+      ],
+      "footprint": [
+        0.64,
+        0.28
+      ],
+      "animation_implementation": "runtime_or_variant"
+    },
+    {
+      "no": 177,
+      "id": "vehicle_delivery_van_red_01",
+      "name": "Roter Lieferwagen",
+      "category": "vehicle",
+      "master_width_px": 1200,
+      "pack": "13_vehicles",
+      "needs_hitbox": true,
+      "states_or_animation": true,
+      "status": "GENERATED_BASE",
+      "notes": "",
+      "src": "assets/world/vehicle_delivery_van_red_01.webp",
+      "width": 1200,
+      "height": 841,
+      "source_width_px": 478,
+      "source_height_px": 335,
+      "upscaled": true,
+      "production": "generated_sprite",
+      "anchor": [
+        0.5,
+        0.93
+      ],
+      "footprint": [
+        0.64,
+        0.28
+      ],
+      "animation_implementation": "runtime_or_variant"
+    },
+    {
+      "no": 178,
+      "id": "vehicle_post_van_01",
+      "name": "Postauto",
+      "category": "vehicle",
+      "master_width_px": 1200,
+      "pack": "13_vehicles",
+      "needs_hitbox": true,
+      "states_or_animation": true,
+      "status": "GENERATED_BASE",
+      "notes": "",
+      "src": "assets/world/vehicle_post_van_01.webp",
+      "width": 1200,
+      "height": 847,
+      "source_width_px": 479,
+      "source_height_px": 338,
+      "upscaled": true,
+      "production": "generated_sprite",
+      "anchor": [
+        0.5,
+        0.93
+      ],
+      "footprint": [
+        0.64,
+        0.28
+      ],
+      "animation_implementation": "runtime_or_variant"
+    },
+    {
+      "no": 179,
+      "id": "vehicle_scrap_truck_01",
+      "name": "Schrott-LKW",
+      "category": "vehicle",
+      "master_width_px": 1200,
+      "pack": "13_vehicles",
+      "needs_hitbox": true,
+      "states_or_animation": true,
+      "status": "GENERATED_BASE",
+      "notes": "",
+      "src": "assets/world/vehicle_scrap_truck_01.webp",
+      "width": 1200,
+      "height": 1010,
+      "source_width_px": 435,
+      "source_height_px": 366,
+      "upscaled": true,
+      "production": "generated_sprite",
+      "anchor": [
+        0.5,
+        0.93
+      ],
+      "footprint": [
+        0.64,
+        0.28
+      ],
+      "animation_implementation": "runtime_or_variant"
+    },
+    {
+      "no": 180,
+      "id": "vehicle_animal_transporter_01",
+      "name": "Tiertransporter",
+      "category": "vehicle",
+      "master_width_px": 1200,
+      "pack": "13_vehicles",
+      "needs_hitbox": true,
+      "states_or_animation": true,
+      "status": "GENERATED_BASE",
+      "notes": "",
+      "src": "assets/world/vehicle_animal_transporter_01.webp",
+      "width": 1200,
+      "height": 1031,
+      "source_width_px": 412,
+      "source_height_px": 354,
+      "upscaled": true,
+      "production": "generated_sprite",
+      "anchor": [
+        0.5,
+        0.93
+      ],
+      "footprint": [
+        0.64,
+        0.28
+      ],
+      "animation_implementation": "runtime_or_variant"
+    },
+    {
+      "no": 181,
+      "id": "vehicle_construction_van_01",
+      "name": "Handwerkerfahrzeug",
+      "category": "vehicle",
+      "master_width_px": 1200,
+      "pack": "13_vehicles",
+      "needs_hitbox": true,
+      "states_or_animation": true,
+      "status": "GENERATED_BASE",
+      "notes": "",
+      "src": "assets/world/vehicle_construction_van_01.webp",
+      "width": 1200,
+      "height": 1088,
+      "source_width_px": 387,
+      "source_height_px": 351,
+      "upscaled": true,
+      "production": "generated_sprite",
+      "anchor": [
+        0.5,
+        0.93
+      ],
+      "footprint": [
+        0.64,
+        0.28
+      ],
+      "animation_implementation": "runtime_or_variant"
+    },
+    {
+      "no": 182,
+      "id": "vehicle_flatbed_01",
+      "name": "Tieflader",
+      "category": "vehicle",
+      "master_width_px": 1200,
+      "pack": "13_vehicles",
+      "needs_hitbox": true,
+      "states_or_animation": true,
+      "status": "GENERATED_BASE",
+      "notes": "",
+      "src": "assets/world/vehicle_flatbed_01.webp",
+      "width": 1200,
+      "height": 772,
+      "source_width_px": 524,
+      "source_height_px": 337,
+      "upscaled": true,
+      "production": "generated_sprite",
+      "anchor": [
+        0.5,
+        0.93
+      ],
+      "footprint": [
+        0.64,
+        0.28
+      ],
+      "animation_implementation": "runtime_or_variant"
+    },
+    {
+      "no": 183,
+      "id": "vehicle_small_truck_01",
+      "name": "Kleiner Transport-LKW",
+      "category": "vehicle",
+      "master_width_px": 1200,
+      "pack": "13_vehicles",
+      "needs_hitbox": true,
+      "states_or_animation": true,
+      "status": "GENERATED_BASE",
+      "notes": "",
+      "src": "assets/world/vehicle_small_truck_01.webp",
+      "width": 1200,
+      "height": 922,
+      "source_width_px": 449,
+      "source_height_px": 345,
+      "upscaled": true,
+      "production": "generated_sprite",
+      "anchor": [
+        0.5,
+        0.93
+      ],
+      "footprint": [
+        0.64,
+        0.28
+      ],
+      "animation_implementation": "runtime_or_variant"
+    },
+    {
+      "no": 184,
+      "id": "vehicle_fishing_boat_01",
+      "name": "Fischkutter",
+      "category": "vehicle",
+      "master_width_px": 1200,
+      "pack": "13_vehicles",
+      "needs_hitbox": true,
+      "states_or_animation": true,
+      "status": "GENERATED_BASE",
+      "notes": "",
+      "src": "assets/world/vehicle_fishing_boat_01.webp",
+      "width": 1200,
+      "height": 1368,
+      "source_width_px": 350,
+      "source_height_px": 399,
+      "upscaled": true,
+      "production": "generated_sprite",
+      "anchor": [
+        0.5,
+        0.93
+      ],
+      "footprint": [
+        0.64,
+        0.28
+      ],
+      "animation_implementation": "runtime_or_variant"
+    },
+    {
+      "no": 185,
+      "id": "vehicle_sailboat_01",
+      "name": "Segelboot",
+      "category": "vehicle",
+      "master_width_px": 1200,
+      "pack": "13_vehicles",
+      "needs_hitbox": true,
+      "states_or_animation": true,
+      "status": "GENERATED_BASE",
+      "notes": "",
+      "src": "assets/world/vehicle_sailboat_01.webp",
+      "width": 1200,
+      "height": 1433,
+      "source_width_px": 360,
+      "source_height_px": 430,
+      "upscaled": true,
+      "production": "generated_sprite",
+      "anchor": [
+        0.5,
+        0.93
+      ],
+      "footprint": [
+        0.64,
+        0.28
+      ],
+      "animation_implementation": "runtime_or_variant"
+    },
+    {
+      "no": 186,
+      "id": "vehicle_small_boat_01",
+      "name": "Kleines Boot",
+      "category": "vehicle",
+      "master_width_px": 1200,
+      "pack": "13_vehicles",
+      "needs_hitbox": true,
+      "states_or_animation": true,
+      "status": "GENERATED_BASE",
+      "notes": "",
+      "src": "assets/world/vehicle_small_boat_01.webp",
+      "width": 1200,
+      "height": 966,
+      "source_width_px": 370,
+      "source_height_px": 298,
+      "upscaled": true,
+      "production": "generated_sprite",
+      "anchor": [
+        0.5,
+        0.93
+      ],
+      "footprint": [
+        0.64,
+        0.28
+      ],
+      "animation_implementation": "runtime_or_variant"
+    },
+    {
+      "no": 187,
+      "id": "vehicle_mine_cart_01",
+      "name": "Minenlore",
+      "category": "vehicle",
+      "master_width_px": 1200,
+      "pack": "13_vehicles",
+      "needs_hitbox": true,
+      "states_or_animation": true,
+      "status": "GENERATED_BASE",
+      "notes": "",
+      "src": "assets/world/vehicle_mine_cart_01.webp",
+      "width": 1200,
+      "height": 1167,
+      "source_width_px": 330,
+      "source_height_px": 321,
+      "upscaled": true,
+      "production": "generated_sprite",
+      "anchor": [
+        0.5,
+        0.93
+      ],
+      "footprint": [
+        0.64,
+        0.28
+      ],
+      "animation_implementation": "runtime_or_variant"
+    },
+    {
+      "no": 188,
+      "id": "prop_wood_crate_01",
+      "name": "Holzkiste",
+      "category": "prop",
+      "master_width_px": 300,
+      "pack": "14_props",
+      "needs_hitbox": false,
+      "states_or_animation": false,
+      "status": "GENERATED_BASE",
+      "notes": "",
+      "src": "assets/world/prop_wood_crate_01.webp",
+      "width": 300,
+      "height": 274,
+      "source_width_px": 387,
+      "source_height_px": 353,
+      "upscaled": false,
+      "production": "generated_sprite",
+      "anchor": [
+        0.5,
+        0.93
+      ],
+      "footprint": [
+        0.64,
+        0.28
+      ],
+      "animation_implementation": "none"
+    },
+    {
+      "no": 189,
+      "id": "prop_barrel_01",
+      "name": "Fass",
+      "category": "prop",
+      "master_width_px": 300,
+      "pack": "14_props",
+      "needs_hitbox": false,
+      "states_or_animation": false,
+      "status": "GENERATED_BASE",
+      "notes": "",
+      "src": "assets/world/prop_barrel_01.webp",
+      "width": 300,
+      "height": 395,
+      "source_width_px": 278,
+      "source_height_px": 366,
+      "upscaled": true,
+      "production": "generated_sprite",
+      "anchor": [
+        0.5,
+        0.93
+      ],
+      "footprint": [
+        0.64,
+        0.28
+      ],
+      "animation_implementation": "none"
+    },
+    {
+      "no": 190,
+      "id": "prop_sack_01",
+      "name": "Sack",
+      "category": "prop",
+      "master_width_px": 250,
+      "pack": "14_props",
+      "needs_hitbox": false,
+      "states_or_animation": false,
+      "status": "GENERATED_BASE",
+      "notes": "",
+      "src": "assets/world/prop_sack_01.webp",
+      "width": 250,
+      "height": 256,
+      "source_width_px": 318,
+      "source_height_px": 326,
+      "upscaled": false,
+      "production": "generated_sprite",
+      "anchor": [
+        0.5,
+        0.93
+      ],
+      "footprint": [
+        0.64,
+        0.28
+      ],
+      "animation_implementation": "none"
+    },
+    {
+      "no": 191,
+      "id": "prop_pallet_01",
+      "name": "Palette",
+      "category": "prop",
+      "master_width_px": 300,
+      "pack": "14_props",
+      "needs_hitbox": false,
+      "states_or_animation": false,
+      "status": "GENERATED_BASE",
+      "notes": "",
+      "src": "assets/world/prop_pallet_01.webp",
+      "width": 300,
+      "height": 207,
+      "source_width_px": 409,
+      "source_height_px": 282,
+      "upscaled": false,
+      "production": "generated_sprite",
+      "anchor": [
+        0.5,
+        0.93
+      ],
+      "footprint": [
+        0.64,
+        0.28
+      ],
+      "animation_implementation": "none"
+    },
+    {
+      "no": 192,
+      "id": "prop_log_stack_01",
+      "name": "Holzstapel",
+      "category": "prop",
+      "master_width_px": 600,
+      "pack": "14_props",
+      "needs_hitbox": false,
+      "states_or_animation": false,
+      "status": "GENERATED_BASE",
+      "notes": "",
+      "src": "assets/world/prop_log_stack_01.webp",
+      "width": 600,
+      "height": 487,
+      "source_width_px": 399,
+      "source_height_px": 324,
+      "upscaled": true,
+      "production": "generated_sprite",
+      "anchor": [
+        0.5,
+        0.93
+      ],
+      "footprint": [
+        0.64,
+        0.28
+      ],
+      "animation_implementation": "none"
+    },
+    {
+      "no": 193,
+      "id": "prop_board_stack_01",
+      "name": "Bretterstapel",
+      "category": "prop",
+      "master_width_px": 600,
+      "pack": "14_props",
+      "needs_hitbox": false,
+      "states_or_animation": false,
+      "status": "GENERATED_BASE",
+      "notes": "",
+      "src": "assets/world/prop_board_stack_01.webp",
+      "width": 600,
+      "height": 465,
+      "source_width_px": 388,
+      "source_height_px": 301,
+      "upscaled": true,
+      "production": "generated_sprite",
+      "anchor": [
+        0.5,
+        0.93
+      ],
+      "footprint": [
+        0.64,
+        0.28
+      ],
+      "animation_implementation": "none"
+    },
+    {
+      "no": 194,
+      "id": "prop_hay_bale_01",
+      "name": "Heuballen",
+      "category": "prop",
+      "master_width_px": 300,
+      "pack": "14_props",
+      "needs_hitbox": false,
+      "states_or_animation": false,
+      "status": "GENERATED_BASE",
+      "notes": "",
+      "src": "assets/world/prop_hay_bale_01.webp",
+      "width": 300,
+      "height": 252,
+      "source_width_px": 375,
+      "source_height_px": 315,
+      "upscaled": false,
+      "production": "generated_sprite",
+      "anchor": [
+        0.5,
+        0.93
+      ],
+      "footprint": [
+        0.64,
+        0.28
+      ],
+      "animation_implementation": "none"
+    },
+    {
+      "no": 195,
+      "id": "prop_street_lamp_01",
+      "name": "Straßenlaterne",
+      "category": "prop",
+      "master_width_px": 300,
+      "pack": "14_props",
+      "needs_hitbox": false,
+      "states_or_animation": false,
+      "status": "GENERATED_BASE",
+      "notes": "",
+      "src": "assets/world/prop_street_lamp_01.webp",
+      "width": 300,
+      "height": 839,
+      "source_width_px": 152,
+      "source_height_px": 425,
+      "upscaled": true,
+      "production": "generated_sprite",
+      "anchor": [
+        0.5,
+        0.93
+      ],
+      "footprint": [
+        0.64,
+        0.28
+      ],
+      "animation_implementation": "none"
+    },
+    {
+      "no": 196,
+      "id": "prop_bench_01",
+      "name": "Bank",
+      "category": "prop",
+      "master_width_px": 300,
+      "pack": "14_props",
+      "needs_hitbox": false,
+      "states_or_animation": false,
+      "status": "GENERATED_BASE",
+      "notes": "",
+      "src": "assets/world/prop_bench_01.webp",
+      "width": 300,
+      "height": 272,
+      "source_width_px": 348,
+      "source_height_px": 316,
+      "upscaled": false,
+      "production": "generated_sprite",
+      "anchor": [
+        0.5,
+        0.93
+      ],
+      "footprint": [
+        0.64,
+        0.28
+      ],
+      "animation_implementation": "none"
+    },
+    {
+      "no": 197,
+      "id": "prop_signpost_01",
+      "name": "Wegweiser",
+      "category": "prop",
+      "master_width_px": 300,
+      "pack": "14_props",
+      "needs_hitbox": false,
+      "states_or_animation": false,
+      "status": "GENERATED_BASE",
+      "notes": "",
+      "src": "assets/world/prop_signpost_01.webp",
+      "width": 300,
+      "height": 346,
+      "source_width_px": 278,
+      "source_height_px": 321,
+      "upscaled": true,
+      "production": "generated_sprite",
+      "anchor": [
+        0.5,
+        0.93
+      ],
+      "footprint": [
+        0.64,
+        0.28
+      ],
+      "animation_implementation": "none"
+    },
+    {
+      "no": 198,
+      "id": "prop_fence_wood_01",
+      "name": "Holzzaun gerade",
+      "category": "prop",
+      "master_width_px": 600,
+      "pack": "14_props",
+      "needs_hitbox": false,
+      "states_or_animation": false,
+      "status": "GENERATED_BASE",
+      "notes": "",
+      "src": "assets/world/prop_fence_wood_01.webp",
+      "width": 600,
+      "height": 542,
+      "source_width_px": 374,
+      "source_height_px": 338,
+      "upscaled": true,
+      "production": "generated_sprite",
+      "anchor": [
+        0.5,
+        0.93
+      ],
+      "footprint": [
+        0.64,
+        0.28
+      ],
+      "animation_implementation": "none"
+    },
+    {
+      "no": 199,
+      "id": "prop_fence_corner_01",
+      "name": "Holzzaun Ecke",
+      "category": "prop",
+      "master_width_px": 600,
+      "pack": "14_props",
+      "needs_hitbox": false,
+      "states_or_animation": false,
+      "status": "GENERATED_BASE",
+      "notes": "",
+      "src": "assets/world/prop_fence_corner_01.webp",
+      "width": 600,
+      "height": 354,
+      "source_width_px": 458,
+      "source_height_px": 270,
+      "upscaled": true,
+      "production": "generated_sprite",
+      "anchor": [
+        0.5,
+        0.93
+      ],
+      "footprint": [
+        0.64,
+        0.28
+      ],
+      "animation_implementation": "none"
+    },
+    {
+      "no": 200,
+      "id": "prop_gate_wood_01",
+      "name": "Holztor",
+      "category": "prop",
+      "master_width_px": 600,
+      "pack": "14_props",
+      "needs_hitbox": false,
+      "states_or_animation": false,
+      "status": "GENERATED_BASE",
+      "notes": "",
+      "src": "assets/world/prop_gate_wood_01.webp",
+      "width": 600,
+      "height": 573,
+      "source_width_px": 381,
+      "source_height_px": 364,
+      "upscaled": true,
+      "production": "generated_sprite",
+      "anchor": [
+        0.5,
+        0.93
+      ],
+      "footprint": [
+        0.64,
+        0.28
+      ],
+      "animation_implementation": "none"
+    }
+  ],
+  "production_note": "200 Basisgrafiken. Exportbreiten entsprechen Katalog. Einige Sprites sind aus Atlanten ausgeschnitten und auf Exportbreite skaliert; Ursprungsauflösung ist separat ausgewiesen. Kein Versprechen unbegrenzter Zoomschärfe. states_or_animation ist eine Anforderung, keine Zusage vollständiger Richtungs-/Animationssprites."
+}
