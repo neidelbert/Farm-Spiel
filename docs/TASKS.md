@@ -5,33 +5,39 @@
 `0.3.0-dev`
 ---
 # Aktuelles Ticket
-ID:
-`FS-002`
-Titel:
-`AI Development System`
+Aktuell ist kein Entwicklungsticket zur Umsetzung freigegeben.
+Nächstes geplantes Ticket:
+`FS-003` – State Audit
 Status:
-`IN_PROGRESS`
+`PLANNED`
 ---
 # Abgeschlossene Tickets
-## FS-001 – Stable Baseline
+## `FS-001` – Stable Baseline
 Status:
 `APPROVED`
 Commit:
 `aa2269b4175383f0cae3b590cf97cd4f6d195da2`
 Baseline:
 `5e6dc7757ab95d5aa7344d1b61e30f16a65407ab`
+## `FS-002` – AI Development System
+Status:
+`APPROVED`
+Commit:
+`cc49e8d4202660515ae8339b2ee32e728c4c08e1`
+Review:
+`APPROVED` by ChatGPT
 ---
 # Geplante Reihenfolge
-FS-003 – State Audit
-FS-004 – Event ID Audit
-FS-005 – Economy Core
-FS-006 – Inventory Core
-FS-007 – Field System Core
-FS-008 – Crop System
-FS-009 – Planting Flow
-FS-010 – Growth + Offline
-FS-011 – Harvest Core
-FS-012 – Selling Core
+- `FS-003` – State Audit
+- `FS-004` – Event ID Audit
+- `FS-005` – Economy Core
+- `FS-006` – Inventory Core
+- `FS-007` – Field System Core
+- `FS-008` – Crop System
+- `FS-009` – Planting Flow
+- `FS-010` – Growth + Offline
+- `FS-011` – Harvest Core
+- `FS-012` – Selling Core
 ---
 # Regel
 Es darf immer nur ein Ticket den Status:
