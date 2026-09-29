@@ -3,7 +3,7 @@ import { EventBus } from "./core/eventBus.js";
 import { SaveManager } from "./core/save.js";
 import { Camera } from "./world/camera.js";
 import { InputController } from "./world/input.js";
-import { Renderer } from "./world/renderer.js";
+import { Renderer } from "./world/renderer.js?v=hof-20260929";
 import { UI } from "./ui/ui.js";
 import { Game } from "./Game.js";
 
