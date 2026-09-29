@@ -115,3 +115,5 @@ button:disabled { opacity: .46; filter: grayscale(.25); transform: none !importa
 .hud-level,.money-pill,.icon-btn{border:1px solid rgba(255,255,255,.14);}
 .sheet{border:1px solid rgba(75,65,45,.10);}
 @media (max-width:430px){.sheet{max-height:52vh}.sheet h2{font-size:22px}}
+
+.world-nav{position:fixed;bottom:max(12px,env(safe-area-inset-bottom));left:50%;transform:translateX(-50%);display:flex;gap:4px;z-index:4;padding:6px;border-radius:16px;background:#fff8e9e8;box-shadow:0 4px 18px #18382b33;max-width:calc(100vw - 20px)}.world-nav button{border:0;background:transparent;color:#29452f;font:600 12px system-ui;padding:11px 9px;border-radius:10px}.world-nav button:active{background:#cad8b5}.catalog-link{padding:14px;color:#365b38;background:#eee5ce;border-radius:12px;text-align:center;font-weight:700;text-decoration:none}
