@@ -116,7 +116,7 @@ export class Game {
       actions.push({label:"Zum Silo",onClick:()=>{this.ui.closeSheet();this.camera.focus(POINTS.silo.x,POINTS.silo.y);}});
     } else if(this.state.missionId==="miller_intro") {
       if(this.state.missionStep===0) actions.push({label:"Müller empfangen",onClick:()=>this.startMillerIntro()});
-      else actions.push({label:"Zur Mühle",onClick:()=>{this.ui.closeSheet();this.camera.focus(171,500);}});
+      else actions.push({label:"Zur Mühle",onClick:()=>{this.ui.closeSheet();this.camera.focus(POINTS.mill.x,POINTS.mill.y);}});
     } else if(this.state.missionId==="workshop_chickens") {
       actions.push({label:"Zur Werkstatt",onClick:()=>{this.ui.closeSheet();this.camera.focus(POINTS.garage.x,POINTS.garage.y);}});
     } else if(this.state.missionId==="eggs_baker") {
@@ -219,9 +219,9 @@ export class Game {
     const p=POINTS;
     const route=farmMachineRoute([
       {x:p.garage.x,y:p.garage.y},
-      {x:540,y:675},
+      {...p.fieldApproach},
       {x:p.field.x,y:p.field.y,tag:"sow",waitMs:CONFIG.timings.sowWaitMs},
-      {x:540,y:675},
+      {...p.fieldApproach},
       {x:p.garage.x,y:p.garage.y},
     ]);
     this.vehicles.spawn({id:uid("tractor"),type:"tractor",eventId:"sow_wheat",route});
@@ -234,11 +234,11 @@ export class Game {
     const p=POINTS;
     const route=farmMachineRoute([
       {x:p.garage.x,y:p.garage.y},
-      {x:540,y:675},
+      {...p.fieldApproach},
       {x:p.field.x,y:p.field.y,tag:"harvest",waitMs:CONFIG.timings.harvestWaitMs},
-      {x:450,y:650},
+      {...p.siloApproach},
       {x:p.silo.x,y:p.silo.y,tag:"unload_wheat",waitMs:CONFIG.timings.unloadWaitMs},
-      {x:560,y:630},
+      {...p.garageApproach},
       {x:p.garage.x,y:p.garage.y},
     ]);
     this.vehicles.spawn({id:uid("combine"),type:"combine",eventId:"first_harvest",route});

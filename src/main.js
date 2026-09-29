@@ -11,6 +11,8 @@ const canvas = document.querySelector("#game");
 const ui = new UI();
 const save = new SaveManager();
 const state = save.load();
+// One-time coordinate migration preserves gameplay state and active delivery events.
+if(state.world.visualVersion!==2){for(const v of state.vehicles){v.x*=3.4;v.y*=3.23;v.speed*=3.2;for(const q of v.route){q.x*=3.4;q.y*=3.23;}}state.world.visualVersion=2;}
 const events = new EventBus();
 
 const camera = new Camera(
@@ -117,4 +119,8 @@ async function startGame(){
 startGame();
 
 // Expose a tiny read-only-ish handle for debugging in browser devtools.
-window.FarmSpiel = { version: CONFIG.version, state, game, camera };
+window.FarmSpiel = { version: CONFIG.version, state, game, camera, renderer };
+
+const destinations={hof:[1710,2220,.72],dorf:[800,3650,.65],hafen:[1800,4440,.6],overview:[1600,2700,Math.min(innerWidth/3300,innerHeight/5550)]};
+document.querySelectorAll("[data-focus]").forEach(b=>b.onclick=()=>{const [x,y,z]=destinations[b.dataset.focus];camera.zoom=Math.max(camera.minZoom,z);camera.focus(x,y);});
+document.querySelectorAll("[data-zoom]").forEach(b=>b.onclick=()=>camera.zoomAt(innerWidth/2,innerHeight/2,camera.zoom*(b.dataset.zoom==="in"?1.25:.8)));
