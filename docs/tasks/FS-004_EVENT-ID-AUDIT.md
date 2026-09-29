@@ -1,6 +1,6 @@
 # FS-004 – Event ID Audit
 ## Status
-`READY_FOR_REVIEW`
+`APPROVED`
 ## Ausgangs-SHA
 `9d339896f4bc1f0d7faa140b55b79f21ced53c80`
 ## Version
@@ -17,8 +17,9 @@ EventBus-Events, Vehicle-eventIds und Route-Tags des aktuellen Farm-Spiel-Cores 
 Nicht verändert. Keine Event-ID repariert oder umbenannt.
 ## Haupt-Deliverable
 `docs/EVENT_ID_AUDIT_0.3.md`
+## Implementierungs-Commit
+`53511b7efab5cdf67b78696cd1591a94a55e4798`
 ## Review
-Audit wartet auf externes ChatGPT-Review.
-`docs/reports/FS-004_REPORT.md` wird erst nach dem Review mit dem tatsächlichen Implementierungs-SHA erstellt.
+`APPROVED` by ChatGPT
 ## STOP
 FS-005 darf nicht automatisch begonnen werden.

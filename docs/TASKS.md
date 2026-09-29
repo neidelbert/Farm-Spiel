@@ -5,12 +5,11 @@
 `0.3.0-dev`
 ---
 # Aktuelles Ticket
-`FS-004` – Event ID Audit
+Aktuell ist kein Entwicklungsticket zur Umsetzung freigegeben.
+Nächstes geplantes Ticket:
+`FS-005` – Economy Core
 Status:
-`READY_FOR_REVIEW`
-Hinweis:
-Event-ID-Audit erstellt und wartet auf externes ChatGPT-Review.
-FS-005 ist noch nicht freigegeben.
+`PLANNED`
 ---
 # Abgeschlossene Tickets
 ## `FS-001` – Stable Baseline
@@ -34,6 +33,13 @@ Status:
 `APPROVED`
 Implementierungs-Commit:
 `c9d99b1bd2b682b8e268d54fb2e939bb901c0779`
+Review:
+`APPROVED` by ChatGPT
+## `FS-004` – Event ID Audit
+Status:
+`APPROVED`
+Implementierungs-Commit:
+`53511b7efab5cdf67b78696cd1591a94a55e4798`
 Review:
 `APPROVED` by ChatGPT
 ---

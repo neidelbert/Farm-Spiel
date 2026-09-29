@@ -18,6 +18,8 @@ Status:
 APPROVED
 FS-004
 Event ID Audit.
+Status:
+APPROVED
 ---
 # Phase B – Core Gameplay
 FS-005
