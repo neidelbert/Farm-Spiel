@@ -23,7 +23,7 @@ export class VehicleSystem {
       id, type, label: label || type, eventId,
       x: start.x, y: start.y,
       route: route.map(p => ({...p})), routeIndex: 1,
-      speed: speed || DEFAULT_SPEEDS[type] || 72,
+      speed: speed || (DEFAULT_SPEEDS[type] || 72) * 3.2,
       waitingUntil: null, waitStartedAt: null, waitDuration: 0,
       currentTag: null, heading: 0,
     };
@@ -81,11 +81,11 @@ export function routeTo(target, { tag, waitMs=0 } = {}) {
   const north=[p.spawn,p.roadNorth,p.mountainRoad,p.millJunction,p.farmEntry,p.loading].map(q=>({x:q.x,y:q.y}));
   let tail=[];
   if (near(target,p.loading)) tail=[];
-  else if (near(target,p.coop)) tail=[{x:680,y:615},{x:p.coop.x,y:p.coop.y}];
-  else if (near(target,p.cowpen)) tail=[{x:690,y:690},{x:p.cowpen.x,y:p.cowpen.y}];
-  else if (near(target,p.bakery)) tail=[{x:610,y:790},{x:p.villageNorth.x,y:p.villageNorth.y},{x:p.bakery.x,y:p.bakery.y}];
-  else if (near(target,p.harbor)) tail=[{x:610,y:790},{x:p.villageNorth.x,y:p.villageNorth.y},{x:610,y:1180},{x:p.harbor.x,y:p.harbor.y}];
-  else if (near(target,p.silo)) tail=[{x:560,y:650},{x:p.silo.x,y:p.silo.y}];
+  else if (near(target,p.coop)) tail=[{x:2260,y:2070},{x:p.coop.x,y:p.coop.y}];
+  else if (near(target,p.cowpen)) tail=[{x:2400,y:2540},{x:p.cowpen.x,y:p.cowpen.y}];
+  else if (near(target,p.bakery)) tail=[{x:1550,y:2780},{x:p.villageNorth.x,y:p.villageNorth.y},{x:p.bakery.x,y:p.bakery.y}];
+  else if (near(target,p.harbor)) tail=[{x:1550,y:2780},{x:p.villageNorth.x,y:p.villageNorth.y},{x:1100,y:4060},{x:p.harbor.x,y:p.harbor.y}];
+  else if (near(target,p.silo)) tail=[{...p.siloApproach},{x:p.silo.x,y:p.silo.y}];
   else if (near(target,p.garage)) tail=[{x:p.garage.x,y:p.garage.y}];
   else tail=[{x:target.x,y:target.y}];
 
