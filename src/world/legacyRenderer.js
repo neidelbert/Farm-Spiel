@@ -227,7 +227,7 @@ function obj(id){return WORLD_OBJECTS.find(o=>o.id===id);}
 function roundRect(ctx,x,y,w,h,r){ctx.beginPath();if(ctx.roundRect)ctx.roundRect(x,y,w,h,r);else ctx.rect(x,y,w,h);}
 function cropStage(state,now){const f=state.field;if(f.status==="prepared"||f.status==="harvested")return 0;if(f.status==="ready"||f.status==="harvesting"||f.status==="harvest_starting")return 5;if(f.status!=="growing"||!f.plantedAt)return f.status==="sowing"?1:0;const total=(f.readyAt||now)-f.plantedAt;const p=total<=0?1:(now-f.plantedAt)/total;if(p<.2)return 1;if(p<.5)return 2;if(p<.8)return 3;if(p<1)return 4;return 5;}
 function isNight(t){return t>.76||t<.18;}
-function drawPin(ctx,x,y,icon){ctx.save();ctx.font="14px sans-serif";ctx.textAlign="center";ctx.textBaseline="middle";ctx.fillStyle="rgba(255,250,229,.97)";ctx.beginPath();ctx.arc(x,y,13,0,Math.PI*2);ctx.fill();ctx.strokeStyle="rgba(40,50,35,.35)";ctx.lineWidth=1.5;ctx.stroke();ctx.fillText(icon,x,y+.5);ctx.restore();}
+function drawPin(ctx,x,y,icon){ctx.save();ctx.font="14px sans-serif";ctx.textAlign="center";ctx.textBaseline="middle";ctx.fillStyle="rgba(255,250,229,.97)";ctx.beginPath();ctx.arc(x,y,13,0,Math.PI*2);ctx.fill();ctx.strokeStyle="rgba(40,50,35,.35)";ctx.lineWidth=1.5;ctx.stroke();ctx.fillStyle="#29452f";ctx.fillText(icon,x,y+.5);ctx.restore();}
 function drawCloud(ctx,x,y,s){ctx.fillStyle="#fff";ctx.beginPath();ctx.arc(x,y,s*.3,0,Math.PI*2);ctx.arc(x+s*.25,y-s*.08,s*.38,0,Math.PI*2);ctx.arc(x+s*.55,y,s*.28,0,Math.PI*2);ctx.fill();}
 function drawBird(ctx,x,y,s){ctx.beginPath();ctx.arc(x-s*.45,y,s*.45,Math.PI,Math.PI*2);ctx.arc(x+s*.45,y,s*.45,Math.PI,Math.PI*2);ctx.stroke();}
 function drawRoadVehicle(ctx,type){
