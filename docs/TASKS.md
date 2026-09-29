@@ -5,11 +5,12 @@
 `0.3.0-dev`
 ---
 # Aktuelles Ticket
-Aktuell ist kein Entwicklungsticket zur Umsetzung freigegeben.
-Nächstes geplantes Ticket:
 `FS-003` – State Audit
 Status:
-`PLANNED`
+`READY_FOR_REVIEW`
+Hinweis:
+Der technische State Audit ist erstellt und wartet auf externes ChatGPT-Review.
+FS-004 ist noch nicht freigegeben.
 ---
 # Abgeschlossene Tickets
 ## `FS-001` – Stable Baseline
@@ -22,13 +23,14 @@ Baseline:
 ## `FS-002` – AI Development System
 Status:
 `APPROVED`
-Commit:
+Implementierungs-Commit:
 `cc49e8d4202660515ae8339b2ee32e728c4c08e1`
+Review-Commit:
+`be8b3af156f5dcb4143c170f01e1fc82b43aff0f`
 Review:
 `APPROVED` by ChatGPT
 ---
 # Geplante Reihenfolge
-- `FS-003` – State Audit
 - `FS-004` – Event ID Audit
 - `FS-005` – Economy Core
 - `FS-006` – Inventory Core
@@ -45,6 +47,9 @@ Es darf immer nur ein Ticket den Status:
 oder
 `IN_PROGRESS`
 haben.
+Ein Ticket mit:
+`READY_FOR_REVIEW`
+darf nicht selbstständig als `APPROVED` betrachtet werden.
 Perplexity darf kein `PLANNED`-Ticket selbstständig starten.
 Nach Umsetzung:
 `READY_FOR_REVIEW`
