@@ -1,3 +1,11 @@
+# 0.2.0 – modulare Grafikbasis
+
+- 200 separate Kataloggrafiken mit dokumentierter Ursprungsauflösung.
+- Größere Karte mit freier Hoffläche, separaten Landschaftsobjekten und angepassten Fahrwegen.
+- Navigation und Zoomtasten; durchsuchbare Grafikübersicht.
+- Sichtbarkeitsprüfung und begrenzter Bildspeicher.
+- Bestehende Level-1–10-Missionen übernommen.
+
 # Changelog
 
 ## 0.1.0 – Visual Reference Build

@@ -18,10 +18,11 @@
         <span class="level-badge">★ <span id="hudLevel">1</span></span>
         <div class="xp-track" aria-label="Erfahrung"><div id="hudXp" class="xp-fill"></div></div>
       </div>
-      <div class="money-pill"><span class="coin">$</span><span id="hudMoney">0</span></div>
+      <div class="money-pill"><span class="coin">F</span><span id="hudMoney">0</span></div>
       <button id="menuBtn" class="icon-btn" type="button" aria-label="Menü öffnen">☰</button>
     </header>
 
+    <nav class="world-nav" aria-label="Kartenbereiche"><button data-focus="hof">Hof</button><button data-focus="dorf">Dorf</button><button data-focus="hafen">Hafen</button><button data-focus="overview">Karte</button><button data-zoom="in" aria-label="Vergrößern">+</button><button data-zoom="out" aria-label="Verkleinern">−</button></nav>
     <button id="devBadge" class="dev-badge hidden" type="button" aria-label="Entwicklermenü öffnen">DEV</button>
 
     <section id="sheet" class="sheet hidden" aria-label="Aktion">
@@ -41,10 +42,11 @@
       <div class="modal-card">
         <div class="eyebrow">Farm-Spiel</div>
         <h2>Menü</h2>
-        <p class="muted">Version <span id="versionLabel">0.1.0</span></p>
+        <p class="muted">Version <span id="versionLabel">0.2.0</span></p>
         <div class="menu-grid">
           <button type="button" data-menu="resume">Weiterspielen</button>
           <button type="button" data-menu="save">Spiel speichern</button>
+          <a href="asset-katalog.html" class="catalog-link">200 Grafikbausteine ansehen</a>
           <button type="button" data-menu="dev">DEV-Modus an/aus</button>
           <button type="button" class="danger" data-menu="reset">Spielstand zurücksetzen</button>
         </div>
