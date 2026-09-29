@@ -3,11 +3,12 @@ import { WORLD_OBJECTS, POINTS, ROAD_PATHS } from '../data/worldData.js';
 import { MODULAR_WORLD as WORLD } from '../data/modularWorld.js';
 import { ASSET_CATALOG } from '../data/assetCatalog.js';
 import { AssetLoader, ASSETS } from './assetLoader.js';
+import { composeVisualObjects, traceSmoothRoad } from '../data/mapLayoutFixes.js';
 const ID=n=>ASSET_CATALOG.assets[n-1].id;
 const VEHICLES={scrap_truck:179,flatbed:182,post_van:178,delivery_van:177,builder_van:181,animal_transport:180,tractor:170,combine:172};
 export class Renderer extends LegacyRenderer {
  constructor(options){super(options);this.ready.catch(()=>{});this.loader=new AssetLoader();this.land=new Path2D(WORLD.land);this.river=new Path2D(WORLD.river);this.selected=null;this.lastTap=0;this.visibleCount=0;this.chunks=new Map();
- for(const o of WORLD.objects){const k=Math.floor(o.x/400)+','+Math.floor(o.y/400);if(!this.chunks.has(k))this.chunks.set(k,[]);this.chunks.get(k).push(o);}
+ for(const o of composeVisualObjects(WORLD.objects)){const k=Math.floor(o.x/400)+','+Math.floor(o.y/400);if(!this.chunks.has(k))this.chunks.set(k,[]);this.chunks.get(k).push(o);}
  this.ready=Promise.all([1,5,9,48,81,83,86,89,132,170,183].map(n=>this.loader.request(ID(n),512))).then(()=>{for(const n of [1,5,9,48]){const im=this.loader.get(ID(n),512);if(im){const p=this.ctx.createPattern(im,'repeat');if(p?.setTransform)p.setTransform(new DOMMatrix().scale(n===48?1:.65));this['pattern'+n]=p;}}});
  }
  render(s,now){const c=this.ctx,{width:w,height:h}=this.viewport,z=this.camera.zoom;c.setTransform(this.dpr,0,0,this.dpr,0,0);c.fillStyle='#158ba5';c.fillRect(0,0,w,h);c.save();c.translate(w/2,h/2);c.scale(z,z);c.translate(-this.camera.x,-this.camera.y);c.imageSmoothingEnabled=true;c.imageSmoothingQuality='high';
@@ -25,7 +26,7 @@ export class Renderer extends LegacyRenderer {
  this.drawEventIcons(c,s,now);if(this.selected&&now-this.lastTap<900){c.strokeStyle='#fff4b5';c.lineWidth=4/z;c.beginPath();c.ellipse(this.selected.x,this.selected.y+this.selected.h*.4,this.selected.w*.52,18,0,0,Math.PI*2);c.stroke();}if(s.world.debug)this.drawDebug(c,s);c.restore();this.drawWeatherOverlay(c,s,now);this.measureFps();
  }
  terrain(c,b,now){c.fillStyle=this.pattern48||'#1ca7c1';c.fillRect(b.l,b.t,b.r-b.l,b.b-b.t);c.strokeStyle='#e0cf94';c.lineWidth=55;c.stroke(this.land);c.fillStyle=this.pattern1||'#98af4e';c.fill(this.land);c.save();c.clip(this.land);c.fillStyle='rgba(195,205,120,.19)';c.fillRect(900,1400,1850,1750);c.strokeStyle='#aaa977';c.lineWidth=190;c.stroke(this.river);c.strokeStyle='#5ececf';c.lineWidth=166;c.stroke(this.river);c.strokeStyle=this.pattern48||'#27b4d0';c.lineWidth=140;c.stroke(this.river);c.restore();
- c.fillStyle=this.pattern9||'#d1c4a5';c.beginPath();c.ellipse(790,3760,330,175,0,0,Math.PI*2);c.fill();c.lineJoin='round';c.lineCap='round';for(const p of ROAD_PATHS){c.beginPath();p.forEach(([x,y],i)=>i?c.lineTo(x,y):c.moveTo(x,y));c.strokeStyle='#bfa36a';c.lineWidth=54;c.stroke();c.strokeStyle=this.pattern5||'#e9c981';c.lineWidth=43;c.stroke();}c.save();c.globalAlpha=.35;c.strokeStyle='#eeffff';c.lineWidth=3;const phase=(now/70)%65;for(const [x,y]of WORLD.riverPoints){if(x<b.l-100||x>b.r+100||y<b.t-100||y>b.b+100)continue;c.beginPath();c.moveTo(x-20,y+phase);c.quadraticCurveTo(x,y+phase+6,x+28,y+phase);c.stroke();}c.restore();
+ c.fillStyle=this.pattern9||'#d1c4a5';c.beginPath();c.ellipse(790,3760,330,175,0,0,Math.PI*2);c.fill();c.lineJoin='round';c.lineCap='round';for(const p of ROAD_PATHS){traceSmoothRoad(c,p);c.strokeStyle='#bfa36a';c.lineWidth=54;c.stroke();c.strokeStyle=this.pattern5||'#e9c981';c.lineWidth=43;c.stroke();}c.save();c.globalAlpha=.35;c.strokeStyle='#eeffff';c.lineWidth=3;const phase=(now/70)%65;for(const [x,y]of WORLD.riverPoints){if(x<b.l-100||x>b.r+100||y<b.t-100||y>b.b+100)continue;c.beginPath();c.moveTo(x-20,y+phase);c.quadraticCurveTo(x,y+phase+6,x+28,y+phase);c.stroke();}c.restore();
  }
  visible(b){const out=[];for(let y=Math.floor((b.t-500)/400);y<=Math.floor((b.b+500)/400);y++)for(let x=Math.floor((b.l-500)/400);x<=Math.floor((b.r+500)/400);x++)out.push(...(this.chunks.get(x+','+y)||[]));return out;}
  show(o,s,z){if(o.id.startsWith('field'))return false;if(o.category==='animal'){if(o.asset===ID(157)&&!s.chickens.unlocked)return false;if(o.asset===ID(162)&&!s.cows.unlocked)return false;}if(z<.25&&o.category==='prop')return false;if(z<.3&&o.width<45)return false;return true;}
