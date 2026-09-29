@@ -1,0 +1,10 @@
+import { ASSET_CATALOG } from '../data/assetCatalog.js';
+export const ASSETS=new Map(ASSET_CATALOG.assets.map(a=>[a.id,a]));
+export class AssetLoader {
+ constructor(){this.cache=new Map();this.pending=new Map();this.errors=new Set();this.bytes=0;this.maxBytes=64*1024*1024;this.queue=[];this.active=0;}
+ get(id,size=256){if(!ASSETS.has(id))return null;const tier=size>600?1200:size>250?512:192,key=id+':'+tier,e=this.cache.get(key);if(e){e.used=performance.now();return e.image;}this.request(id,tier);for(const t of [512,192,1200]){const q=this.cache.get(id+':'+t);if(q){q.used=performance.now();return q.image;}}return null;}
+ request(id,tier=512){const key=id+':'+tier;if(this.cache.has(key))return Promise.resolve(this.cache.get(key).image);if(this.pending.has(key))return this.pending.get(key);if(this.errors.has(key))return Promise.resolve(null);const p=new Promise(resolve=>this.queue.push({id,tier,key,resolve}));this.pending.set(key,p);this.pump();return p;}
+ pump(){while(this.active<4&&this.queue.length){const job=this.queue.shift();this.active++;this.load(job).finally(()=>{this.active--;this.pending.delete(job.key);this.pump();});}}
+ async load(job){try{const a=ASSETS.get(job.id),r=await fetch(a.src);if(!r.ok)throw Error('Asset '+r.status+': '+a.id);const blob=await r.blob(),w=Math.min(job.tier,a.width),h=Math.max(1,Math.round(w*a.height/a.width));let im;if(typeof createImageBitmap==='function')im=await createImageBitmap(blob,{resizeWidth:w,resizeHeight:h,resizeQuality:'high'});else{const url=URL.createObjectURL(blob);try{im=new Image();im.src=url;await im.decode();}finally{URL.revokeObjectURL(url);}}const bytes=im.width*im.height*4;this.cache.set(job.key,{image:im,bytes,used:performance.now()});this.bytes+=bytes;this.evict(job.key);job.resolve(im);}catch(e){console.warn(e);this.errors.add(job.key);job.resolve(null);}}
+ evict(keep){while(this.bytes>this.maxBytes&&this.cache.size>1){const victim=[...this.cache].filter(([k])=>k!==keep).sort((a,b)=>a[1].used-b[1].used)[0];if(!victim)break;this.cache.delete(victim[0]);this.bytes-=victim[1].bytes;victim[1].image.close?.();}}
+}
