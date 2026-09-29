@@ -1,6 +1,6 @@
 export const CONFIG = Object.freeze({
   name: "Farm-Spiel",
-  version: "0.2.0",
+  version: "0.3.0-dev",
   build: "modular-catalog-200",
   saveKey: "farm-spiel-save-v1",
   backupKey: "farm-spiel-save-v1-backup",
