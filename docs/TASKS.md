@@ -1,0 +1,48 @@
+# Farm-Spiel – Task Control
+## Aktiver Entwicklungsbranch
+`develop`
+## Aktuelle Version
+`0.3.0-dev`
+---
+# Aktuelles Ticket
+ID:
+`FS-002`
+Titel:
+`AI Development System`
+Status:
+`IN_PROGRESS`
+---
+# Abgeschlossene Tickets
+## FS-001 – Stable Baseline
+Status:
+`APPROVED`
+Commit:
+`aa2269b4175383f0cae3b590cf97cd4f6d195da2`
+Baseline:
+`5e6dc7757ab95d5aa7344d1b61e30f16a65407ab`
+---
+# Geplante Reihenfolge
+FS-003 – State Audit
+FS-004 – Event ID Audit
+FS-005 – Economy Core
+FS-006 – Inventory Core
+FS-007 – Field System Core
+FS-008 – Crop System
+FS-009 – Planting Flow
+FS-010 – Growth + Offline
+FS-011 – Harvest Core
+FS-012 – Selling Core
+---
+# Regel
+Es darf immer nur ein Ticket den Status:
+`READY`
+oder
+`IN_PROGRESS`
+haben.
+Perplexity darf kein `PLANNED`-Ticket selbstständig starten.
+Nach Umsetzung:
+`READY_FOR_REVIEW`
+Nach ChatGPT-Review:
+`APPROVED`
+oder:
+`CHANGES_REQUESTED`
