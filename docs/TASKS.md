@@ -5,11 +5,12 @@
 `0.3.0-dev`
 ---
 # Aktuelles Ticket
-Aktuell ist kein Entwicklungsticket zur Umsetzung freigegeben.
-Nächstes geplantes Ticket:
 `FS-005` – Economy Core
 Status:
-`PLANNED`
+`READY_FOR_REVIEW`
+Hinweis:
+Economy Core implementiert und wartet nach dem Commit auf externes ChatGPT-Review.
+FS-006 ist noch nicht freigegeben.
 ---
 # Abgeschlossene Tickets
 ## `FS-001` – Stable Baseline
@@ -44,7 +45,6 @@ Review:
 `APPROVED` by ChatGPT
 ---
 # Geplante Reihenfolge
-- `FS-005` – Economy Core
 - `FS-006` – Inventory Core
 - `FS-007` – Field System Core
 - `FS-008` – Crop System

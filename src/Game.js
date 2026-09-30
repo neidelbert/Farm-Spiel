@@ -3,6 +3,7 @@ import { POINTS } from "./data/worldData.js";
 import { MissionSystem } from "./systems/missions.js";
 import { VehicleSystem, routeTo, farmMachineRoute } from "./systems/vehicles.js";
 import { TimeSystems } from "./systems/timeSystems.js";
+import { EconomySystem } from "./systems/economy.js";
 
 export class Game {
   constructor({ state, save, events, camera, renderer, ui }) {
@@ -16,6 +17,7 @@ export class Game {
     this.missions = new MissionSystem(state);
     this.vehicles = new VehicleSystem({state,events});
     this.timeSystems = new TimeSystems(state,events);
+    this.economy = new EconomySystem(state);
 
     this.lastAutosave = performance.now();
     this.lastFrame = performance.now();
@@ -101,7 +103,7 @@ export class Game {
     const actions=[];
 
     if(this.state.missionId==="scrap_sale" && this.state.missionStep===0) {
-      actions.push({label:"Schrott verkaufen · +100 $",onClick:()=>this.startScrapSale()});
+      actions.push({label:"Schrott verkaufen · +100 F",onClick:()=>this.startScrapSale()});
     } else if(this.state.missionId==="friend_gift" && this.state.missionStep===0) {
       actions.push({label:"Geschenk annehmen",onClick:()=>this.startFriendGift()});
     } else if(this.state.missionId==="first_seed") {
@@ -111,7 +113,7 @@ export class Game {
       actions.push({label:"Zum Feld",onClick:()=>{this.ui.closeSheet();this.camera.focus(POINTS.field.x,POINTS.field.y);}});
     } else if(this.state.missionId==="first_order") {
       const can=this.state.silo.items.wheat>=5;
-      actions.push({label:can?"5 Weizen liefern · +35 $":"5 Weizen benötigt",disabled:!can,onClick:()=>this.startFirstOrder()});
+      actions.push({label:can?"5 Weizen liefern · +35 F":"5 Weizen benötigt",disabled:!can,onClick:()=>this.startFirstOrder()});
     } else if(this.state.missionId==="storage_upgrade") {
       actions.push({label:"Zum Silo",onClick:()=>{this.ui.closeSheet();this.camera.focus(POINTS.silo.x,POINTS.silo.y);}});
     } else if(this.state.missionId==="miller_intro") {
@@ -158,18 +160,18 @@ export class Game {
   }
 
   openCatalog() {
-    const price=CONFIG.economy.wheatSeedPrice;
-    const can=this.state.money>=price && !this.vehicles.hasEvent("seed_delivery");
+    const price=this.economy.getValue("wheatSeedPrice");
+    const can=this.economy.canAfford(price) && !this.vehicles.hasEvent("seed_delivery");
     this.ui.panel({
       eyebrow:"Hofkatalog",title:"Weizensaatgut",
-      body:`<p>Ein Sack reicht für dein erstes Feld.</p><div class="status">Preis: <strong>${price} $</strong><br>Lieferung: sofort per Postauto</div>`,
-      actions:[{label:can?`Für ${price} $ bestellen`:"Nicht genug Geld",disabled:!can,onClick:()=>this.buyWheatSeed()}]
+      body:`<p>Ein Sack reicht für dein erstes Feld.</p><div class="status">Preis: <strong>${price} F</strong><br>Lieferung: sofort per Postauto</div>`,
+      actions:[{label:can?`Für ${price} F bestellen`:"Nicht genug Geld",disabled:!can,onClick:()=>this.buyWheatSeed()}]
     });
   }
 
   buyWheatSeed() {
-    if(this.state.money<CONFIG.economy.wheatSeedPrice || this.vehicles.hasEvent("seed_delivery"))return;
-    this.state.money-=CONFIG.economy.wheatSeedPrice;
+    const price=this.economy.getValue("wheatSeedPrice");
+    if(this.vehicles.hasEvent("seed_delivery") || !this.economy.spend(price))return;
     this.state.missionStep=0.5;
     this.vehicles.spawn({
       id:uid("post"),type:"post_van",eventId:"seed_delivery",
@@ -256,8 +258,9 @@ export class Game {
     const s=this.state.silo;
     const actions=[];
     if(this.state.missionId==="storage_upgrade" && s.level<2 && !this.state.construction){
-      const cost=CONFIG.economy.siloUpgrade;
-      actions.push({label:this.state.money>=cost?`Verbessern · ${cost} $`:`${cost} $ benötigt`,disabled:this.state.money<cost,onClick:()=>this.startConstruction("silo",cost)});
+      const cost=this.economy.getValue("siloUpgrade");
+      const canAfford=this.economy.canAfford(cost);
+      actions.push({label:canAfford?`Verbessern · ${cost} F`:`${cost} F benötigt`,disabled:!canAfford,onClick:()=>this.startConstruction("silo",cost)});
     }
     this.ui.panel({eyebrow:"Lager",title:`Silo · Level ${s.level}`,body:`<div class="status">🌾 Weizen: <strong>${s.items.wheat}</strong><br>Kapazität: ${totalItems(s.items)} / ${s.capacity}</div>`,actions});
   }
@@ -271,8 +274,9 @@ export class Game {
     const g=this.state.garage;
     const actions=[];
     if(this.state.missionId==="workshop_chickens"&&g.level<2&&!this.state.construction){
-      const cost=CONFIG.economy.garageUpgrade;
-      actions.push({label:this.state.money>=cost?`Werkstatt verbessern · ${cost} $`:`${cost} $ benötigt`,disabled:this.state.money<cost,onClick:()=>this.startConstruction("garage",cost)});
+      const cost=this.economy.getValue("garageUpgrade");
+      const canAfford=this.economy.canAfford(cost);
+      actions.push({label:canAfford?`Werkstatt verbessern · ${cost} F`:`${cost} F benötigt`,disabled:!canAfford,onClick:()=>this.startConstruction("garage",cost)});
     }
     const tr=this.state.machines.tractor?(this.state.machines.tractorRestored?"restauriert":"rostig"):"nicht vorhanden";
     const co=this.state.level>=4?(this.state.machines.combineRestored?"restauriert":"rostig"):"in der Werkstatt";
@@ -280,8 +284,7 @@ export class Game {
   }
 
   startConstruction(building,cost) {
-    if(this.state.money<cost||this.state.construction)return;
-    this.state.money-=cost;
+    if(this.state.construction || !this.economy.spend(cost))return;
     const target=building==="silo"?POINTS.silo:POINTS.garage;
     this.vehicles.spawn({id:uid("builder"),type:"builder_van",eventId:`build_${building}`,route:routeTo(target,{tag:`build_${building}`,waitMs:2500})});
     this.ui.closeSheet();this.ui.toast("🔨 Das Handwerkerauto ist unterwegs.");
@@ -323,8 +326,8 @@ export class Game {
     this.state.barn.items.flour+=qty;
     this.ui.closeSheet();this.ui.toast(`📦 +${qty} Mehl in der Scheune`);
     if(this.state.missionId==="miller_intro"){
-      this.state.money+=CONFIG.economy.millerReward;
-      this.advanceTo(7,"workshop_chickens","Müller-Auftrag abgeschlossen · +100 $");
+      this.economy.credit(this.economy.getValue("millerReward"));
+      this.advanceTo(7,"workshop_chickens","Müller-Auftrag abgeschlossen · +100 F");
     }
   }
 
@@ -466,8 +469,8 @@ export class Game {
   onVehicleComplete(vehicle) {
     switch(vehicle.eventId){
       case "scrap_sale":
-        this.state.money+=CONFIG.economy.scrapReward;
-        this.advanceTo(2,"friend_gift","Schrott verkauft · +100 $");
+        this.economy.credit(this.economy.getValue("scrapReward"));
+        this.advanceTo(2,"friend_gift","Schrott verkauft · +100 F");
         break;
       case "friend_gift":
         this.advanceTo(3,"first_seed","Deine ersten Maschinen sind da.");
@@ -476,18 +479,18 @@ export class Game {
         this.advanceTo(5,"first_order","Erste Ernte eingelagert.");
         break;
       case "first_order":
-        this.state.money+=CONFIG.economy.firstOrderReward;
-        this.advanceTo(6,"storage_upgrade","Erster Auftrag erledigt · +35 $");
+        this.economy.credit(this.economy.getValue("firstOrderReward"));
+        this.advanceTo(6,"storage_upgrade","Erster Auftrag erledigt · +35 F");
         break;
       case "chicken_delivery":
         this.advanceTo(8,"eggs_baker","Die Hühner sind angekommen.");
         break;
       case "baker_eggs":
-        this.state.money+=CONFIG.economy.bakerEggReward;
-        this.advanceTo(9,"cows_milk","Bäckerauftrag erledigt · +80 $");
+        this.economy.credit(this.economy.getValue("bakerEggReward"));
+        this.advanceTo(9,"cows_milk","Bäckerauftrag erledigt · +80 F");
         break;
       case "baker_milk":
-        this.state.money+=CONFIG.economy.bakerMilkReward;
+        this.economy.credit(this.economy.getValue("bakerMilkReward"));
         this.state.level=10;this.state.xp=0;this.state.missionId="tutorial_done";this.state.tutorialComplete=true;this.state.achievements.tutorialDone=true;
         this.ui.toast("⭐ Level 10 – Die Einführung ist abgeschlossen!",4200);
         break;
@@ -527,7 +530,7 @@ export class Game {
 
   devAction(action) {
     const s=this.state;
-    if(action==="money") s.money+=1000;
+    if(action==="money") this.economy.credit(1000);
     if(action==="xp") s.xp=Math.min(s.xpNeeded,s.xp+100);
     if(action==="grow" && ["growing","sowing"].includes(s.field.status)){s.field.status="ready";s.field.readyAt=null;}
     if(action==="finish") this.timeSystems.forceFinishAll();
