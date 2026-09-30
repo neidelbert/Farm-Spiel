@@ -1,46 +1,70 @@
 # Farm-Spiel 0.3 – Core Rebuild Roadmap
+
 ## Ziel
 0.3 stellt einen stabilen First Playable Core her.
 Keine vollständige Produktion des späteren 100-Level-Spiels.
+
 ---
+
 # Phase A – Foundation
-FS-001
-Stable Baseline.
-Status:
-APPROVED
-FS-002
-AI Development System.
-Status:
-APPROVED
-FS-003
-State Audit.
-Status:
-APPROVED
-FS-004
-Event ID Audit.
-Status:
-APPROVED
+
+FS-001  
+Stable Baseline.  
+Status: `APPROVED`
+
+FS-002  
+AI Development System.  
+Status: `APPROVED`
+
+FS-003  
+State Audit.  
+Status: `APPROVED`
+
+FS-004  
+Event ID Audit.  
+Status: `APPROVED`
+
 ---
+
 # Phase B – Core Gameplay
-FS-005
-Economy Core.
-FS-006
-Inventory Core.
-FS-007
-Field System Core.
-FS-008
-Crop System.
-FS-009
-Planting Flow.
-FS-010
-Growth + Offline Time.
-FS-011
-Harvest Core.
-FS-012
-Selling Core.
+
+FS-005  
+Economy Core.  
+Status: `APPROVED`
+
+FS-006  
+Inventory Core.  
+Status: `APPROVED`
+
+FS-007  
+Field System Core.  
+Status: `PLANNED`
+
+FS-008  
+Crop System.  
+Status: `PLANNED`
+
+FS-009  
+Planting Flow.  
+Status: `PLANNED`
+
+FS-010  
+Growth + Offline Time.  
+Status: `PLANNED`
+
+FS-011  
+Harvest Core.  
+Status: `PLANNED`
+
+FS-012  
+Selling Core.  
+Status: `PLANNED`
+
 ---
+
 # Milestone 1
 Ohne Tutorial muss möglich sein:
+
 Farmercoins
 → Saat kaufen
 → pflanzen
@@ -49,31 +73,47 @@ Farmercoins
 → lagern
 → verkaufen
 → erneut Saat kaufen
+
 Wenn dieser Kreislauf nicht stabil funktioniert:
 keine Erweiterung.
+
 ---
+
 # Phase C – Save + Stability
-FS-013
+
+FS-013  
 Save Schema v2.
-FS-014
+
+FS-014  
 Save Migration.
-FS-015
+
+FS-015  
 Save Recovery.
-FS-016
+
+FS-016  
 Core Tests.
+
 ---
+
 # Phase D – Mobile + Architecture
-FS-017
+
+FS-017  
 Camera Stabilization.
-FS-018
+
+FS-018  
 Interaction System.
-FS-019
+
+FS-019  
 World Object Model.
-FS-020
+
+FS-020  
 Renderer Cleanup.
-FS-021
+
+FS-021  
 Performance Test.
+
 ---
+
 # Milestone 2
 Erforderlich:
 - stabiler Gameplay-Core
@@ -84,11 +124,15 @@ Erforderlich:
 - Verkauf
 - Tests
 - kontrollierte Weltobjekte
+
 ---
+
 # Phase E – Tutorial Level 1–10
 FS-022 bis FS-031.
 Tutorial wird erst auf den stabilen Gameplay-Core aufgebaut.
+
 ---
+
 # Nicht vorziehen
 Bis Milestone 1 nicht priorisieren:
 - Level 11–100

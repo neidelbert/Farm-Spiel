@@ -1,10 +1,13 @@
 # FS-006 – Inventory Core
 
 ## Status
-`READY_FOR_REVIEW`
+`APPROVED`
 
 ## Ausgangs-SHA
 `16b3966eb5404fae6224ed3d6b292c63b9e71d6f`
+
+## Implementierungs-Commit
+`239288df3a6d5da642b5730076b8f0fc35a6bc49`
 
 ## Version
 `0.3.0-dev`
@@ -60,6 +63,8 @@ Der aktuelle einmalige Ernteablauf besitzt noch keine Fahrzeug-/Cargo-Zwischenla
 Ist das Silo beim Entladen voll, verhindert FS-006 den Überlauf, kann die Ernte aber noch nicht als Fracht zurückhalten.
 Dieses Harvest-Verhalten gehört in `FS-011` und wird hier bewusst nicht vorgezogen.
 
+Der Renderer liest an einzelnen Stellen weiterhin bestehende Lagerwerte direkt für Anzeige-/Hinweislogik. Das ist kein neuer Schreibpfad und wird nicht in FS-006 vorgezogen; Renderer-Bereinigung bleibt für die spätere Architekturphase vorgesehen.
+
 ## Bewusst nicht verändert
 - `src/core/save.js`
 - Save-Version / Migration
@@ -79,10 +84,28 @@ Dieses Harvest-Verhalten gehört in `FS-011` und wird hier bewusst nicht vorgezo
 - JavaScript-Syntax `src/Game.js`: PASS
 - JavaScript-Syntax `src/systems/inventory.js`: PASS
 - gezielte InventorySystem-Tests: PASS
-- direkte Item-Zugriffe in `Game.js`: PASS – auf InventorySystem umgestellt
+- direkte Item-Schreibzugriffe in `Game.js`: PASS – auf InventorySystem umgestellt
+- Installer-Validierung und Push: PASS
 - Browser: NOT TESTED
 - Gameplay: NOT TESTED
 - vollständige Integration: NOT TESTED
 
+## Review
+Durchgeführt durch:
+ChatGPT
+
+Ergebnis:
+`APPROVED`
+
+Review-Basis:
+- Implementierungs-Commit und exakter Dateiscope geprüft
+- `InventorySystem` und Integration statisch geprüft
+- atomare Mehrfachentnahme für Bäckeraufträge geprüft
+- Kapazitätsgrenzen für Silo und Scheune geprüft
+- bekannte Harvest-Grenze dokumentiert
+- keine Save-Schema-Änderung festgestellt
+- keine fachfremden Source-Dateien verändert
+- nicht ausgeführte Browser-/Gameplay-Tests bleiben ausdrücklich `NOT TESTED`
+
 ## STOP
-FS-007 darf nicht automatisch begonnen werden.
+FS-007 wurde nicht automatisch begonnen.
