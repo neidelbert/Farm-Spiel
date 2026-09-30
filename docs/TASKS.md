@@ -5,12 +5,12 @@
 `0.3.0-dev`
 ---
 # Aktuelles Ticket
-`FS-005` – Economy Core
+`FS-006` – Inventory Core
 Status:
 `READY_FOR_REVIEW`
 Hinweis:
-Economy Core implementiert und wartet nach dem Commit auf externes ChatGPT-Review.
-FS-006 ist noch nicht freigegeben.
+Inventory Core implementiert und wartet nach dem Commit auf externes ChatGPT-Review.
+FS-007 ist noch nicht freigegeben.
 ---
 # Abgeschlossene Tickets
 ## `FS-001` – Stable Baseline
@@ -43,9 +43,15 @@ Implementierungs-Commit:
 `53511b7efab5cdf67b78696cd1591a94a55e4798`
 Review:
 `APPROVED` by ChatGPT
+## `FS-005` – Economy Core
+Status:
+`APPROVED`
+Implementierungs-Commit:
+`16b3966eb5404fae6224ed3d6b292c63b9e71d6f`
+Review:
+`APPROVED` by ChatGPT
 ---
 # Geplante Reihenfolge
-- `FS-006` – Inventory Core
 - `FS-007` – Field System Core
 - `FS-008` – Crop System
 - `FS-009` – Planting Flow

@@ -4,6 +4,7 @@ import { MissionSystem } from "./systems/missions.js";
 import { VehicleSystem, routeTo, farmMachineRoute } from "./systems/vehicles.js";
 import { TimeSystems } from "./systems/timeSystems.js";
 import { EconomySystem } from "./systems/economy.js";
+import { InventorySystem } from "./systems/inventory.js";
 
 export class Game {
   constructor({ state, save, events, camera, renderer, ui }) {
@@ -18,6 +19,7 @@ export class Game {
     this.vehicles = new VehicleSystem({state,events});
     this.timeSystems = new TimeSystems(state,events);
     this.economy = new EconomySystem(state);
+    this.inventory = new InventorySystem(state);
 
     this.lastAutosave = performance.now();
     this.lastFrame = performance.now();
@@ -112,7 +114,7 @@ export class Game {
     } else if(this.state.missionId==="first_harvest") {
       actions.push({label:"Zum Feld",onClick:()=>{this.ui.closeSheet();this.camera.focus(POINTS.field.x,POINTS.field.y);}});
     } else if(this.state.missionId==="first_order") {
-      const can=this.state.silo.items.wheat>=5;
+      const can=this.inventory.has("silo","wheat",5);
       actions.push({label:can?"5 Weizen liefern · +35 F":"5 Weizen benötigt",disabled:!can,onClick:()=>this.startFirstOrder()});
     } else if(this.state.missionId==="storage_upgrade") {
       actions.push({label:"Zum Silo",onClick:()=>{this.ui.closeSheet();this.camera.focus(POINTS.silo.x,POINTS.silo.y);}});
@@ -122,10 +124,10 @@ export class Game {
     } else if(this.state.missionId==="workshop_chickens") {
       actions.push({label:"Zur Werkstatt",onClick:()=>{this.ui.closeSheet();this.camera.focus(POINTS.garage.x,POINTS.garage.y);}});
     } else if(this.state.missionId==="eggs_baker") {
-      const canBaker=this.state.barn.items.eggs>=2&&this.state.barn.items.flour>=1;
+      const canBaker=this.inventory.hasAll("barn",{eggs:2,flour:1});
       actions.push({label:canBaker?"Zum Bäcker":"Zum Hühnergehege",onClick:()=>{this.ui.closeSheet();this.camera.focus(canBaker?POINTS.bakery.x:POINTS.coop.x,canBaker?POINTS.bakery.y:POINTS.coop.y);}});
     } else if(this.state.missionId==="cows_milk") {
-      const canBaker=this.state.barn.items.milk>=1&&this.state.barn.items.flour>=1;
+      const canBaker=this.inventory.hasAll("barn",{milk:1,flour:1});
       if(!this.state.cows.unlocked) actions.push({label:"2 Kühe übernehmen",onClick:()=>this.startCowDelivery()});
       else actions.push({label:canBaker?"Zum Bäcker":"Zur Kuhweide",onClick:()=>{this.ui.closeSheet();this.camera.focus(canBaker?POINTS.bakery.x:POINTS.cowpen.x,canBaker?POINTS.bakery.y:POINTS.cowpen.y);}});
     }
@@ -143,18 +145,18 @@ export class Game {
   progressText() {
     const s=this.state;
     switch(s.missionId){
-      case "scrap_sale": return `Schrott: ${s.inventory.scrap ? "bereit" : "abgeholt"}`;
+      case "scrap_sale": return `Schrott: ${this.inventory.has("inventory","scrap",1) ? "bereit" : "abgeholt"}`;
       case "friend_gift": return s.machines.tractor ? "Traktor und Sämaschine angekommen ✓" : "Lieferung steht aus";
       case "first_seed":
-        return `Saatgut: ${s.inventory.wheatSeed} · Feld: ${statusName(s.field.status)}`;
+        return `Saatgut: ${this.inventory.getQuantity("inventory","wheatSeed")} · Feld: ${statusName(s.field.status)}`;
       case "first_harvest":
-        return `Feld: ${statusName(s.field.status)} · Silo: ${s.silo.items.wheat}/${s.silo.capacity} Weizen`;
-      case "first_order": return `Weizen: ${s.silo.items.wheat}/5`;
+        return `Feld: ${statusName(s.field.status)} · Silo: ${this.inventory.getQuantity("silo","wheat")}/${this.inventory.getCapacity("silo")} Weizen`;
+      case "first_order": return `Weizen: ${this.inventory.getQuantity("silo","wheat")}/5`;
       case "storage_upgrade": return `Silo Level ${s.silo.level} · Kapazität ${s.silo.capacity}`;
-      case "miller_intro": return `Weizen: ${s.silo.items.wheat} · Mehl: ${s.barn.items.flour}`;
+      case "miller_intro": return `Weizen: ${this.inventory.getQuantity("silo","wheat")} · Mehl: ${this.inventory.getQuantity("barn","flour")}`;
       case "workshop_chickens": return `Werkstatt Level ${s.garage.level} · Hühner: ${s.chickens.count}`;
-      case "eggs_baker": return `Eier: ${s.barn.items.eggs} · Mehl: ${s.barn.items.flour}`;
-      case "cows_milk": return `Kühe: ${s.cows.count} · Milch: ${s.barn.items.milk} · Mehl: ${s.barn.items.flour}`;
+      case "eggs_baker": return `Eier: ${this.inventory.getQuantity("barn","eggs")} · Mehl: ${this.inventory.getQuantity("barn","flour")}`;
+      case "cows_milk": return `Kühe: ${s.cows.count} · Milch: ${this.inventory.getQuantity("barn","milk")} · Mehl: ${this.inventory.getQuantity("barn","flour")}`;
       default:return "Einführung abgeschlossen. Das Tal kann weiter ausgebaut werden.";
     }
   }
@@ -198,7 +200,7 @@ export class Game {
 
   openField() {
     const f=this.state.field;
-    if(this.state.missionId==="first_seed" && this.state.inventory.wheatSeed>0 && f.status==="prepared"){
+    if(this.state.missionId==="first_seed" && this.inventory.has("inventory","wheatSeed",1) && f.status==="prepared"){
       return this.ui.panel({
         eyebrow:"Feld 1",title:"Weizen aussäen",
         body:`<p>Der Traktor holt die Sämaschine aus der Werkstatt und fährt selbstständig zum Feld.</p>`,
@@ -216,7 +218,7 @@ export class Game {
   }
 
   startSowing() {
-    if(this.state.field.status!=="prepared"||this.state.inventory.wheatSeed<1)return;
+    if(this.state.field.status!=="prepared"||!this.inventory.has("inventory","wheatSeed",1))return;
     this.state.field.status="sowing";
     const p=POINTS;
     const route=farmMachineRoute([
@@ -248,8 +250,7 @@ export class Game {
   }
 
   startFirstOrder() {
-    if(this.state.silo.items.wheat<5||this.vehicles.hasEvent("first_order"))return;
-    this.state.silo.items.wheat-=5;
+    if(this.vehicles.hasEvent("first_order")||!this.inventory.remove("silo","wheat",5))return;
     this.vehicles.spawn({id:uid("order"),type:"delivery_van",eventId:"first_order",route:routeTo(POINTS.loading,{tag:"order_pickup",waitMs:3000})});
     this.ui.closeSheet();this.ui.toast("📦 5 Weizen sind für den Auftrag reserviert.");
   }
@@ -262,12 +263,12 @@ export class Game {
       const canAfford=this.economy.canAfford(cost);
       actions.push({label:canAfford?`Verbessern · ${cost} F`:`${cost} F benötigt`,disabled:!canAfford,onClick:()=>this.startConstruction("silo",cost)});
     }
-    this.ui.panel({eyebrow:"Lager",title:`Silo · Level ${s.level}`,body:`<div class="status">🌾 Weizen: <strong>${s.items.wheat}</strong><br>Kapazität: ${totalItems(s.items)} / ${s.capacity}</div>`,actions});
+    this.ui.panel({eyebrow:"Lager",title:`Silo · Level ${s.level}`,body:`<div class="status">🌾 Weizen: <strong>${this.inventory.getQuantity("silo","wheat")}</strong><br>Kapazität: ${this.inventory.getUsed("silo")} / ${this.inventory.getCapacity("silo")}</div>`,actions});
   }
 
   openBarn() {
     const b=this.state.barn;
-    this.ui.panel({eyebrow:"Lager",title:`Scheune · Level ${b.level}`,body:`<div class="status">Mehl: ${b.items.flour}<br>Eier: ${b.items.eggs}<br>Milch: ${b.items.milk}<br><br>Belegt: ${totalItems(b.items)} / ${b.capacity}</div>`,actions:[]});
+    this.ui.panel({eyebrow:"Lager",title:`Scheune · Level ${b.level}`,body:`<div class="status">Mehl: ${this.inventory.getQuantity("barn","flour")}<br>Eier: ${this.inventory.getQuantity("barn","eggs")}<br>Milch: ${this.inventory.getQuantity("barn","milk")}<br><br>Belegt: ${this.inventory.getUsed("barn")} / ${this.inventory.getCapacity("barn")}</div>`,actions:[]});
   }
 
   openGarage() {
@@ -305,15 +306,15 @@ export class Game {
     if(s.mill.outputReady>0){
       actions.push({label:`${s.mill.outputReady} Mehl einsammeln`,onClick:()=>this.collectFlour()});
     } else if(!s.mill.busy){
-      actions.push({label:s.silo.items.wheat>=5?"5 Weizen → 2 Mehl":"5 Weizen benötigt",disabled:s.silo.items.wheat<5,onClick:()=>this.startFlour()});
+      const hasWheat=this.inventory.has("silo","wheat",5);
+      actions.push({label:hasWheat?"5 Weizen → 2 Mehl":"5 Weizen benötigt",disabled:!hasWheat,onClick:()=>this.startFlour()});
     }
     let body=s.mill.busy?`<div class="status">Produktion läuft · ${formatTime(Math.max(0,Math.ceil((s.mill.readyAt-Date.now())/1000)))}</div>`:`<div class="status">Wasserrad: ${s.mill.unlocked?"aktiv":"still"}</div>`;
     this.ui.panel({eyebrow:"Produktion",title:"Mühle",body,actions});
   }
 
   startFlour() {
-    if(this.state.silo.items.wheat<5||this.state.mill.busy)return;
-    this.state.silo.items.wheat-=5;
+    if(this.state.mill.busy||!this.inventory.remove("silo","wheat",5))return;
     this.state.mill.busy=true;
     this.state.mill.readyAt=Date.now()+CONFIG.timings.flourMs;
     this.ui.closeSheet();this.ui.toast("⚙️ Die Mühle verarbeitet Weizen zu Mehl.");
@@ -322,8 +323,11 @@ export class Game {
   collectFlour() {
     const qty=this.state.mill.outputReady;
     if(qty<=0)return;
+    if(!this.inventory.add("barn","flour",qty)){
+      this.ui.toast("📦 Scheune voll – Mehl bleibt an der Mühle.");
+      return;
+    }
     this.state.mill.outputReady=0;
-    this.state.barn.items.flour+=qty;
     this.ui.closeSheet();this.ui.toast(`📦 +${qty} Mehl in der Scheune`);
     if(this.state.missionId==="miller_intro"){
       this.economy.credit(this.economy.getValue("millerReward"));
@@ -336,20 +340,27 @@ export class Game {
     if(!c.unlocked) return this.ui.panel({eyebrow:"Wiese",title:"Tierbereich",body:"<p>Hier ist später Platz für Hühner.</p>",actions:[]});
     const actions=[];
     if(c.eggsReady>0) actions.push({label:`${c.eggsReady} Eier einsammeln`,onClick:()=>this.collectEggs()});
-    else if(!c.fed) actions.push({label:this.state.silo.items.wheat>=2?"2 Weizen füttern":"2 Weizen benötigt",disabled:this.state.silo.items.wheat<2,onClick:()=>this.feedChickens()});
+    else if(!c.fed) {
+      const hasFeed=this.inventory.has("silo","wheat",2);
+      actions.push({label:hasFeed?"2 Weizen füttern":"2 Weizen benötigt",disabled:!hasFeed,onClick:()=>this.feedChickens()});
+    }
     const body=`<div class="status">🐔 Hühner: ${c.count}<br>${c.fed?`Produktion: ${formatTime(Math.max(0,Math.ceil((c.readyAt-Date.now())/1000)))}`:c.eggsReady?"Eier bereit":"Futter benötigt"}</div>`;
     this.ui.panel({eyebrow:"Tiere",title:"Hühnerstall",body,actions});
   }
 
   feedChickens() {
-    if(this.state.silo.items.wheat<2||this.state.chickens.fed)return;
-    this.state.silo.items.wheat-=2;this.state.chickens.fed=true;this.state.chickens.readyAt=Date.now()+CONFIG.timings.eggsMs;
+    if(this.state.chickens.fed||!this.inventory.remove("silo","wheat",2))return;
+    this.state.chickens.fed=true;this.state.chickens.readyAt=Date.now()+CONFIG.timings.eggsMs;
     this.ui.closeSheet();this.ui.toast("🌾 Die Hühner laufen zur Futterstelle.");
   }
 
   collectEggs() {
     const q=this.state.chickens.eggsReady;if(!q)return;
-    this.state.chickens.eggsReady=0;this.state.barn.items.eggs+=q;this.state.achievements.firstEggs=true;
+    if(!this.inventory.add("barn","eggs",q)){
+      this.ui.toast("📦 Scheune voll – Eier bleiben am Hühnerstall.");
+      return;
+    }
+    this.state.chickens.eggsReady=0;this.state.achievements.firstEggs=true;
     if(this.state.missionId==="eggs_baker") this.state.bakery.unlocked=true;
     this.ui.closeSheet();this.ui.toast(`🥚 +${q} Eier in der Scheune`);
   }
@@ -359,7 +370,10 @@ export class Game {
     if(!c.unlocked) return this.ui.panel({eyebrow:"Wiese",title:"Kuhweide",body:"<p>Diese Fläche ist noch frei.</p>",actions:[]});
     const actions=[];
     if(c.milkReady>0) actions.push({label:`${c.milkReady} Milch einsammeln`,onClick:()=>this.collectMilk()});
-    else if(!c.fed) actions.push({label:this.state.silo.items.wheat>=2?"2 Weizen füttern":"2 Weizen benötigt",disabled:this.state.silo.items.wheat<2,onClick:()=>this.feedCows()});
+    else if(!c.fed) {
+      const hasFeed=this.inventory.has("silo","wheat",2);
+      actions.push({label:hasFeed?"2 Weizen füttern":"2 Weizen benötigt",disabled:!hasFeed,onClick:()=>this.feedCows()});
+    }
     const body=`<div class="status">🐄 Kühe: ${c.count}<br>${c.fed?`Produktion: ${formatTime(Math.max(0,Math.ceil((c.readyAt-Date.now())/1000)))}`:c.milkReady?"Milch bereit":"Futter benötigt"}</div>`;
     this.ui.panel({eyebrow:"Tiere",title:"Kuhweide",body,actions});
   }
@@ -371,14 +385,18 @@ export class Game {
   }
 
   feedCows() {
-    if(this.state.silo.items.wheat<2||this.state.cows.fed)return;
-    this.state.silo.items.wheat-=2;this.state.cows.fed=true;this.state.cows.readyAt=Date.now()+CONFIG.timings.milkMs;
+    if(this.state.cows.fed||!this.inventory.remove("silo","wheat",2))return;
+    this.state.cows.fed=true;this.state.cows.readyAt=Date.now()+CONFIG.timings.milkMs;
     this.ui.closeSheet();this.ui.toast("🌾 Die Kühe gehen zur Futterstelle.");
   }
 
   collectMilk() {
     const q=this.state.cows.milkReady;if(!q)return;
-    this.state.cows.milkReady=0;this.state.barn.items.milk+=q;
+    if(!this.inventory.add("barn","milk",q)){
+      this.ui.toast("📦 Scheune voll – Milch bleibt an der Kuhweide.");
+      return;
+    }
+    this.state.cows.milkReady=0;
     this.ui.closeSheet();this.ui.toast(`🥛 +${q} Milch in der Scheune`);
   }
 
@@ -388,25 +406,23 @@ export class Game {
     }
     const actions=[];
     if(this.state.missionId==="eggs_baker"){
-      const can=this.state.barn.items.eggs>=2&&this.state.barn.items.flour>=1;
+      const can=this.inventory.hasAll("barn",{eggs:2,flour:1});
       actions.push({label:can?"1 Mehl + 2 Eier liefern":"1 Mehl + 2 Eier benötigt",disabled:!can,onClick:()=>this.startBakerEggOrder()});
     }else if(this.state.missionId==="cows_milk"){
-      const can=this.state.barn.items.milk>=1&&this.state.barn.items.flour>=1;
+      const can=this.inventory.hasAll("barn",{milk:1,flour:1});
       actions.push({label:can?"1 Mehl + 1 Milch liefern":"1 Mehl + 1 Milch benötigt",disabled:!can,onClick:()=>this.startBakerMilkOrder()});
     }
-    this.ui.panel({eyebrow:"Dorf",title:"Bäcker",body:`<div class="status">Mehl: ${this.state.barn.items.flour}<br>Eier: ${this.state.barn.items.eggs}<br>Milch: ${this.state.barn.items.milk}</div>`,actions});
+    this.ui.panel({eyebrow:"Dorf",title:"Bäcker",body:`<div class="status">Mehl: ${this.inventory.getQuantity("barn","flour")}<br>Eier: ${this.inventory.getQuantity("barn","eggs")}<br>Milch: ${this.inventory.getQuantity("barn","milk")}</div>`,actions});
   }
 
   startBakerEggOrder() {
-    if(this.state.barn.items.eggs<2||this.state.barn.items.flour<1)return;
-    this.state.barn.items.eggs-=2;this.state.barn.items.flour-=1;
+    if(!this.inventory.removeMany("barn",{eggs:2,flour:1}))return;
     this.vehicles.spawn({id:uid("baker"),type:"delivery_van",eventId:"baker_eggs",route:routeTo(POINTS.bakery,{tag:"baker_egg_delivery",waitMs:3000})});
     this.ui.closeSheet();
   }
 
   startBakerMilkOrder() {
-    if(this.state.barn.items.milk<1||this.state.barn.items.flour<1)return;
-    this.state.barn.items.milk-=1;this.state.barn.items.flour-=1;
+    if(!this.inventory.removeMany("barn",{milk:1,flour:1}))return;
     this.vehicles.spawn({id:uid("baker"),type:"delivery_van",eventId:"baker_milk",route:routeTo(POINTS.bakery,{tag:"baker_milk_delivery",waitMs:3000})});
     this.ui.closeSheet();
   }
@@ -424,10 +440,11 @@ export class Game {
 
   onVehicleArrive(vehicle,tag) {
     if(tag==="scrap_pickup"){
-      this.state.world.scrapVisible=false;this.state.inventory.scrap=0;this.ui.toast("🧹 Der Hof wird sichtbar aufgeräumt.");
+      this.state.world.scrapVisible=false;this.inventory.remove("inventory","scrap",1);this.ui.toast("🧹 Der Hof wird sichtbar aufgeräumt.");
     }
     if(tag==="seed_delivery"){
-      this.state.inventory.wheatSeed=1;this.state.missionStep=1;this.ui.toast("📦 Weizensaatgut ist angekommen.");
+      if(!this.inventory.has("inventory","wheatSeed",1)) this.inventory.add("inventory","wheatSeed",1);
+      this.state.missionStep=1;this.ui.toast("📦 Weizensaatgut ist angekommen.");
     }
     if(tag==="miller_arrive"){
       this.state.mill.unlocked=true;this.state.missionStep=1;this.ui.toast("🌾 Die Mühle ist jetzt aktiv.");
@@ -451,7 +468,7 @@ export class Game {
       this.state.machines.tractor=true;this.state.machines.seeder=true;this.ui.toast("🚜 Alter Traktor + Sämaschine erhalten.");
     }
     if(tag==="sow"){
-      this.state.inventory.wheatSeed=Math.max(0,this.state.inventory.wheatSeed-1);
+      this.inventory.remove("inventory","wheatSeed",1);
       this.state.field.status="growing";this.state.field.crop="wheat";this.state.field.plantedAt=Date.now();this.state.field.readyAt=Date.now()+CONFIG.timings.wheatGrowthMs;
       if(this.state.missionId==="first_seed") this.advanceTo(4,"first_harvest","Erste Aussaat geschafft.");
     }
@@ -459,7 +476,12 @@ export class Game {
       this.state.field.status="harvested";this.state.field.harvestProgress=1;
     }
     if(tag==="unload_wheat"){
-      this.state.silo.items.wheat+=CONFIG.economy.wheatYield;this.state.achievements.firstHarvest=true;this.ui.toast(`🌾 +${CONFIG.economy.wheatYield} Weizen im Silo`);
+      const yieldQty=CONFIG.economy.wheatYield;
+      if(this.inventory.add("silo","wheat",yieldQty)){
+        this.state.achievements.firstHarvest=true;this.ui.toast(`🌾 +${yieldQty} Weizen im Silo`);
+      }else{
+        this.ui.toast("📦 Silo voll – Ernte konnte nicht eingelagert werden.");
+      }
     }
     if(tag==="chickens_unload"){
       this.state.chickens.unlocked=true;this.state.chickens.count=4;
@@ -510,7 +532,7 @@ export class Game {
       this.state.garage.level=2;
       this.state.machines.tractorRestored=true;this.state.machines.combineRestored=true;
       if(this.state.missionId==="workshop_chickens"){
-        this.state.silo.items.wheat+=4; // starter feed
+        this.inventory.add("silo","wheat",4); // starter feed
         this.vehicles.spawn({id:uid("chickens"),type:"animal_transport",eventId:"chicken_delivery",route:routeTo(POINTS.coop,{tag:"chickens_unload",waitMs:4000})});
         this.ui.toast("🔧 Maschinen restauriert. Der Tiertransporter ist unterwegs.");
       }
@@ -561,7 +583,6 @@ TimeScale: ${this.state.world.timeScale}x`;
   }
 }
 
-function totalItems(items){return Object.values(items).reduce((a,b)=>a+(Number(b)||0),0);}
 function uid(prefix){return `${prefix}_${Date.now()}_${Math.floor(Math.random()*9999)}`;}
 function formatTime(sec){const m=Math.floor(sec/60),s=Math.max(0,sec%60);return `${m}:${String(s).padStart(2,"0")}`;}
 function statusName(s){return ({prepared:"vorbereitet",sowing:"wird gesät",growing:"wächst",ready:"erntereif",harvest_starting:"Mähdrescher unterwegs",harvesting:"wird geerntet",harvested:"abgeerntet"}[s]||s);}
