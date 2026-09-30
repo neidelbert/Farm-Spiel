@@ -1,0 +1,344 @@
+name: Farm-Spiel Ticket Installer
+on:
+  workflow_dispatch:
+    inputs:
+      payload:
+        description: "ChatGPT ticket payload (gzip + base64url)"
+        required: true
+        type: string
+permissions:
+  contents: write
+concurrency:
+  group: farm-spiel-ticket-installer
+  cancel-in-progress: false
+jobs:
+  install:
+    name: Verify and install ticket
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout develop
+        uses: actions/checkout@v4
+        with:
+          ref: develop
+          fetch-depth: 0
+          persist-credentials: true
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+      - name: Apply verified ticket payload
+        env:
+          FARM_TICKET_PAYLOAD: ${{ inputs.payload }}
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          import base64
+          import gzip
+          import hashlib
+          import json
+          import os
+          from pathlib import Path, PurePosixPath
+          import re
+          import subprocess
+          import sys
+          TARGET_BRANCH = "develop"
+          MAX_JSON_BYTES = 5_000_000
+          payload_text = os.environ.get("FARM_TICKET_PAYLOAD", "").strip()
+          def fail(message):
+              print(f"ERROR: {message}", file=sys.stderr)
+              raise SystemExit(1)
+          def run(*args, check=True):
+              result = subprocess.run(args, text=True, capture_output=True)
+              if check and result.returncode != 0:
+                  if result.stdout:
+                      print(result.stdout)
+                  if result.stderr:
+                      print(result.stderr, file=sys.stderr)
+                  raise SystemExit(result.returncode)
+              return result
+          if not payload_text:
+              fail("Ticket payload is empty.")
+          if len(payload_text) > 65_535:
+              fail("Ticket payload exceeds GitHub workflow input limit.")
+          if not re.fullmatch(r"[A-Za-z0-9_-]+", payload_text):
+              fail("Ticket payload is not valid base64url text.")
+          padded = payload_text + "=" * (-len(payload_text) % 4)
+          try:
+              compressed = base64.urlsafe_b64decode(padded.encode("ascii"))
+              import io
+              with gzip.GzipFile(
+                  fileobj=io.BytesIO(compressed),
+                  mode="rb"
+              ) as gz:
+                  raw = gz.read(MAX_JSON_BYTES + 1)
+              if len(raw) > MAX_JSON_BYTES:
+                  fail("Decoded ticket payload is too large.")
+              data = json.loads(raw.decode("utf-8"))
+          except Exception as exc:
+              fail(f"Could not decode ticket payload: {exc}")
+          if data.get("schema") != 1:
+              fail("Unsupported ticket payload schema.")
+          ticket = data.get("ticket")
+          base_sha = data.get("base_sha")
+          commit_message = data.get("commit_message")
+          files = data.get("files")
+          if not isinstance(ticket, str) or not re.fullmatch(
+              r"FS-\d{3}",
+              ticket
+          ):
+              fail("Invalid ticket ID.")
+          if not isinstance(base_sha, str) or not re.fullmatch(
+              r"[0-9a-f]{40}",
+              base_sha
+          ):
+              fail("Invalid base SHA.")
+          if (
+              not isinstance(commit_message, str)
+              or not commit_message.startswith(ticket + ": ")
+          ):
+              fail("Commit message must start with the ticket ID.")
+          if not isinstance(files, list) or not (1 <= len(files) <= 50):
+              fail(
+                  "Payload must contain between 1 and 50 file operations."
+              )
+          run("git", "fetch", "origin", TARGET_BRANCH)
+          remote_sha = run(
+              "git",
+              "rev-parse",
+              f"origin/{TARGET_BRANCH}"
+          ).stdout.strip()
+          if remote_sha != base_sha:
+              fail(
+                  f"Remote {TARGET_BRANCH} moved. "
+                  f"Expected {base_sha}, found {remote_sha}."
+              )
+          run(
+              "git",
+              "reset",
+              "--hard",
+              f"origin/{TARGET_BRANCH}"
+          )
+          run("git", "clean", "-fd")
+          repo_root = Path.cwd().resolve()
+          expected_paths = []
+          seen = set()
+          for item in files:
+              if not isinstance(item, dict):
+                  fail("Each file operation must be an object.")
+              rel = item.get("path")
+              action = item.get("action")
+              if not isinstance(rel, str) or not rel:
+                  fail("Invalid file path.")
+              if rel in seen:
+                  fail(f"Duplicate file path: {rel}")
+              seen.add(rel)
+              posix = PurePosixPath(rel)
+              if (
+                  posix.is_absolute()
+                  or ".." in posix.parts
+                  or "." in posix.parts
+              ):
+                  fail(f"Unsafe file path: {rel}")
+              if (
+                  rel == ".github"
+                  or rel.startswith(".github/")
+                  or rel == ".git"
+                  or rel.startswith(".git/")
+              ):
+                  fail(
+                      f"Installer-protected path is not allowed: {rel}"
+                  )
+              target = (
+                  repo_root / Path(*posix.parts)
+              ).resolve()
+              try:
+                  target.relative_to(repo_root)
+              except ValueError:
+                  fail(f"Path escapes repository: {rel}")
+              expected_paths.append(rel)
+              if action == "write":
+                  content_b64 = item.get("content_b64")
+                  expected_sha256 = item.get("sha256")
+                  if (
+                      not isinstance(content_b64, str)
+                      or not isinstance(expected_sha256, str)
+                  ):
+                      fail(f"Missing content/hash for {rel}")
+                  try:
+                      content = base64.b64decode(
+                          content_b64,
+                          validate=True
+                      )
+                  except Exception:
+                      fail(
+                          f"Invalid file content encoding for {rel}"
+                      )
+                  actual_sha256 = hashlib.sha256(
+                      content
+                  ).hexdigest()
+                  if actual_sha256 != expected_sha256:
+                      fail(f"SHA-256 mismatch for {rel}")
+                  target.parent.mkdir(
+                      parents=True,
+                      exist_ok=True
+                  )
+                  target.write_bytes(content)
+              elif action == "delete":
+                  if target.exists():
+                      if target.is_dir():
+                          fail(
+                              f"Refusing directory deletion: {rel}"
+                          )
+                      target.unlink()
+              else:
+                  fail(
+                      f"Unsupported action for {rel}: {action}"
+                  )
+          changed = set(
+              line.strip()
+              for line in run(
+                  "git",
+                  "diff",
+                  "--name-only"
+              ).stdout.splitlines()
+              if line.strip()
+          )
+          untracked = set(
+              line.strip()
+              for line in run(
+                  "git",
+                  "ls-files",
+                  "--others",
+                  "--exclude-standard"
+              ).stdout.splitlines()
+              if line.strip()
+          )
+          actual_paths = changed | untracked
+          expected_set = set(expected_paths)
+          if actual_paths != expected_set:
+              fail(
+                  "Changed-file set mismatch. "
+                  f"Expected {sorted(expected_set)}, "
+                  f"got {sorted(actual_paths)}"
+              )
+          syntax_checked = []
+          for rel in sorted(expected_set):
+              if (
+                  rel.endswith((".js", ".mjs", ".cjs"))
+                  and Path(rel).exists()
+              ):
+                  run("node", "--check", rel)
+                  syntax_checked.append(rel)
+          run(
+              "git",
+              "config",
+              "user.name",
+              "Farm-Spiel Ticket Installer"
+          )
+          run(
+              "git",
+              "config",
+              "user.email",
+              "farm-spiel-installer@users.noreply.github.com"
+          )
+          run(
+              "git",
+              "add",
+              "-A",
+              "--",
+              *sorted(expected_set)
+          )
+          staged = run(
+              "git",
+              "diff",
+              "--cached",
+              "--name-only"
+          ).stdout.splitlines()
+          if set(staged) != expected_set:
+              fail(
+                  f"Staged-file set mismatch: {staged}"
+              )
+          run(
+              "git",
+              "commit",
+              "-m",
+              commit_message
+          )
+          result_sha = run(
+              "git",
+              "rev-parse",
+              "HEAD"
+          ).stdout.strip()
+          run(
+              "git",
+              "push",
+              "origin",
+              f"HEAD:{TARGET_BRANCH}"
+          )
+          run(
+              "git",
+              "fetch",
+              "origin",
+              TARGET_BRANCH
+          )
+          verify_sha = run(
+              "git",
+              "rev-parse",
+              f"origin/{TARGET_BRANCH}"
+          ).stdout.strip()
+          if verify_sha != result_sha:
+              fail(
+                  f"Push verification failed. "
+                  f"Local {result_sha}, remote {verify_sha}"
+              )
+          summary_path = os.environ.get(
+              "GITHUB_STEP_SUMMARY"
+          )
+          if summary_path:
+              with open(
+                  summary_path,
+                  "a",
+                  encoding="utf-8"
+              ) as summary:
+                  summary.write(
+                      "# Farm-Spiel Ticket Installer\n\n"
+                  )
+                  summary.write(
+                      f"- Ticket: `{ticket}`\n"
+                  )
+                  summary.write(
+                      f"- Base-SHA: `{base_sha}`\n"
+                  )
+                  summary.write(
+                      f"- Ergebnis-SHA: `{result_sha}`\n"
+                  )
+                  summary.write(
+                      f"- Commit: `{commit_message}`\n"
+                  )
+                  summary.write(
+                      "- Geänderte Dateien:\n"
+                  )
+                  for rel in sorted(expected_set):
+                      summary.write(
+                          f"  - `{rel}`\n"
+                      )
+                  if syntax_checked:
+                      summary.write(
+                          "- JavaScript-Syntax: PASS\n"
+                      )
+                      for rel in syntax_checked:
+                          summary.write(
+                              f"  - `{rel}`\n"
+                          )
+                  else:
+                      summary.write(
+                          "- JavaScript-Syntax: "
+                          "NOT APPLICABLE\n"
+                      )
+          print(
+              f"READY_FOR_REVIEW "
+              f"{ticket} "
+              f"{result_sha}"
+          )
+          PY
