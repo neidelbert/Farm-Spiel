@@ -11,8 +11,6 @@ const canvas = document.querySelector("#game");
 const ui = new UI();
 const save = new SaveManager();
 const state = save.load();
-// One-time coordinate migration preserves gameplay state and active delivery events.
-if(state.world.visualVersion!==2){for(const v of state.vehicles){v.x*=3.4;v.y*=3.23;v.speed*=3.2;for(const q of v.route){q.x*=3.4;q.y*=3.23;}}state.world.visualVersion=2;}
 const events = new EventBus();
 
 const camera = new Camera(

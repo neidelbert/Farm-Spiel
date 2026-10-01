@@ -9,20 +9,17 @@
 ---
 
 # Aktuelles Ticket
-`FS-014` – Save Migration Hardening
+`FS-015` – Save/Visual Migration Cleanup
 
 Status:
-`APPROVED`
+`READY_FOR_REVIEW`
 
-Implementierungs-Commit:
-`b9479f9fb275f2b33dda952c349dc99a3a91f4c5`
-
-Review:
-`APPROVED` by ChatGPT
+Ausgangs-SHA:
+`4ef2ef3a807e59f8114318a0658f6b395d708b69`
 
 Hinweis:
-FS-014 ist nach Implementierung und Review abgeschlossen.
-FS-015 ist vorbereitet, wurde aber nicht gestartet und benötigt eine separate Freigabe von Lukas.
+Save/Visual Migration Cleanup ist für den Installer vorbereitet. Nach erfolgreichem Commit wartet FS-015 auf ChatGPT-Review.
+Ein Folgeticket darf vorher nicht gestartet werden.
 
 ---
 
@@ -182,10 +179,23 @@ Review-Abschluss:
 Review:
 `APPROVED` by ChatGPT
 
+## `FS-014` – Save Migration Hardening
+Status:
+`APPROVED`
+
+Implementierungs-Commit:
+`b9479f9fb275f2b33dda952c349dc99a3a91f4c5`
+
+Review-Abschluss:
+`4ef2ef3a807e59f8114318a0658f6b395d708b69`
+
+Review:
+`APPROVED` by ChatGPT
+
 ---
 
 # Geplante Reihenfolge
-- `FS-015` – Save/Visual Migration Cleanup
+Nach FS-015 wird das nächste Ticket separat aus dem aktuellen Repository-Stand geplant.
 
 ---
 

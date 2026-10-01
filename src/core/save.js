@@ -1,6 +1,6 @@
 import { CONFIG } from "../config.js";
 
-export const CURRENT_SAVE_VERSION = 2;
+export const CURRENT_SAVE_VERSION = 3;
 
 const FIELD_STATUSES = new Set([
   "prepared",
@@ -13,6 +13,12 @@ const FIELD_STATUSES = new Set([
 ]);
 
 const WEATHER_VALUES = new Set(["sunny", "rain", "fog"]);
+
+const LEGACY_VISUAL_SCALE = Object.freeze({
+  x: 3.4,
+  y: 3.23,
+  speed: 3.2,
+});
 
 export function createInitialState() {
   return {
@@ -75,6 +81,7 @@ export function createInitialState() {
 
 const MIGRATIONS = Object.freeze({
   1: migrateV1ToV2,
+  2: migrateV2ToV3,
 });
 
 export class SaveManager {
@@ -155,9 +162,49 @@ function migrateV1ToV2(input) {
   };
 }
 
+function migrateV2ToV3(input) {
+  const world = isPlainObject(input.world) ? { ...input.world } : {};
+  const alreadyVisualMigrated = world.visualVersion === 2;
+  delete world.visualVersion;
+
+  return {
+    ...input,
+    saveVersion: 3,
+    world,
+    vehicles: alreadyVisualMigrated
+      ? structuredCloneSafe(Array.isArray(input.vehicles) ? input.vehicles : [])
+      : migrateLegacyVehicleCoordinates(input.vehicles),
+  };
+}
+
+function migrateLegacyVehicleCoordinates(vehicles) {
+  if (!Array.isArray(vehicles)) return [];
+  return vehicles.map(vehicle => {
+    if (!isPlainObject(vehicle)) return vehicle;
+
+    const migrated = { ...vehicle };
+    if (Number.isFinite(vehicle.x)) migrated.x = vehicle.x * LEGACY_VISUAL_SCALE.x;
+    if (Number.isFinite(vehicle.y)) migrated.y = vehicle.y * LEGACY_VISUAL_SCALE.y;
+    if (Number.isFinite(vehicle.speed)) migrated.speed = vehicle.speed * LEGACY_VISUAL_SCALE.speed;
+
+    if (Array.isArray(vehicle.route)) {
+      migrated.route = vehicle.route.map(point => {
+        if (!isPlainObject(point)) return point;
+        return {
+          ...point,
+          x: Number.isFinite(point.x) ? point.x * LEGACY_VISUAL_SCALE.x : point.x,
+          y: Number.isFinite(point.y) ? point.y * LEGACY_VISUAL_SCALE.y : point.y,
+        };
+      });
+    }
+
+    return migrated;
+  });
+}
+
 function sanitizeState(input) {
   const base = createInitialState();
-  const out = sanitizeTemplate(base, input, "");
+  const out = sanitizeTemplate(base, input);
   out.saveVersion = CURRENT_SAVE_VERSION;
   out.gameVersion = CONFIG.version;
 
@@ -210,13 +257,6 @@ function sanitizeState(input) {
   out.world.timeOfDay = clampFinite(input.world?.timeOfDay, 0, 1, base.world.timeOfDay);
   out.world.timeScale = positiveFinite(input.world?.timeScale, base.world.timeScale);
 
-  // visualVersion is intentionally preserved until FS-015 moves this migration
-  // into the save migration pipeline. Dropping it here would re-scale vehicles
-  // on every reload.
-  if (Number.isInteger(input.world?.visualVersion) && input.world.visualVersion >= 1) {
-    out.world.visualVersion = input.world.visualVersion;
-  }
-
   out.construction = sanitizeNullableObject(input.construction);
   out.sideOrder = sanitizeNullableObject(input.sideOrder);
   out.vehicles = sanitizeVehicles(input.vehicles);
@@ -224,15 +264,14 @@ function sanitizeState(input) {
   return out;
 }
 
-function sanitizeTemplate(base, extra, path) {
+function sanitizeTemplate(base, extra) {
   if (Array.isArray(base)) return Array.isArray(extra) ? structuredCloneSafe(extra) : [];
 
   if (isPlainObject(base)) {
     const source = isPlainObject(extra) ? extra : {};
     const out = {};
     for (const key of Object.keys(base)) {
-      const childPath = path ? `${path}.${key}` : key;
-      out[key] = sanitizeTemplate(base[key], source[key], childPath);
+      out[key] = sanitizeTemplate(base[key], source[key]);
     }
     return out;
   }
