@@ -12,14 +12,17 @@
 `FS-013` – Save Schema v2 / Migration Core
 
 Status:
-`READY_FOR_REVIEW`
+`APPROVED`
 
-Ausgangs-SHA:
-`31b3166191ad6114804bb61392b17db84f2fd258`
+Implementierungs-Commit:
+`06468f02f16aa24133987c4e0c9424f919212830`
+
+Review:
+`APPROVED` by ChatGPT
 
 Hinweis:
-Save Schema v2 / Migration Core ist für den Installer vorbereitet. Nach erfolgreichem Commit wartet FS-013 auf ChatGPT-Review.
-FS-014 darf vorher nicht gestartet werden.
+FS-013 ist nach Implementierung und Review abgeschlossen.
+FS-014 ist vorbereitet, wurde aber nicht gestartet und benötigt eine separate Freigabe von Lukas.
 
 ---
 

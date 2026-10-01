@@ -1,10 +1,13 @@
 # FS-013 – Save Schema v2 / Migration Core
 
 ## Status
-`READY_FOR_REVIEW`
+`APPROVED`
 
 ## Ausgangs-SHA
 `31b3166191ad6114804bb61392b17db84f2fd258`
+
+## Implementierungs-Commit
+`06468f02f16aa24133987c4e0c9424f919212830`
 
 ## Version
 `0.3.0-dev`
@@ -15,47 +18,42 @@ Das bisherige implizite Save-Merging durch ein echtes versioniertes Save-Schema 
 ## Was ändert sich im Spiel?
 Für den Spieler ändert sich sichtbar fast nichts: vorhandene Spielstände werden beim Laden kontrolliert auf Save-Schema v2 angehoben, sodass spätere Updates sicherer auf bestehenden Spielständen aufbauen können.
 
-## Geänderte Source-Dateien
-- `src/core/save.js`
+## Review
+Durchgeführt durch:
+ChatGPT
 
-## Neue Tests
-- `tests/save.test.js`
+Ergebnis:
+`APPROVED`
 
-## Technische Anforderungen
-- Zentrale Konstante `CURRENT_SAVE_VERSION = 2`.
-- Neue Spielstände starten mit `saveVersion: 2`.
-- Bestehende Save-v1-Spielstände werden explizit über eine Migration `v1 -> v2` geführt.
-- Alte Spielstände ohne `saveVersion` werden als Legacy-v1 behandelt.
-- Migrationen laufen schrittweise und müssen die Version tatsächlich erhöhen.
-- Zukünftige, vom aktuellen Spiel unbekannte Save-Versionen dürfen nicht still auf v2 heruntergestuft werden.
-- Ungültige Save-Versionen werden nicht still akzeptiert.
-- Nach Migration wird weiterhin der aktuelle Default-State ergänzt, damit neue Felder vorhanden sind.
-- Spielerfortschritt wie Level, Farmercoins, Mission, Inventar, Feldstatus und Fahrzeuge bleibt beim v1→v2-Laden erhalten.
-- `SaveManager.save()` schreibt immer die aktuelle Save-Version und Game-Version.
-- Der bestehende Backup-Mechanismus bleibt erhalten.
-- Ist der Hauptsave inkompatibel, wird das Backup versucht.
-- Sind Hauptsave und Backup unbrauchbar, wird kontrolliert ein neuer Spielstand erzeugt.
-- Der bestehende LocalStorage-Key `farm-spiel-save-v1` wird bewusst noch nicht geändert, damit vorhandene iPhone-Spielstände weiterhin gefunden werden.
-- Die bisherige Visual-Migration in `main.js` bleibt in FS-013 unverändert; ihre Zentralisierung gehört zu FS-015.
-
-## Bewusst nicht umgesetzt
-- keine strikte Entfernung unbekannter Save-Felder
-- keine tiefe Typvalidierung aller Gameplay-Felder
-- keine automatische Reparatur beliebig beschädigter Werte
-- keine Änderung des LocalStorage-Keys
-- keine Verschiebung der Visual-Migration aus `main.js`
-- keine Gameplay-, Economy-, Feld-, Verkaufs- oder Renderer-Änderung
+Geprüft:
+- Implementierungs-Commit ist direkter Nachfolger des FS-012-Abschluss-SHA.
+- Commit-Nachricht entspricht dem Ticket.
+- Exakt die fünf vorgesehenen Dateien wurden verändert bzw. neu angelegt.
+- `CURRENT_SAVE_VERSION` ist 2.
+- Neue Spielstände starten mit Save-v2.
+- v1-Spielstände werden explizit über `v1 -> v2` migriert.
+- Spielstände ohne Versionsnummer werden als Legacy-v1 behandelt.
+- Migrationen müssen ihre Version erhöhen.
+- Future-Saves werden nicht still heruntergestuft.
+- Ungültige Save-Versionen werden abgelehnt.
+- Spielerfortschritt bleibt bei v1→v2 erhalten.
+- `SaveManager.save()` schreibt aktuelle Save- und Game-Version.
+- Backup-Fallback bleibt erhalten.
+- Der bestehende LocalStorage-Key bleibt bewusst unverändert.
+- Visual-Migration bleibt bewusst außerhalb von FS-013.
 
 ## Tests
-Vor dem Payload lokal reproduziert:
-- JavaScript-Syntax `src/core/save.js`: `PASS`
-- JavaScript-Syntax `tests/save.test.js`: `PASS`
-- Save-Migration-Core: 9/9 `PASS`
+Save-Migration-Core:
+`PASS` – 9/9 Subtests
 
-Die vollständige vorhandene Node-Test-Suite muss durch den Installer erneut ausgeführt werden.
+Komplette Node-Test-Suite im Installer:
+`PASS` – 77/77 Subtests
 
-Vollständige Repository-Test-Suite vor Installer:
-`NOT TESTED`
+Installer-Workflow:
+`PASS`
+
+Remote-Push-Verifikation:
+`PASS`
 
 Browser:
 `NOT TESTED`
@@ -66,11 +64,13 @@ Gameplay auf Gerät:
 Mobile/Touch:
 `NOT TESTED`
 
-## Commit-Nachricht
-`FS-013: Introduce save schema v2 migrations`
+## Bekannte Grenzen
+- Unbekannte zusätzliche Save-Felder werden aktuell weiterhin vom Deep-Merge übernommen.
+- Tiefe Typ-/Wertevalidierung folgt in FS-014.
+- Die Visual-Migration bleibt bis FS-015 in `main.js`.
+- Der LocalStorage-Key enthält aus Kompatibilitätsgründen weiterhin `v1`.
 
-## STOP
-Nach erfolgreichem Installer-Commit:
-`READY_FOR_REVIEW`
+## Abschluss
+FS-013 ist abgeschlossen und `APPROVED`.
 
-FS-014 darf erst nach separatem ChatGPT-Review von FS-013 gestartet werden.
+FS-014 wurde nicht automatisch gestartet und benötigt eine separate Freigabe von Lukas.
