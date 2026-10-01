@@ -45,4 +45,20 @@ export class CropSystem {
   getStorage(cropId) {
     return this.get(cropId).storage;
   }
+
+  getGrowthDuration(cropId) {
+    return this.get(cropId).growthMs;
+  }
+
+  getYieldAmount(cropId) {
+    return this.get(cropId).yield;
+  }
+
+  getFertilizerRules(cropId) {
+    return this.get(cropId).fertilizer;
+  }
+
+  getVisualStages(cropId) {
+    return this.get(cropId).visualStages;
+  }
 }

@@ -6,30 +6,42 @@
 ## Ausgangs-SHA
 `90c88257f77ba6b97c98ef58cac2bcfa6da21880`
 
+## Erstimplementierung
+`974c7f296917b88ffa974be5ec22c4f9dc8f42ba`
+
+## Korrektur-Basis
+`974c7f296917b88ffa974be5ec22c4f9dc8f42ba`
+
 ## Version
 `0.3.0-dev`
 
 ## Ziel
-Die Identität und grundlegenden Metadaten der aktuellen Pflanzenart aus verstreuten Hardcodes in einen kleinen zentralen Crop-Kern überführen, ohne den sichtbaren Gameplay-Ablauf bereits umzubauen.
+Die zentrale Definition der aktuellen Pflanzenart vollständig als Domain-Datenquelle bereitstellen,
+ohne den sichtbaren Gameplay-Ablauf bereits umzubauen.
 
-## Neue Source-Dateien
+## Source-Dateien
 - `src/data/crops.js`
 - `src/systems/crops.js`
 
-## Neue Tests
+## Tests
 - `tests/crops.test.js`
 
-## Aktueller Crop-Katalog
-FS-008 enthält bewusst nur die bereits vorhandene Pflanze:
-
-### `wheat`
+## Zentral definierter Weizen
+- Crop-ID: `wheat`
 - Anzeigename: `Weizen`
 - Saatgut-Item: `wheatSeed`
 - Ernte-Item: `wheat`
 - Ziellager: `silo`
 - Freischaltung: Level 1
+- Basis-Wachstum: 5:00
+- Ertrag: 10 Weizen
+- Dünger ab Level 4
+- nach Dünger: 2:00 Restwachstum
+- Düngen nur bei mehr als 2:20 Restzeit
+- vier zentrale Growing-Visual-Stufen bei 20%, 45%, 70% und 100%
 
-Weitere Pflanzen werden nicht vorgezogen.
+Die Definitionen werden in FS-009 bis FS-011 schrittweise tatsächlich in Gameplay, Wachstum,
+Renderer und Ernte verwendet. FS-008 selbst verändert noch kein sichtbares Gameplay.
 
 ## CropSystem API
 - `has(cropId)`
@@ -40,19 +52,10 @@ Weitere Pflanzen werden nicht vorgezogen.
 - `getSeedItem(cropId)`
 - `getHarvestItem(cropId)`
 - `getStorage(cropId)`
-
-Unbekannte Crop-IDs erhalten keinen stillen Fallback.
-
-## Bewusst nicht im Crop-Katalog
-Noch nicht zentralisiert werden:
-- Wachstumsdauer
-- Düngerregeln
-- Ertrag
-- Verkaufspreise
-- Saatgutpreise
-
-Begründung:
-Diese Werte gehören zu den Folgetickets für Growth, Harvest und Economy-Integration. FS-008 soll keine späteren Gameplay-Tickets vorziehen und insbesondere die bekannte aktuelle Weizen-Zeit nicht nebenbei verändern.
+- `getGrowthDuration(cropId)`
+- `getYieldAmount(cropId)`
+- `getFertilizerRules(cropId)`
+- `getVisualStages(cropId)`
 
 ## Bewusst nicht verändert
 - `src/Game.js`
@@ -60,27 +63,19 @@ Diese Werte gehören zu den Folgetickets für Growth, Harvest und Economy-Integr
 - `src/core/save.js`
 - `src/systems/fields.js`
 - `src/systems/timeSystems.js`
-- Inventory
-- Economy
-- Missionen
-- Vehicles
+- Economy / Inventory
+- Missionen / Vehicles
 - Renderer / UI
-- Welt / Kamera / Assets
+- Kamera / Welt / Assets
 - sichtbarer Spielablauf
 
-## Tests
-- CropSystem: 8 Unit-Subtests
-- vorhandene Economy-, Field- und Inventory-Tests werden vom Installer erneut ausgeführt
-- JavaScript-Syntax
-- JSON-Validierung
-- Scope-/Hash-/Base-SHA-Prüfung
-
-Browser: `NOT TESTED`
-Gameplay: `NOT TESTED`
-Mobile: `NOT TESTED`
+## Review-Hinweis
+Die Erstimplementierung bestand alle technischen Tests, war gegenüber dem bestehenden
+State-Audit aber zu schmal. Diese Korrektur ergänzt die dort geforderten zentralen
+Crop-Werte, ohne Folgetickets funktional vorwegzunehmen.
 
 ## STOP
-Nach dem Implementierungs-Commit:
+Nach dem Korrektur-Commit erneut:
 `READY_FOR_REVIEW`
 
-FS-009 darf nicht automatisch gestartet werden.
+FS-009 darf erst nach erfolgreichem Review gestartet werden.

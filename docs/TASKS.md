@@ -15,9 +15,11 @@ Status:
 `READY_FOR_REVIEW`
 
 Hinweis:
-Crop System implementiert und wartet nach dem Commit auf externes ChatGPT-Review.
+Die Erstimplementierung wurde technisch erfolgreich installiert.
+Im Review wurde die zentrale Crop-Definition entsprechend dem bestehenden State-Audit ergänzt.
+FS-008 wartet nach dem Korrektur-Commit erneut auf ChatGPT-Review.
 
-FS-009 ist bereits vorbereitet, aber noch nicht freigegeben und darf erst nach dem FS-008-Review gestartet werden.
+FS-009 ist vorbereitet, aber noch nicht freigegeben.
 
 ---
 
@@ -27,64 +29,25 @@ FS-009 ist bereits vorbereitet, aber noch nicht freigegeben und darf erst nach d
 Status:
 `APPROVED`
 
-Commit:
-`aa2269b4175383f0cae3b590cf97cd4f6d195da2`
-
-Baseline:
-`5e6dc7757ab95d5aa7344d1b61e30f16a65407ab`
-
 ## `FS-002` – AI Development System
 Status:
 `APPROVED`
-
-Implementierungs-Commit:
-`cc49e8d4202660515ae8339b2ee32e728c4c08e1`
-
-Review-Commit:
-`be8b3af156f5dcb4143c170f01e1fc82b43aff0f`
-
-Review:
-`APPROVED` by ChatGPT
 
 ## `FS-003` – State Audit
 Status:
 `APPROVED`
 
-Implementierungs-Commit:
-`c9d99b1bd2b682b8e268d54fb2e939bb901c0779`
-
-Review:
-`APPROVED` by ChatGPT
-
 ## `FS-004` – Event ID Audit
 Status:
 `APPROVED`
-
-Implementierungs-Commit:
-`53511b7efab5cdf67b78696cd1591a94a55e4798`
-
-Review:
-`APPROVED` by ChatGPT
 
 ## `FS-005` – Economy Core
 Status:
 `APPROVED`
 
-Implementierungs-Commit:
-`16b3966eb5404fae6224ed3d6b292c63b9e71d6f`
-
-Review:
-`APPROVED` by ChatGPT
-
 ## `FS-006` – Inventory Core
 Status:
 `APPROVED`
-
-Implementierungs-Commit:
-`239288df3a6d5da642b5730076b8f0fc35a6bc49`
-
-Review:
-`APPROVED` by ChatGPT
 
 ## `FS-007` – Field System Core
 Status:
@@ -92,9 +55,6 @@ Status:
 
 Implementierungs-Commit:
 `90c88257f77ba6b97c98ef58cac2bcfa6da21880`
-
-Review:
-`APPROVED` by ChatGPT
 
 ---
 
