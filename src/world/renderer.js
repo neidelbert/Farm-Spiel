@@ -1,5 +1,5 @@
 import { Renderer as LegacyRenderer } from './legacyRenderer.js';
-import { POINTS, ROAD_PATHS } from '../data/worldData.js';
+import { RUNTIME_POINTS as POINTS, WORLD_ROADS as ROAD_PATHS, WORLD_RUNTIME } from '../data/worldRuntime.js';
 import { MODULAR_WORLD as WORLD } from '../data/modularWorld.js';
 import { ASSET_CATALOG } from '../data/assetCatalog.js';
 import { AssetLoader, ASSETS } from './assetLoader.js';
@@ -26,12 +26,12 @@ export class Renderer extends LegacyRenderer {
  for(const f of WORLD.fields){const no=f.id==='field1'?fieldNo(s,now):f.id==='field2'?140:142;objects.push(this.sprite(ID(no),f.x,f.y,240,{id:f.id,layer:3}));}
  for(const v of s.vehicles){let n=VEHICLES[v.type]||177;if(v.type==='tractor'&&s.machines.tractorRestored)n=171;if(v.type==='combine'&&s.machines.combineRestored)n=173;objects.push(this.sprite(ID(n),v.x,v.y,v.type==='combine'?115:95,{layer:10,flip:Math.cos(v.heading)>0,id:v.id}));if(v.type==='tractor'&&v.eventId==='first_sow')objects.push(this.sprite(ID(174),v.x+60,v.y-10,70,{layer:10}));}
  if(s.machines.tractor&&!s.vehicles.some(v=>v.type==='tractor'))objects.push(this.sprite(ID(s.machines.tractorRestored?171:170),POINTS.garage.x,POINTS.garage.y,83,{layer:10}));
- if(s.level>=4&&!s.vehicles.some(v=>v.type==='combine'))objects.push(this.sprite(ID(s.machines.combineRestored?173:172),1870,2590,110,{layer:10}));
+ if(s.level>=4&&!s.vehicles.some(v=>v.type==='combine')){const p=WORLD_RUNTIME.parking.combine;objects.push(this.sprite(ID(s.machines.combineRestored?173:172),p.x,p.y,110,{layer:10}));}
  if(!s.vehicles.some(v=>v.type==='scrap_truck'))objects.push(this.sprite(ID(183),POINTS.loading.x,POINTS.loading.y,105,{layer:10,id:'loading'}));
  for(const o of objects){if(o.id==='silo')o.asset=ID(s.silo.level>=3?88:s.silo.level>=2?87:86);if(o.id==='garage')o.asset=ID(s.garage.level>=3?91:s.garage.level>=2?90:89);if(o.id==='barn')o.asset=ID(s.barn.level>=3?85:s.barn.level>=2?84:83);}
  objects.sort((a,b)=>(a.layer||10)-(b.layer||10)||a.y-b.y);for(const o of objects)if(inBox(o,box))this.polish.drawShadow(c,o);this.visibleCount=0;for(const o of objects){if(!inBox(o,box))continue;this.drawSprite(c,o,now);this.visibleCount++;}
  if(s.construction){const o=this.interactions.get(s.construction.building);if(o){const b=o.bounds;c.save();c.strokeStyle='#ffdc81';c.lineWidth=5;c.setLineDash([10,8]);c.strokeRect(b.left-12,b.top-12,b.width+24,b.height+24);c.restore();}}
- if(s.world.scrapVisible){this.drawSprite(c,this.sprite(ID(191),1550,2430,85),now);this.drawSprite(c,this.sprite(ID(189),1520,2410,38),now);this.drawSprite(c,this.sprite(ID(188),1560,2405,42),now);}
+ if(s.world.scrapVisible){const p=WORLD_RUNTIME.scrap;this.drawSprite(c,this.sprite(ID(191),p.pile.x,p.pile.y,85),now);this.drawSprite(c,this.sprite(ID(189),p.crate.x,p.crate.y,38),now);this.drawSprite(c,this.sprite(ID(188),p.barrel.x,p.barrel.y,42),now);}
  this.drawEventIcons(c,s,now);if(this.selected&&now-this.lastTap<900){const b=this.selected.bounds;c.strokeStyle='#fff4b5';c.lineWidth=4/z;c.beginPath();c.ellipse((b.left+b.right)/2,b.bottom-6,Math.max(18,b.width*.42),18,0,0,Math.PI*2);c.stroke();}if(s.world.debug)this.drawInteractionDebug(c);c.restore();this.drawWeatherOverlay(c,s,now);this.measureFps();
  }
  terrain(c,b,now){c.fillStyle=this.pattern48||'#1ca7c1';c.fillRect(b.l,b.t,b.r-b.l,b.b-b.t);c.strokeStyle='#e0cf94';c.lineWidth=55;c.stroke(this.land);c.fillStyle=this.pattern1||'#98af4e';c.fill(this.land);c.save();c.clip(this.land);c.strokeStyle='#aaa977';c.lineWidth=190;c.stroke(this.river);c.strokeStyle='#5ececf';c.lineWidth=166;c.stroke(this.river);c.strokeStyle=this.pattern48||'#27b4d0';c.lineWidth=140;c.stroke(this.river);c.restore();

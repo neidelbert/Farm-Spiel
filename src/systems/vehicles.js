@@ -1,4 +1,4 @@
-import { POINTS } from "../data/worldData.js";
+import { RUNTIME_POINTS as POINTS } from "../data/worldRuntime.js";
 
 const DEFAULT_SPEEDS = {
   scrap_truck: 78,

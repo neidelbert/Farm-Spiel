@@ -9,24 +9,17 @@
 ---
 
 # Aktuelles Ticket
-`FS-019` – World UI Position Alignment
-
-Status:
-`APPROVED`
-
-Implementierungs-Commit:
-`226d06d13716f4a608e6444e01f289cf96d6cd9a`
-
-Review:
-`APPROVED` by ChatGPT
-
-Hinweis:
-FS-019 ist nach Implementierung und Review abgeschlossen.
-
-Als nächster Roadmap-Schritt ist vorgesehen:
 `FS-020` – World Source Consolidation
 
-FS-020 wurde noch nicht gestartet.
+Status:
+`READY_FOR_REVIEW`
+
+Ausgangs-SHA:
+`d58b8e954b3c127be391d3f636c25156d56c13a8`
+
+Hinweis:
+World Source Consolidation ist für den Installer vorbereitet. Nach erfolgreichem Commit wartet FS-020 auf ChatGPT-Review.
+Ein Folgeticket darf vorher nicht gestartet werden.
 
 ---
 
@@ -251,10 +244,23 @@ Review-Abschluss:
 Review:
 `APPROVED` by ChatGPT
 
+## `FS-019` – World UI Position Alignment
+Status:
+`APPROVED`
+
+Implementierungs-Commit:
+`226d06d13716f4a608e6444e01f289cf96d6cd9a`
+
+Review-Abschluss:
+`d58b8e954b3c127be391d3f636c25156d56c13a8`
+
+Review:
+`APPROVED` by ChatGPT
+
 ---
 
 # Geplante Reihenfolge
-- `FS-020` – World Source Consolidation
+Nach FS-020 wird das nächste Ticket separat aus dem dann aktuellen Repository-Stand geplant.
 
 ---
 

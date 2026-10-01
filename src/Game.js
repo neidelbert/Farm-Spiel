@@ -1,5 +1,5 @@
 import { CONFIG } from "./config.js";
-import { POINTS } from "./data/worldData.js";
+import { RUNTIME_POINTS as POINTS } from "./data/worldRuntime.js";
 import { MissionSystem } from "./systems/missions.js";
 import { VehicleSystem, routeTo, farmMachineRoute } from "./systems/vehicles.js";
 import { TimeSystems } from "./systems/timeSystems.js";
