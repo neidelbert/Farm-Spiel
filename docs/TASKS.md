@@ -9,20 +9,17 @@
 ---
 
 # Aktuelles Ticket
-`FS-012` – Selling Core
+`FS-013` – Save Schema v2 / Migration Core
 
 Status:
-`APPROVED`
+`READY_FOR_REVIEW`
 
-Implementierungs-Commit:
-`cce69a1a16b0efec7e333a8c101945f3dbfdc543`
-
-Review:
-`APPROVED` by ChatGPT
+Ausgangs-SHA:
+`31b3166191ad6114804bb61392b17db84f2fd258`
 
 Hinweis:
-FS-012 ist nach Implementierung und Review abgeschlossen.
-FS-013 ist vorbereitet, wurde aber nicht gestartet und benötigt eine separate Freigabe von Lukas.
+Save Schema v2 / Migration Core ist für den Installer vorbereitet. Nach erfolgreichem Commit wartet FS-013 auf ChatGPT-Review.
+FS-014 darf vorher nicht gestartet werden.
 
 ---
 
@@ -156,10 +153,22 @@ Review-Abschluss:
 Review:
 `APPROVED` by ChatGPT
 
+## `FS-012` – Selling Core
+Status:
+`APPROVED`
+
+Implementierungs-Commit:
+`cce69a1a16b0efec7e333a8c101945f3dbfdc543`
+
+Review-Abschluss:
+`31b3166191ad6114804bb61392b17db84f2fd258`
+
+Review:
+`APPROVED` by ChatGPT
+
 ---
 
 # Geplante Reihenfolge
-- `FS-013` – Save Schema v2 / Migration Core
 - `FS-014` – Save Migration Hardening
 - `FS-015` – Save/Visual Migration Cleanup
 

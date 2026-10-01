@@ -1,8 +1,10 @@
 import { CONFIG } from "../config.js";
 
+export const CURRENT_SAVE_VERSION = 2;
+
 export function createInitialState() {
   return {
-    saveVersion: 1,
+    saveVersion: CURRENT_SAVE_VERSION,
     gameVersion: CONFIG.version,
     lastSavedAt: Date.now(),
     level: 1,
@@ -59,31 +61,45 @@ export function createInitialState() {
   };
 }
 
+const MIGRATIONS = Object.freeze({
+  1: migrateV1ToV2,
+});
+
 export class SaveManager {
   load() {
-    const raw = localStorage.getItem(CONFIG.saveKey);
-    if (!raw) return createInitialState();
-
-    try {
-      const parsed = JSON.parse(raw);
-      return migrateAndSanitize(parsed);
-    } catch (error) {
-      console.warn("Save defekt, Backup wird versucht.", error);
-      const backup = localStorage.getItem(CONFIG.backupKey);
-      if (backup) {
-        try { return migrateAndSanitize(JSON.parse(backup)); } catch {}
+    const primary = readStoredSave(CONFIG.saveKey);
+    if (primary !== null) {
+      try {
+        return migrateAndSanitize(primary);
+      } catch (error) {
+        console.warn("Save defekt oder inkompatibel, Backup wird versucht.", error);
       }
-      return createInitialState();
     }
+
+    const backup = readStoredSave(CONFIG.backupKey);
+    if (backup !== null) {
+      try {
+        return migrateAndSanitize(backup);
+      } catch (error) {
+        console.warn("Backup defekt oder inkompatibel.", error);
+      }
+    }
+
+    return createInitialState();
   }
 
   save(state) {
     const copy = structuredCloneSafe(state);
+    copy.saveVersion = CURRENT_SAVE_VERSION;
+    copy.gameVersion = CONFIG.version;
     copy.lastSavedAt = Date.now();
 
     const existing = localStorage.getItem(CONFIG.saveKey);
     if (existing) localStorage.setItem(CONFIG.backupKey, existing);
     localStorage.setItem(CONFIG.saveKey, JSON.stringify(copy));
+
+    state.saveVersion = copy.saveVersion;
+    state.gameVersion = copy.gameVersion;
     state.lastSavedAt = copy.lastSavedAt;
   }
 
@@ -93,13 +109,64 @@ export class SaveManager {
   }
 }
 
-function migrateAndSanitize(input) {
+export function migrateAndSanitize(input) {
+  if (!input || typeof input !== "object" || Array.isArray(input)) {
+    throw new Error("Save payload must be an object.");
+  }
+
+  let working = structuredCloneSafe(input);
+  let version = getSaveVersion(working);
+
+  if (version > CURRENT_SAVE_VERSION) {
+    throw new Error(`Unsupported future save version: ${version}`);
+  }
+
+  while (version < CURRENT_SAVE_VERSION) {
+    const migration = MIGRATIONS[version];
+    if (typeof migration !== "function") {
+      throw new Error(`Missing save migration from version ${version}.`);
+    }
+
+    working = migration(working);
+    const nextVersion = getSaveVersion(working);
+    if (nextVersion <= version) {
+      throw new Error(`Save migration ${version} did not advance the schema.`);
+    }
+    version = nextVersion;
+  }
+
   const base = createInitialState();
-  const merged = deepMerge(base, input || {});
+  const merged = deepMerge(base, working);
   merged.gameVersion = CONFIG.version;
-  merged.saveVersion = 1;
+  merged.saveVersion = CURRENT_SAVE_VERSION;
   if (!Array.isArray(merged.vehicles)) merged.vehicles = [];
   return merged;
+}
+
+function migrateV1ToV2(input) {
+  return {
+    ...input,
+    saveVersion: 2,
+  };
+}
+
+function getSaveVersion(input) {
+  if (input.saveVersion === undefined || input.saveVersion === null) return 1;
+  if (!Number.isInteger(input.saveVersion) || input.saveVersion < 1) {
+    throw new Error(`Invalid save version: ${input.saveVersion}`);
+  }
+  return input.saveVersion;
+}
+
+function readStoredSave(key) {
+  const raw = localStorage.getItem(key);
+  if (!raw) return null;
+  try {
+    return JSON.parse(raw);
+  } catch (error) {
+    console.warn(`Save-Slot ${key} enthält ungültiges JSON.`, error);
+    return null;
+  }
 }
 
 function deepMerge(base, extra) {
