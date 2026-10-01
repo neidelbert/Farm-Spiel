@@ -6,6 +6,9 @@ const WHEAT_VISUAL_STAGES = Object.freeze([
 ]);
 
 const WHEAT_FERTILIZER = Object.freeze({
+  item: "fertilizer",
+  packSize: 2,
+  priceKey: "fertilizerPackPrice",
   unlockLevel: 4,
   growthMs: 2 * 60 * 1000,
   cutoffRemainingMs: 2 * 60 * 1000 + 20 * 1000,

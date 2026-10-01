@@ -334,3 +334,44 @@ test("SaveManager.load falls back to a new game when both save slots are unusabl
   assert.equal(state.level, 1);
   assert.equal(state.money, 0);
 });
+
+
+test("schema v3 adds fertilizer defaults to older current saves", () => {
+  const migrated = migrateAndSanitize({
+    saveVersion: 3,
+    level: 4,
+    inventory: { scrap: 0, wheatSeed: 1 },
+    field: {
+      status: "growing",
+      crop: "wheat",
+      plantedAt: 1000,
+      readyAt: 301000,
+      harvestProgress: 0,
+    },
+  });
+
+  assert.equal(migrated.inventory.fertilizer, 0);
+  assert.equal(migrated.field.fertilized, false);
+  assert.equal(migrated.field.fertilizedAt, null);
+});
+
+test("schema v3 preserves valid fertilizer inventory and field application state", () => {
+  const migrated = migrateAndSanitize({
+    saveVersion: 3,
+    level: 4,
+    inventory: { scrap: 0, wheatSeed: 0, fertilizer: 3 },
+    field: {
+      status: "growing",
+      crop: "wheat",
+      plantedAt: 1000,
+      readyAt: 121000,
+      harvestProgress: 0,
+      fertilized: true,
+      fertilizedAt: 1000,
+    },
+  });
+
+  assert.equal(migrated.inventory.fertilizer, 3);
+  assert.equal(migrated.field.fertilized, true);
+  assert.equal(migrated.field.fertilizedAt, 1000);
+});

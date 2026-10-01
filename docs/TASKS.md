@@ -9,21 +9,17 @@
 ---
 
 # Aktuelles Ticket
-`FS-015` – Save/Visual Migration Cleanup
+`FS-016` – Fertilizer Core
 
 Status:
-`APPROVED`
+`READY_FOR_REVIEW`
 
-Implementierungs-Commit:
-`f8e7323547a5674a8592ac16925fcc0466c7b763`
-
-Review:
-`APPROVED` by ChatGPT
+Ausgangs-SHA:
+`52492a49b70ae062b63e8b68450b869dc7949913`
 
 Hinweis:
-FS-015 ist nach Implementierung und Review abgeschlossen.
-Als nächster sinnvoller Core-Schritt ist FS-016 vorgesehen.
-FS-016 wurde noch nicht gestartet und benötigt eine separate Freigabe von Lukas.
+Fertilizer Core ist für den Installer vorbereitet. Nach erfolgreichem Commit wartet FS-016 auf ChatGPT-Review.
+Ein Folgeticket darf vorher nicht gestartet werden.
 
 ---
 
@@ -196,10 +192,23 @@ Review-Abschluss:
 Review:
 `APPROVED` by ChatGPT
 
+## `FS-015` – Save/Visual Migration Cleanup
+Status:
+`APPROVED`
+
+Implementierungs-Commit:
+`f8e7323547a5674a8592ac16925fcc0466c7b763`
+
+Review-Abschluss:
+`52492a49b70ae062b63e8b68450b869dc7949913`
+
+Review:
+`APPROVED` by ChatGPT
+
 ---
 
 # Geplante Reihenfolge
-- `FS-016` – Fertilizer Core
+Nach FS-016 wird das nächste Ticket separat aus dem dann aktuellen Repository-Stand geplant.
 
 ---
 

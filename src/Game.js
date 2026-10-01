@@ -10,6 +10,7 @@ import { CropSystem } from "./systems/crops.js";
 import { PlantingSystem } from "./systems/planting.js";
 import { HarvestSystem } from "./systems/harvest.js";
 import { SellingSystem } from "./systems/selling.js";
+import { FertilizerSystem } from "./systems/fertilizer.js";
 
 export class Game {
   constructor({ state, save, events, camera, renderer, ui }) {
@@ -30,6 +31,7 @@ export class Game {
     this.planting = new PlantingSystem({ state, economy: this.economy, inventory: this.inventory, fields: this.fields, crops: this.crops });
     this.harvest = new HarvestSystem({ state, inventory: this.inventory, fields: this.fields, crops: this.crops });
     this.selling = new SellingSystem({ economy: this.economy, inventory: this.inventory });
+    this.fertilizer = new FertilizerSystem({ state, economy: this.economy, inventory: this.inventory, fields: this.fields, crops: this.crops });
 
     this.lastAutosave = performance.now();
     this.lastFrame = performance.now();
@@ -177,11 +179,35 @@ export class Game {
     const price=this.planting.getSeedPrice("wheat");
     const deliveryPending=this.vehicles.hasEvent("seed_delivery");
     const can=this.planting.canBuySeed("wheat") && !deliveryPending;
+    const fertilizerUnlocked=this.fertilizer.isUnlocked("wheat");
+    const fertilizerOffer=this.fertilizer.getOffer("wheat");
+    const fertilizerCanBuy=this.fertilizer.canBuyPack("wheat");
+    const actions=[
+      {label:deliveryPending?"Lieferung unterwegs":can?`Weizensaat · ${price} F`:"Nicht genug Geld für Saat",disabled:!can,onClick:()=>this.buyWheatSeed()}
+    ];
+    if(fertilizerUnlocked){
+      actions.push({
+        label:fertilizerCanBuy?`${fertilizerOffer.packSize} Säcke Dünger · ${fertilizerOffer.price} F`:`${fertilizerOffer.price} F für ${fertilizerOffer.packSize} Säcke Dünger benötigt`,
+        disabled:!fertilizerCanBuy,
+        onClick:()=>this.buyFertilizerPack()
+      });
+    }
+    const fertilizerBody=fertilizerUnlocked
+      ?`<div class="status">🌱 Dünger: <strong>${fertilizerOffer.available}</strong> Sack<br>${fertilizerOffer.packSize} Säcke kosten ${fertilizerOffer.price} F · 1 Sack pro Feld</div>`
+      :`<div class="status">🌱 Dünger wird ab Level ${fertilizerOffer.unlockLevel} freigeschaltet.</div>`;
     this.ui.panel({
-      eyebrow:"Hofkatalog",title:`${crop.name}saatgut`,
-      body:`<p>Ein Sack reicht für ein Feld.</p><div class="status">Preis: <strong>${price} F</strong><br>Bestand: ${this.inventory.getQuantity("inventory",crop.seedItem)} Sack<br>Lieferung: sofort per Postauto</div>`,
-      actions:[{label:deliveryPending?"Lieferung unterwegs":can?`Für ${price} F bestellen`:"Nicht genug Geld",disabled:!can,onClick:()=>this.buyWheatSeed()}]
+      eyebrow:"Hofkatalog",title:"Saatgut & Dünger",
+      body:`<div class="status">🌾 ${crop.name}saatgut: <strong>${this.inventory.getQuantity("inventory",crop.seedItem)}</strong> Sack<br>Preis: ${price} F · 1 Sack pro Feld<br>Lieferung: sofort per Postauto</div>${fertilizerBody}`,
+      actions
     });
+  }
+
+  buyFertilizerPack() {
+    const result=this.fertilizer.buyPack("wheat");
+    if(!result)return;
+    this.ui.closeSheet();
+    this.ui.toast(`🌱 +${result.amount} Säcke Dünger · -${result.cost} F`);
+    this.save.save(this.state);
   }
 
   buyWheatSeed() {
@@ -220,8 +246,30 @@ export class Game {
       });
     }
     if(f.status==="growing"){
-      const sec=Math.max(0,Math.ceil((f.readyAt-Date.now())/1000));
-      return this.ui.panel({eyebrow:"Feld 1",title:"Weizen wächst",body:`<div class="status">Restzeit: <strong>${formatTime(sec)}</strong></div>`,actions:[]});
+      const now=Date.now();
+      const sec=Math.max(0,Math.ceil((f.readyAt-now)/1000));
+      const fertilizer=this.fertilizer.getFieldStatus(now);
+      const actions=[];
+      if(fertilizer.unlocked && !fertilizer.fertilized){
+        if(fertilizer.canApply){
+          actions.push({label:"1 Sack Dünger verwenden",onClick:()=>this.applyFertilizer()});
+        }else if(fertilizer.reason==="no_fertilizer"){
+          actions.push({label:"Dünger im Hofkatalog kaufen",secondary:true,onClick:()=>this.openCatalog()});
+        }else if(fertilizer.reason==="too_late"){
+          actions.push({label:"Zu spät zum Düngen",disabled:true,onClick:()=>{}});
+        }
+      }
+      const fertilizerText=fertilizer.fertilized
+        ?"Gedüngt ✓"
+        :fertilizer.unlocked
+          ?`${fertilizer.available} Sack verfügbar`
+          :`ab Level ${this.fertilizer.getOffer("wheat").unlockLevel}`;
+      return this.ui.panel({
+        eyebrow:"Feld 1",
+        title:"Weizen wächst",
+        body:`<div class="status">Restzeit: <strong>${formatTime(sec)}</strong><br>🌱 Dünger: ${fertilizerText}</div>`,
+        actions
+      });
     }
     if(f.status==="ready"){
       const plan=this.harvest.getPlan();
@@ -267,6 +315,17 @@ export class Game {
     ]);
     this.vehicles.spawn({id:uid("tractor"),type:"tractor",eventId:"sow_wheat",route});
     this.ui.closeSheet();this.ui.toast("🚜 Traktor und Sämaschine fahren zum Feld.");
+  }
+
+  applyFertilizer() {
+    const result=this.fertilizer.apply(Date.now());
+    if(!result){
+      this.ui.toast("🌱 Dünger kann jetzt nicht verwendet werden.");
+      return;
+    }
+    this.ui.closeSheet();
+    this.ui.toast(`🌱 Feld gedüngt · neue Restzeit ${formatTime(Math.ceil(result.remainingMs/1000))}`);
+    this.save.save(this.state);
   }
 
   startHarvest() {

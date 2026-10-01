@@ -65,6 +65,9 @@ test("wheat centralizes the existing harvest yield", () => {
 test("wheat centralizes fertilizer rules", () => {
   const rules = new CropSystem().getFertilizerRules("wheat");
   assert.deepEqual(rules, {
+    item: "fertilizer",
+    packSize: 2,
+    priceKey: "fertilizerPackPrice",
     unlockLevel: 4,
     growthMs: 2 * 60 * 1000,
     cutoffRemainingMs: 2 * 60 * 1000 + 20 * 1000,

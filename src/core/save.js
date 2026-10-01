@@ -34,7 +34,7 @@ export function createInitialState() {
     tutorialComplete: false,
     achievements: { firstHarvest:false, firstEggs:false, tutorialDone:false },
 
-    inventory: { scrap: 1, wheatSeed: 0 },
+    inventory: { scrap: 1, wheatSeed: 0, fertilizer: 0 },
     silo: { level: 1, capacity: 40, items: { wheat: 0 } },
     barn: { level: 1, capacity: 30, items: { flour: 0, eggs: 0, milk: 0 } },
     garage: { level: 1 },
@@ -53,6 +53,8 @@ export function createInitialState() {
       plantedAt: null,
       readyAt: null,
       harvestProgress: 0,
+      fertilized: false,
+      fertilizedAt: null,
     },
 
     mill: { unlocked: false, busy: false, readyAt: null, outputReady: 0 },
@@ -217,6 +219,7 @@ function sanitizeState(input) {
 
   out.inventory.scrap = integerNonNegative(input.inventory?.scrap, base.inventory.scrap);
   out.inventory.wheatSeed = integerNonNegative(input.inventory?.wheatSeed, base.inventory.wheatSeed);
+  out.inventory.fertilizer = integerNonNegative(input.inventory?.fertilizer, base.inventory.fertilizer);
 
   out.silo.level = integerAtLeast(input.silo?.level, 1, base.silo.level);
   out.silo.capacity = integerAtLeast(input.silo?.capacity, 1, base.silo.capacity);
@@ -239,6 +242,10 @@ function sanitizeState(input) {
   out.field.plantedAt = nullableFiniteNonNegative(input.field?.plantedAt);
   out.field.readyAt = nullableFiniteNonNegative(input.field?.readyAt);
   out.field.harvestProgress = clampFinite(input.field?.harvestProgress, 0, 1, base.field.harvestProgress);
+  out.field.fertilized = typeof input.field?.fertilized === "boolean"
+    ? input.field.fertilized
+    : base.field.fertilized;
+  out.field.fertilizedAt = nullableFiniteNonNegative(input.field?.fertilizedAt);
 
   out.mill.readyAt = nullableFiniteNonNegative(input.mill?.readyAt);
   out.mill.outputReady = integerNonNegative(input.mill?.outputReady, base.mill.outputReady);

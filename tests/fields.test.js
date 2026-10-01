@@ -11,6 +11,8 @@ function createState(overrides = {}) {
       plantedAt: null,
       readyAt: null,
       harvestProgress: 0,
+      fertilized: false,
+      fertilizedAt: null,
       ...overrides,
     },
   };
@@ -35,6 +37,8 @@ test("prepared field can enter sowing exactly once", () => {
 
   assert.equal(fields.startSowing(), true);
   assert.equal(state.field.status, FIELD_STATUS.SOWING);
+  assert.equal(state.field.fertilized, false);
+  assert.equal(state.field.fertilizedAt, null);
   assert.equal(fields.startSowing(), false);
 });
 
@@ -51,7 +55,7 @@ test("startGrowing rejects invalid crop and timestamps without mutation", () => 
 });
 
 test("sowing field can enter growing with explicit crop and timestamps", () => {
-  const state = createState({ status: FIELD_STATUS.SOWING });
+  const state = createState({ status: FIELD_STATUS.SOWING, fertilized: true, fertilizedAt: 500 });
   const fields = new FieldSystem(state);
 
   assert.equal(fields.startGrowing({ crop: "wheat", plantedAt: 1000, readyAt: 5000 }), true);
@@ -60,6 +64,8 @@ test("sowing field can enter growing with explicit crop and timestamps", () => {
   assert.equal(state.field.plantedAt, 1000);
   assert.equal(state.field.readyAt, 5000);
   assert.equal(state.field.harvestProgress, 0);
+  assert.equal(state.field.fertilized, false);
+  assert.equal(state.field.fertilizedAt, null);
 });
 
 test("growing field can become ready and clears readyAt", () => {
@@ -112,6 +118,8 @@ test("resetPrepared clears cycle data only after harvest", () => {
     plantedAt: 1000,
     readyAt: null,
     harvestProgress: 1,
+    fertilized: true,
+    fertilizedAt: 1100,
   });
   const fields = new FieldSystem(state);
 
@@ -122,6 +130,8 @@ test("resetPrepared clears cycle data only after harvest", () => {
     plantedAt: null,
     readyAt: null,
     harvestProgress: 0,
+    fertilized: false,
+    fertilizedAt: null,
   });
 });
 

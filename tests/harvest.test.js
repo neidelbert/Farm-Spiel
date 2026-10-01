@@ -16,8 +16,10 @@ function createState(overrides = {}) {
       plantedAt: 1_000,
       readyAt: null,
       harvestProgress: 0,
+      fertilized: false,
+      fertilizedAt: null,
     },
-    inventory: { wheatSeed: 0 },
+    inventory: { wheatSeed: 0, fertilizer: 0 },
     silo: { capacity: 40, items: { wheat: 0 } },
     barn: { capacity: 30, items: { flour: 0, eggs: 0, milk: 0 } },
   };
@@ -27,6 +29,7 @@ function createState(overrides = {}) {
     ...overrides,
     machines: { ...base.machines, ...(overrides.machines || {}) },
     field: { ...base.field, ...(overrides.field || {}) },
+    inventory: { ...base.inventory, ...(overrides.inventory || {}) },
     silo: {
       ...base.silo,
       ...(overrides.silo || {}),
@@ -116,7 +119,7 @@ test("harvest lifecycle uses FieldSystem transitions", () => {
 
 test("successful storage adds full yield and resets field for replanting", () => {
   const state = createState({
-    field: { status: "harvested" },
+    field: { status: "harvested", fertilized: true, fertilizedAt: 1_500 },
     silo: { capacity: 40, items: { wheat: 12 } },
   });
   const { harvest } = createSystem(state);
@@ -129,6 +132,8 @@ test("successful storage adds full yield and resets field for replanting", () =>
     plantedAt: null,
     readyAt: null,
     harvestProgress: 0,
+    fertilized: false,
+    fertilizedAt: null,
   });
 });
 
@@ -157,6 +162,7 @@ test("exactly enough silo space accepts the complete harvest", () => {
   assert.equal(harvest.storeHarvest(), true);
   assert.equal(state.silo.items.wheat, 40);
   assert.equal(state.field.status, "prepared");
+  assert.equal(state.field.fertilized, false);
 });
 
 test("unknown field crop cannot start or store a harvest", () => {

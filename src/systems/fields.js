@@ -36,6 +36,8 @@ export class FieldSystem {
     if (!this.is(FIELD_STATUS.PREPARED)) return false;
     this.state.field.status = FIELD_STATUS.SOWING;
     this.state.field.harvestProgress = 0;
+    this.state.field.fertilized = false;
+    this.state.field.fertilizedAt = null;
     return true;
   }
 
@@ -51,6 +53,23 @@ export class FieldSystem {
     this.state.field.plantedAt = plantedAt;
     this.state.field.readyAt = readyAt;
     this.state.field.harvestProgress = 0;
+    this.state.field.fertilized = false;
+    this.state.field.fertilizedAt = null;
+    return true;
+  }
+
+  applyFertilizer({ appliedAt, readyAt }) {
+    if (!this.is(FIELD_STATUS.GROWING) || this.state.field.fertilized === true) return false;
+    if (!Number.isFinite(appliedAt) || !Number.isFinite(readyAt) || readyAt <= appliedAt) {
+      return false;
+    }
+    if (!Number.isFinite(this.state.field.readyAt) || readyAt >= this.state.field.readyAt) {
+      return false;
+    }
+
+    this.state.field.fertilized = true;
+    this.state.field.fertilizedAt = appliedAt;
+    this.state.field.readyAt = readyAt;
     return true;
   }
 
@@ -95,6 +114,8 @@ export class FieldSystem {
     this.state.field.plantedAt = null;
     this.state.field.readyAt = null;
     this.state.field.harvestProgress = 0;
+    this.state.field.fertilized = false;
+    this.state.field.fertilizedAt = null;
     return true;
   }
 }
