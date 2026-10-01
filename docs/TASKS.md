@@ -9,15 +9,15 @@
 ---
 
 # Aktuelles Ticket
-Kein Implementierungsticket aktiv.
-
-Nächster geplanter Schritt:
 `FS-007` – Field System Core
 
 Status:
-`PLANNED`
+`READY_FOR_REVIEW`
 
-FS-007 ist noch nicht freigegeben und darf erst nach separater Vorbereitung gestartet werden.
+Hinweis:
+Field System Core implementiert und wartet nach dem Commit auf externes ChatGPT-Review.
+
+FS-008 ist noch nicht freigegeben.
 
 ---
 
@@ -89,7 +89,6 @@ Review:
 ---
 
 # Geplante Reihenfolge
-- `FS-007` – Field System Core
 - `FS-008` – Crop System
 - `FS-009` – Planting Flow
 - `FS-010` – Growth + Offline
