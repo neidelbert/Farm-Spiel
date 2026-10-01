@@ -1,10 +1,13 @@
 # FS-014 – Save Migration Hardening
 
 ## Status
-`READY_FOR_REVIEW`
+`APPROVED`
 
 ## Ausgangs-SHA
 `97521efe5c0bbbcf5e4dd347f9bde4ab1759f6c9`
+
+## Implementierungs-Commit
+`b9479f9fb275f2b33dda952c349dc99a3a91f4c5`
 
 ## Version
 `0.3.0-dev`
@@ -15,49 +18,41 @@ Den in FS-013 eingeführten Save-v2-Migrationskern gegen beschädigte, unplausib
 ## Was ändert sich im Spiel?
 Beschädigte oder falsche Speicherwerte werden beim Laden und Speichern kontrolliert bereinigt. Dadurch gelangen weniger kaputte Daten in Gameplay-Systeme und alte Spielstände bleiben stabiler.
 
-## Geänderte Source-Dateien
-- `src/core/save.js`
+## Review
+Durchgeführt durch:
+ChatGPT
 
-## Geänderte Tests
-- `tests/save.test.js`
+Ergebnis:
+`APPROVED`
 
-## Technische Anforderungen
-- Root- und verschachtelte unbekannte Felder werden anhand des aktuellen State-Templates entfernt.
-- `world.visualVersion` bleibt als ausdrücklich erlaubter Übergangswert erhalten, bis FS-015 die Visual-Migration zentralisiert.
-- Boolesche Felder akzeptieren nur echte Booleans.
-- Numerische Kernwerte müssen endlich und in gültigen Bereichen liegen.
-- Negative Farmercoins, Inventarmengen, Lagerbestände und Tier-/Produktionsmengen werden nicht übernommen.
-- Level/Kapazitäten müssen gültige positive Ganzzahlen sein.
-- Feldstatus wird auf bekannte Zustände begrenzt.
-- Feld-Timestamps akzeptieren nur null oder nichtnegative endliche Zahlen.
-- Harvest-Fortschritt wird auf 0..1 begrenzt.
-- Wetter wird auf die aktuell bekannten Werte begrenzt.
-- TimeScale muss positiv sein.
-- Construction und sideOrder akzeptieren nur Objekt oder null.
-- Vehicles werden strukturell geprüft.
-- Ein Fahrzeug mit kaputter Route, ungültiger Geschwindigkeit oder fehlenden Kern-IDs wird verworfen.
-- Vehicle-Routenpunkte benötigen gültige x/y-Koordinaten.
+Geprüft:
+- Implementierungs-Commit ist direkter Nachfolger des FS-013-Abschluss-SHA.
+- Commit-Nachricht entspricht dem Ticket.
+- Exakt die fünf vorgesehenen Dateien wurden verändert bzw. neu angelegt.
+- Unbekannte Root-/Nested-Felder werden entfernt.
+- `world.visualVersion` bleibt bis FS-015 erhalten.
+- Kernwerte werden auf Typ und gültige Bereiche geprüft.
+- Negative Geld-/Inventar-/Lagerwerte werden nicht übernommen.
+- Feldstatus, Wetter, TimeScale und Harvest-Fortschritt werden validiert.
+- Construction/sideOrder akzeptieren nur Objekt oder null.
+- Kaputte Fahrzeuge und Routen werden verworfen.
 - Unbekannte Vehicle-Felder werden entfernt.
-- `SaveManager.save()` sanitisiert ebenfalls vor dem Schreiben und synchronisiert den bereinigten Stand zurück in den Live-State.
-- Backup- und v1→v2-Migrationslogik aus FS-013 bleibt erhalten.
-- LocalStorage-Key bleibt unverändert.
-- Visual-Migration in `main.js` bleibt bis FS-015 unverändert.
-
-## Bewusst nicht umgesetzt
-- keine Verschiebung der Visual-Migration
-- keine LocalStorage-Key-Umbenennung
-- keine Gameplay-Änderung
-- keine Welt-/Renderer-/Kameraänderung
-- keine inhaltliche Mission-Reparatur
-- keine semantische Rekonstruktion stark beschädigter Spielstände
+- `SaveManager.save()` sanitisiert und synchronisiert den Live-State.
+- Backup- und Save-v2-Migrationslogik aus FS-013 bleibt erhalten.
+- Kein Gameplay-, Welt-, Renderer- oder Kamera-Scope wurde vorgezogen.
 
 ## Tests
-Vor Payload:
-- JavaScript-Syntax `src/core/save.js`: `PASS`
-- JavaScript-Syntax `tests/save.test.js`: `PASS`
-- Save-Hardening-Tests: `PASS`
+Save-Hardening:
+`PASS` – 15/15 Subtests
 
-Die vollständige Repository-Test-Suite muss der Installer erneut ausführen.
+Komplette Node-Test-Suite im Installer:
+`PASS` – 83/83 Subtests
+
+Installer-Workflow:
+`PASS`
+
+Remote-Push-Verifikation:
+`PASS`
 
 Browser:
 `NOT TESTED`
@@ -68,11 +63,12 @@ Gameplay auf Gerät:
 Mobile/Touch:
 `NOT TESTED`
 
-## Commit-Nachricht
-`FS-014: Harden save migration sanitization`
+## Bekannte Grenzen
+- Construction und sideOrder werden nur strukturell, nicht tief semantisch validiert.
+- `world.visualVersion` bleibt ein Übergangssonderfall bis FS-015.
+- LocalStorage-Key bleibt aus Kompatibilitätsgründen unverändert.
 
-## STOP
-Nach erfolgreichem Installer-Commit:
-`READY_FOR_REVIEW`
+## Abschluss
+FS-014 ist abgeschlossen und `APPROVED`.
 
-FS-015 darf erst nach separatem ChatGPT-Review von FS-014 gestartet werden.
+FS-015 wurde nicht automatisch gestartet und benötigt eine separate Freigabe von Lukas.
