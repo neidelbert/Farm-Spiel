@@ -9,24 +9,17 @@
 ---
 
 # Aktuelles Ticket
-`FS-018` – World Interaction Core
-
-Status:
-`APPROVED`
-
-Implementierungs-Commit:
-`b79c6256672b416092e9bd1bf709fb40a9e7f5c5`
-
-Review:
-`APPROVED` by ChatGPT
-
-Hinweis:
-FS-018 ist nach Implementierung und Review abgeschlossen.
-
-Als nächster Roadmap-Schritt ist vorgesehen:
 `FS-019` – World UI Position Alignment
 
-FS-019 wurde noch nicht gestartet.
+Status:
+`READY_FOR_REVIEW`
+
+Ausgangs-SHA:
+`bd4e140618d52b9c903e18e5556590de08760f7b`
+
+Hinweis:
+World UI Position Alignment ist für den Installer vorbereitet. Nach erfolgreichem Commit wartet FS-019 auf ChatGPT-Review.
+Ein Folgeticket darf vorher nicht gestartet werden.
 
 ---
 
@@ -238,10 +231,23 @@ Review-Abschluss:
 Review:
 `APPROVED` by ChatGPT
 
+## `FS-018` – World Interaction Core
+Status:
+`APPROVED`
+
+Implementierungs-Commit:
+`b79c6256672b416092e9bd1bf709fb40a9e7f5c5`
+
+Review-Abschluss:
+`bd4e140618d52b9c903e18e5556590de08760f7b`
+
+Review:
+`APPROVED` by ChatGPT
+
 ---
 
 # Geplante Reihenfolge
-- `FS-019` – World UI Position Alignment
+Nach FS-019 wird das nächste Ticket separat aus dem dann aktuellen Repository-Stand geplant.
 
 ---
 

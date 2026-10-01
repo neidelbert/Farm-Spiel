@@ -5,6 +5,7 @@ import { ASSET_CATALOG } from '../data/assetCatalog.js';
 import { AssetLoader, ASSETS } from './assetLoader.js';
 import { FarmPolish } from './farmPolish.js';
 import { WorldInteractionCore } from './interactions.js';
+import { collectWorldEventIcons, getWorldEventIconPosition } from './worldUi.js';
 const ID=n=>ASSET_CATALOG.assets[n-1].id;
 const VEHICLES={scrap_truck:179,flatbed:182,post_van:178,delivery_van:177,builder_van:181,animal_transport:180,tractor:170,combine:172};
 export class Renderer extends LegacyRenderer {
@@ -40,8 +41,10 @@ export class Renderer extends LegacyRenderer {
  show(o,s,z){if(o.id.startsWith('field'))return false;if(o.category==='animal'){if(o.asset===ID(157)&&!s.chickens.unlocked)return false;if(o.asset===ID(162)&&!s.cows.unlocked)return false;}if(z<.25&&o.category==='prop')return false;if(z<.3&&o.width<45)return false;return true;}
  sprite(asset,x,y,width,extra={}){const a=ASSETS.get(asset);return {asset,x,y,width,height:width*a.height/a.width,anchor:[.5,.93],...extra};}
  drawSprite(c,o,now){if(o.fence){this.polish.drawFence(c,o);return;}const im=this.loader.get(o.asset,Math.ceil(o.width*this.camera.zoom*this.dpr));if(!im)return;const a=ASSETS.get(o.asset),height=o.width*a.height/a.width,ax=o.anchor?.[0]??.5,ay=o.anchor?.[1]??.93;let y=o.y;if(o.animated==='foam')y+=Math.sin(now/1300+o.x)*3;c.save();c.translate(o.x,y);if(o.flip)c.scale(-1,1);if(o.category==='animal'&&this.camera.zoom>.4)c.rotate(Math.sin(now/1500+o.x)*.012);c.drawImage(im,-o.width*ax,-height*ay,o.width,height);c.restore();}
+ drawEventIcons(c,s,now){for(const {id,icon} of collectWorldEventIcons(s)){const p=getWorldEventIconPosition(this.interactions,id,now);if(!p)continue;drawWorldPin(c,p.x,p.y,icon);}}
  drawInteractionDebug(c){c.save();c.font='9px monospace';c.lineWidth=1;for(const o of this.interactions.all()){const b=o.bounds;c.strokeStyle=o.kind==='area'?'rgba(80,210,255,.85)':'rgba(255,60,60,.85)';c.strokeRect(b.left,b.top,b.width,b.height);c.fillStyle='#fff';c.fillText(o.id,b.left,b.top-3);}c.strokeStyle='rgba(255,230,40,.7)';c.lineWidth=2;for(const path of ROAD_PATHS){c.beginPath();c.moveTo(path[0][0],path[0][1]);for(let i=1;i<path.length;i++)c.lineTo(path[i][0],path[i][1]);c.stroke();}c.restore();}
  objectAt(x,y){const a=this.interactions.hitTest(x,y);this.selected=a;this.lastTap=Date.now();return a;}
 }
+function drawWorldPin(ctx,x,y,icon){ctx.save();ctx.font='14px sans-serif';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillStyle='rgba(255,250,229,.97)';ctx.beginPath();ctx.arc(x,y,13,0,Math.PI*2);ctx.fill();ctx.strokeStyle='rgba(40,50,35,.35)';ctx.lineWidth=1.5;ctx.stroke();ctx.fillStyle='#29452f';ctx.fillText(icon,x,y+.5);ctx.restore();}
 function inBox(o,b){return o.x+o.width/2>b.l&&o.x-o.width/2<b.r&&o.y+30>b.t&&o.y-o.height<b.b;}
 function fieldNo(s,now){const f=s.field;if(f.status==='harvested')return 139;if(['ready','harvesting','harvest_starting'].includes(f.status))return 138;if(f.status==='sowing')return 133;if(f.status==='growing'){const p=(now-f.plantedAt)/Math.max(1,f.readyAt-f.plantedAt);return p<.2?134:p<.45?135:p<.7?136:137;}return f.status==='prepared'?132:131;}
