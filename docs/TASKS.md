@@ -9,20 +9,17 @@
 ---
 
 # Aktuelles Ticket
-`FS-011` – Harvest Core
+`FS-012` – Selling Core
 
 Status:
-`APPROVED`
+`READY_FOR_REVIEW`
 
-Implementierungs-Commit:
-`aacdfa225c138ba06aa966d415accee52ac1f82e`
-
-Review:
-`APPROVED` by ChatGPT
+Ausgangs-SHA:
+`ffbbbeb78d38308914112b10ac93bd36d588c617`
 
 Hinweis:
-FS-011 ist nach Implementierung und Review abgeschlossen.
-FS-012 ist vorbereitet, wurde aber nicht gestartet und benötigt eine separate Freigabe von Lukas.
+Selling Core ist für den Installer vorbereitet. Nach erfolgreichem Commit wartet FS-012 auf ChatGPT-Review.
+Ein Folgeticket darf vorher nicht gestartet werden.
 
 ---
 
@@ -143,10 +140,23 @@ Review-Abschluss:
 Review:
 `APPROVED` by ChatGPT
 
+## `FS-011` – Harvest Core
+Status:
+`APPROVED`
+
+Implementierungs-Commit:
+`aacdfa225c138ba06aa966d415accee52ac1f82e`
+
+Review-Abschluss:
+`ffbbbeb78d38308914112b10ac93bd36d588c617`
+
+Review:
+`APPROVED` by ChatGPT
+
 ---
 
 # Geplante Reihenfolge
-- `FS-012` – Selling Core
+Nach FS-012 wird das nächste Ticket separat aus dem aktuellen Repository-Stand geplant.
 
 ---
 

@@ -9,6 +9,7 @@ import { FieldSystem } from "./systems/fields.js";
 import { CropSystem } from "./systems/crops.js";
 import { PlantingSystem } from "./systems/planting.js";
 import { HarvestSystem } from "./systems/harvest.js";
+import { SellingSystem } from "./systems/selling.js";
 
 export class Game {
   constructor({ state, save, events, camera, renderer, ui }) {
@@ -28,6 +29,7 @@ export class Game {
     this.crops = new CropSystem();
     this.planting = new PlantingSystem({ state, economy: this.economy, inventory: this.inventory, fields: this.fields, crops: this.crops });
     this.harvest = new HarvestSystem({ state, inventory: this.inventory, fields: this.fields, crops: this.crops });
+    this.selling = new SellingSystem({ economy: this.economy, inventory: this.inventory });
 
     this.lastAutosave = performance.now();
     this.lastFrame = performance.now();
@@ -122,8 +124,7 @@ export class Game {
     } else if(this.state.missionId==="first_harvest") {
       actions.push({label:"Zum Feld",onClick:()=>{this.ui.closeSheet();this.camera.focus(POINTS.field.x,POINTS.field.y);}});
     } else if(this.state.missionId==="first_order") {
-      const can=this.inventory.has("silo","wheat",5);
-      actions.push({label:can?"5 Weizen liefern · +35 F":"5 Weizen benötigt",disabled:!can,onClick:()=>this.startFirstOrder()});
+      actions.push({label:"Zum Verkaufstruck",onClick:()=>{this.ui.closeSheet();this.camera.focus(POINTS.loading.x,POINTS.loading.y);}});
     } else if(this.state.missionId==="storage_upgrade") {
       actions.push({label:"Zum Silo",onClick:()=>{this.ui.closeSheet();this.camera.focus(POINTS.silo.x,POINTS.silo.y);}});
     } else if(this.state.missionId==="miller_intro") {
@@ -303,12 +304,6 @@ export class Game {
     return true;
   }
 
-  startFirstOrder() {
-    if(this.vehicles.hasEvent("first_order")||!this.inventory.remove("silo","wheat",5))return;
-    this.vehicles.spawn({id:uid("order"),type:"delivery_van",eventId:"first_order",route:routeTo(POINTS.loading,{tag:"order_pickup",waitMs:3000})});
-    this.ui.closeSheet();this.ui.toast("📦 5 Weizen sind für den Auftrag reserviert.");
-  }
-
   openSilo() {
     const s=this.state.silo;
     const actions=[];
@@ -483,7 +478,45 @@ export class Game {
 
   openLoading() {
     const active=this.state.vehicles.filter(v=>["scrap_truck","flatbed","post_van","delivery_van"].includes(v.type));
-    this.ui.panel({eyebrow:"Hof",title:"Lieferplatz",body:`<div class="status">Aktive Lieferfahrzeuge: ${active.length}</div>`,actions:[]});
+    const offer=this.selling.getOffer("wheat");
+    const pending=this.vehicles.hasEvent("sell_wheat");
+    const can=this.selling.canSell("wheat")&&!pending;
+    const label=pending
+      ?"Verkauf läuft"
+      :can
+        ?`${offer.amount} ${offer.name} verkaufen · +${offer.reward} F`
+        :`${offer.amount} ${offer.name} benötigt`;
+
+    this.ui.panel({
+      eyebrow:"Hofverkauf",
+      title:"Verkaufstruck",
+      body:`<p>Hier verkaufst du Hofware unabhängig von Aufträgen.</p><div class="status">🌾 Weizen im Silo: <strong>${offer.available}</strong><br>Verkauf: ${offer.amount} Weizen → <strong>${offer.reward} F</strong><br>Aktive Lieferfahrzeuge: ${active.length}</div>`,
+      actions:[{label,disabled:!can,onClick:()=>this.startWheatSale()}]
+    });
+  }
+
+  startWheatSale() {
+    if(this.vehicles.hasEvent("sell_wheat"))return;
+
+    const result=this.selling.sell("wheat");
+    if(!result)return;
+
+    this.vehicles.spawn({
+      id:uid("sale"),
+      type:"delivery_van",
+      eventId:"sell_wheat",
+      route:routeTo(POINTS.loading,{tag:"order_pickup",waitMs:3000}),
+    });
+
+    const wasTutorialSale=this.state.missionId==="first_order";
+    this.ui.closeSheet();
+    this.ui.toast(`🚚 ${result.amount} Weizen verkauft · +${result.reward} F`);
+
+    if(wasTutorialSale){
+      this.advanceTo(6,"storage_upgrade",`Erster Verkauf erledigt · +${result.reward} F`);
+    }else{
+      this.save.save(this.state);
+    }
   }
 
   openLandmark(id) {
@@ -549,10 +582,6 @@ export class Game {
         break;
       case "friend_gift":
         this.advanceTo(3,"first_seed","Deine ersten Maschinen sind da.");
-        break;
-      case "first_order":
-        this.economy.credit(this.economy.getValue("firstOrderReward"));
-        this.advanceTo(6,"storage_upgrade","Erster Auftrag erledigt · +35 F");
         break;
       case "chicken_delivery":
         this.advanceTo(8,"eggs_baker","Die Hühner sind angekommen.");
