@@ -12,14 +12,17 @@
 `FS-009` – Planting Flow
 
 Status:
-`READY_FOR_REVIEW`
+`APPROVED`
 
-Ausgangs-SHA:
-`aca0c62905c69a58f9b9fcc29c0a10cb0682cb3e`
+Implementierungs-Commit:
+`fce6174e8082422e5145036d6d024b02f1e0c76d`
+
+Review:
+`APPROVED` by ChatGPT
 
 Hinweis:
-Planting Flow ist für den Installer vorbereitet. Nach erfolgreichem Commit wartet FS-009 auf ChatGPT-Review.
-FS-010 darf vorher nicht gestartet werden.
+FS-009 ist nach Implementierung und Review abgeschlossen.
+FS-010 ist vorbereitet, wurde aber nicht gestartet und benötigt eine separate Freigabe von Lukas.
 
 ---
 

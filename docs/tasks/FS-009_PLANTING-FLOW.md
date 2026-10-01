@@ -1,10 +1,13 @@
 # FS-009 – Planting Flow
 
 ## Status
-`READY_FOR_REVIEW`
+`APPROVED`
 
 ## Ausgangs-SHA
 `aca0c62905c69a58f9b9fcc29c0a10cb0682cb3e`
+
+## Implementierungs-Commit
+`fce6174e8082422e5145036d6d024b02f1e0c76d`
 
 ## Version
 `0.3.0-dev`
@@ -36,12 +39,55 @@ Der Hofkatalog und die Weizen-Aussaat funktionieren nicht mehr nur während der 
 - Saatgutpreis kommt aus `EconomySystem`.
 - Saatgut-Item und Wachstumsdauer kommen aus `CropSystem`.
 - Feldübergänge laufen über `FieldSystem`.
-- Saatgutlieferungen addieren tatsächlich jeden gekauften Sack und überschreiben keinen vorhandenen Bestand.
+- Saatgutlieferungen addieren jeden gekauften Sack und überschreiben keinen vorhandenen Bestand.
 - Tutorial-Fortschritt bleibt als optionale Reaktion in `Game.js` erhalten.
 - Der Hofkatalog bleibt während und nach der Einführung erreichbar.
 - Die Aussaat startet bei vorbereitetem Feld + vorhandenem Saatgut unabhängig von `missionId`.
 - Beim Abschluss der Aussaat wird genau ein Saatgutsack verbraucht.
 - Die Weizen-Wachstumsdauer wird beim Pflanzen aus der zentralen Crop-Definition genommen: 5:00.
+
+## Review
+Durchgeführt durch:
+ChatGPT
+
+Ergebnis:
+`APPROVED`
+
+Geprüft:
+- Implementierungs-Commit ist direkter Nachfolger des erwarteten FS-008-Abschluss-SHA.
+- Commit-Nachricht entspricht dem Ticket.
+- Genau die sechs vorgesehenen Dateien wurden verändert bzw. neu angelegt.
+- PlantingSystem enthält keine Mission-IDs.
+- Saatpreis, Saatgut-Item und Wachstumsdauer kommen aus den bestehenden Domain-Systemen.
+- Feldstatus wird über FieldSystem verändert.
+- Saatgutlieferungen stapeln vorhandenen Bestand.
+- Aussaat ist nicht mehr an `first_seed` gebunden.
+- Tutorial-Fortschritt bleibt erhalten.
+- Der alte 4-Minuten-Wert wird im neuen Planting Flow nicht mehr verwendet.
+- Weizen erhält beim Pflanzen 5:00 aus der zentralen Crop-Definition.
+- Kein FS-010-, FS-011- oder FS-012-Scope wurde funktional vorgezogen.
+
+## Tests
+Lokale Node-Test-Suite vor Installer:
+`PASS` – 40/40 Subtests
+
+PlantingSystem:
+`PASS` – 8/8 Subtests
+
+Installer-Commit-Gate:
+`PASS` – der freigegebene Installer hat den erwarteten Commit auf `develop` erzeugt.
+
+GitHub-Actions-Run-Metadaten:
+`NOT TESTED` – der konkrete Workflow-Run konnte über den aktuellen Read-Zugriff nicht separat abgefragt werden.
+
+Browser:
+`NOT TESTED`
+
+Gameplay auf Gerät:
+`NOT TESTED`
+
+Mobile/Touch:
+`NOT TESTED`
 
 ## Bewusst nicht umgesetzt
 - kein Feld-Reset nach Ernte; das gehört zu FS-011
@@ -53,24 +99,7 @@ Der Hofkatalog und die Weizen-Aussaat funktionieren nicht mehr nur während der 
 - keine Renderer-/Kamera-/Weltänderung
 - keine neue Crop-Art
 
-## Tests
-Vor dem Payload lokal reproduziert:
-- JavaScript-Syntax `src/Game.js`: `PASS`
-- JavaScript-Syntax `src/systems/planting.js`: `PASS`
-- PlantingSystem: 8/8 `PASS`
-- vorhandene + neue Node-Test-Suite: 40/40 `PASS`
+## Abschluss
+FS-009 ist abgeschlossen und `APPROVED`.
 
-Installer muss zusätzlich den vollständigen Repository-Stand erneut prüfen und testen.
-
-Browser: `NOT TESTED`
-Gameplay auf Gerät: `NOT TESTED`
-Mobile/Touch: `NOT TESTED`
-
-## Commit-Nachricht
-`FS-009: Decouple planting flow from tutorial`
-
-## STOP
-Nach erfolgreichem Installer-Commit:
-`READY_FOR_REVIEW`
-
-FS-010 darf erst nach separatem ChatGPT-Review von FS-009 gestartet werden.
+FS-010 wurde nicht automatisch gestartet und benötigt eine separate Freigabe von Lukas.

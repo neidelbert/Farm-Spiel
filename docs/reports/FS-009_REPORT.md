@@ -1,21 +1,26 @@
-# FS-009 – Development Report
+# FS-009 – Review Report
 
 ## Ticket
 `FS-009` – Planting Flow
 
 ## Status
-`READY_FOR_REVIEW`
+`APPROVED`
 
 ## Ausgangs-SHA
 `aca0c62905c69a58f9b9fcc29c0a10cb0682cb3e`
 
-## Ergebnis-SHA / Implementierungs-Commit
-`PENDING_INSTALLER_RESULT`
+## Implementierungs-Commit / Ergebnis-SHA
+`fce6174e8082422e5145036d6d024b02f1e0c76d`
 
-Der exakte Commit-SHA wird erst vom freigegebenen GitHub Ticket Installer erzeugt und im Review ergänzt. Es wird kein SHA vorgetäuscht.
+## Review
+Durchgeführt durch:
+ChatGPT
+
+Ergebnis:
+`APPROVED`
 
 ## Ergebnis
-Saatgutkauf und Aussaat wurden technisch vom Missionszustand entkoppelt.
+Saatgutkauf und Aussaat wurden erfolgreich aus der Tutorial-Mission gelöst.
 
 Neu:
 - `src/systems/planting.js`
@@ -27,30 +32,35 @@ Aktualisiert:
 - `src/Game.js`
 - `docs/TASKS.md`
 
-## Wichtige Änderungen
-- PlantingSystem bündelt Saatkauf, Saatgutannahme sowie Start und Abschluss der Aussaat.
-- Hofkatalog ist nicht mehr ausschließlich an `first_seed` gebunden.
-- Aussaat ist nicht mehr ausschließlich an `first_seed` gebunden.
-- Saatgutlieferungen stapeln vorhandene Saat korrekt.
-- `Game.js` nutzt für die Aussaat `FieldSystem` und `CropSystem` über PlantingSystem.
-- Die neue zentrale Weizen-Wachstumsdauer von 5:00 wird beim Abschluss der Aussaat verwendet.
-- Tutorial-Fortschritt bleibt erhalten, erzeugt aber die Funktion nicht mehr.
+## Was ändert sich im Spiel?
+Der Hofkatalog und die Weizen-Aussaat funktionieren nicht mehr nur während der ersten Saat-Mission; ein vorbereitetes Feld mit Saatgut kann unabhängig vom aktuellen Missionszustand bepflanzt werden.
 
-## Tests vor Installer-Ausführung
-JavaScript-Syntax `src/Game.js`:
-`PASS`
+## Review-Ergebnis
+Geprüft wurde:
+- erwarteter Parent-SHA stimmt
+- Commit-Nachricht stimmt
+- Commit-Scope entspricht exakt FS-009
+- PlantingSystem ist missionsunabhängig
+- EconomySystem liefert den Saatgutpreis
+- CropSystem liefert Saatgut-Item und 5-Minuten-Wachstumsdauer
+- FieldSystem übernimmt die Feldstatus-Übergänge
+- mehrfache Saatgutlieferungen stapeln korrekt
+- genau ein Saatgutsack wird beim Abschluss der Aussaat verbraucht
+- Tutorial-Reaktion bleibt optional in `Game.js`
+- keine Growth-/Offline-, Harvest-, Selling-, Save-, Renderer-, Kamera- oder Welt-Erweiterung wurde vorgezogen
 
-JavaScript-Syntax `src/systems/planting.js`:
-`PASS`
-
+## Tests
 PlantingSystem:
 `PASS` – 8/8 Subtests
 
-Vorhandene + neue lokale Node-Test-Suite:
+Vorhandene + neue lokale Node-Test-Suite vor Installer:
 `PASS` – 40/40 Subtests
 
-GitHub Ticket Installer:
-`NOT TESTED` – wird erst beim Hochladen dieses Payloads ausgeführt.
+Installer-Commit-Gate:
+`PASS` – Commit `fce6174e8082422e5145036d6d024b02f1e0c76d` wurde durch den freigegebenen Farm-Spiel Ticket Installer auf `develop` erzeugt.
+
+GitHub-Actions-Run-Metadaten:
+`NOT TESTED` – der konkrete Workflow-Run konnte mit dem aktuellen Read-Zugriff nicht separat abgefragt werden.
 
 Browser:
 `NOT TESTED`
@@ -62,9 +72,9 @@ Mobile/Touch:
 `NOT TESTED`
 
 ## Bekannte Probleme / Risiken
-- `CONFIG.timings.wheatGrowthMs` enthält weiterhin den alten 4-Minuten-Wert. Der neue Planting Flow verwendet ihn nicht mehr; Bereinigung und zentrale Zeitlogik bleiben FS-010.
-- Ein nach der Ernte auf `harvested` stehendes Feld wird in FS-009 bewusst noch nicht automatisch wieder vorbereitet. Der vollständige Ernte-/Reset-Lifecycle bleibt FS-011.
-- Dadurch ist der Planting Flow missionsunabhängig, der komplette wiederholbare Farming-Loop aber noch nicht abgeschlossen.
+- `CONFIG.timings.wheatGrowthMs` enthält weiterhin den alten 4-Minuten-Wert. FS-009 verwendet ihn beim Pflanzen nicht mehr. Die zentrale Zeit-/Offline-Bereinigung gehört zu FS-010.
+- Nach einer Ernte bleibt das Feld weiterhin im Zustand `harvested`, bis FS-011 den vollständigen Ernte-/Reset-Lifecycle umsetzt.
+- Der Planting Flow ist damit missionsunabhängig, der komplette wiederholbare Farming-Loop aber noch nicht vollständig geschlossen.
 
 ## Bewusst nicht umgesetzt
 - kein Offline-Cap / keine neue Offline-Simulation
@@ -75,5 +85,6 @@ Mobile/Touch:
 - keine Welt-/Renderer-/Kameraänderung
 
 ## Abschluss
-Nach erfolgreichem Installer-Run wartet FS-009 auf ChatGPT-Review.
-FS-010 wurde nicht begonnen.
+FS-009 ist abgeschlossen und `APPROVED`.
+
+FS-010 wurde nicht automatisch begonnen.
