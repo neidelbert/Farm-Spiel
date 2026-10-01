@@ -1,10 +1,13 @@
 # FS-019 – World UI Position Alignment
 
 ## Status
-`READY_FOR_REVIEW`
+`APPROVED`
 
 ## Ausgangs-SHA
 `bd4e140618d52b9c903e18e5556590de08760f7b`
+
+## Implementierungs-Commit
+`226d06d13716f4a608e6444e01f289cf96d6cd9a`
 
 ## Version
 `0.3.0-dev`
@@ -15,53 +18,43 @@ Weltgebundene UI-Hinweise und Kamera-Fokusziele an dieselben aktuellen Weltposit
 ## Was ändert sich im Spiel?
 Hinweis-Symbole wie `!`, 🌾, 📦, 🥚, 🥛 oder Upgrade-Pfeile erscheinen über dem tatsächlich sichtbaren Gebäude/Feld. Die Schnell-Fokusbuttons für Hof, Dorf und Hafen springen zu den aktuellen `MODULAR_WORLD.destinations` statt zu alten Hardcodes.
 
-## Geänderte Source-Dateien
-- `src/main.js`
-- `src/world/renderer.js`
-- `src/world/worldUi.js` – neu
+## Review
+Durchgeführt durch:
+ChatGPT
 
-## Neue Tests
-- `tests/world-ui.test.js`
-- `tests/world-ui-source.test.js`
+Ergebnis:
+`APPROVED`
 
-## Technische Anforderungen
-- Neues `worldUi`-Modul bündelt weltgebundene UI-Positionslogik.
-- Bestehende Event-Icon-Regeln werden funktional beibehalten.
-- Event-Icon-Positionen werden aus `WorldInteractionCore`-Bounds abgeleitet.
-- Fehlende Interaktionsziele unterdrücken das Icon sicher statt auf alte Koordinaten zurückzufallen.
-- Der aktuelle Renderer überschreibt die geerbte Legacy-`drawEventIcons()`-Positionierung.
-- Event-Icons im aktuellen Renderer verwenden keine `WORLD_OBJECTS`.
+Geprüft:
+- Implementierungs-Commit ist direkter Nachfolger des FS-018-Abschluss-SHA.
+- Commit-Nachricht entspricht dem Ticket.
+- Exakt acht vorgesehene Dateien wurden geändert bzw. neu angelegt.
+- Neues `worldUi`-Modul bündelt weltgebundene UI-Positionen.
+- Bestehende Event-Icon-Regeln bleiben funktional erhalten.
+- Event-Icon-Positionen werden aus `WorldInteractionCore.bounds` abgeleitet.
+- Fehlende Interaction-Ziele erzeugen kein falsch positioniertes Fallback-Icon.
+- Der aktuelle Renderer überschreibt die Legacy-Event-Icon-Positionierung.
+- Aktuelle Event-Icons verwenden keine `WORLD_OBJECTS`.
 - Hof-/Dorf-/Hafen-Fokus verwendet `MODULAR_WORLD.destinations`.
-- Overview-Fokus verwendet Mittelpunkt und Maße der aktuellen Welt.
-- Overview-Zoom bleibt responsive zum Viewport.
-- Fokusziele werden bei Klick neu berechnet, damit Größen-/Orientierungsänderungen berücksichtigt werden.
-- Keine Gameplay-Regel, Mission, Economy, Save-Daten oder Gebäude-/Objektposition wird geändert.
-- LegacyRenderer bleibt unangetastet; der aktuelle Renderer übernimmt nur die weltgebundene UI-Positionierung.
+- Overview-Fokus wird aus Weltmaßen und aktuellem Viewport berechnet.
+- Alte Fokus-Hardcodes wurden entfernt.
+- Keine Gameplay-, Save-, Economy-, Kamera- oder Objektpositionsänderung wurde vorgezogen.
 
-## Bewusst nicht umgesetzt
-- keine Weltobjektverschiebung
-- keine neuen Icons
-- keine UI-Neugestaltung
-- keine neue Kamera-Steuerung
-- keine Map-Erweiterung
-- keine Placement-/Collision-Logik
-- keine vollständige Entfernung des LegacyRenderer
-- keine Änderung an Fahrzeugpositionen oder Routen
-
-## Tests vor Payload
-JavaScript-Syntax:
-`PASS`
-- `src/main.js`
-- `src/world/renderer.js`
-- `src/world/worldUi.js`
-- `tests/world-ui.test.js`
-- `tests/world-ui-source.test.js`
-
+## Tests
 World-UI-Fokustests:
 `PASS` – 13/13 Subtests
 
-Vollständige Repository-Test-Suite:
-`NOT TESTED` – wird vom GitHub Ticket Installer ausgeführt.
+Komplette Node-Test-Suite im Installer:
+`PASS` – 143/143 Subtests
+
+Installer-Workflow:
+`PASS`
+
+Push:
+`PASS`
+
+Remote-Verifikation:
+`PASS`
 
 Browser:
 `NOT TESTED`
@@ -72,11 +65,13 @@ Gameplay auf Gerät:
 Mobile/Touch:
 `NOT TESTED`
 
-## Commit-Nachricht
-`FS-019: Align world UI positions`
+## Bekannte Grenzen
+- `POINTS`, `MODULAR_WORLD`, `FarmPolish` und einzelne Renderer-Hardcodes existieren weiterhin parallel.
+- LegacyRenderer enthält weiterhin ältere Welt-/UI-Hilfen, die im aktuellen Renderer teilweise überschrieben werden.
+- Die vollständige World-Source-Konsolidierung ist noch offen.
 
-## STOP
-Nach erfolgreichem Installer-Commit:
-`READY_FOR_REVIEW`
+## Abschluss
+FS-019 ist abgeschlossen und `APPROVED`.
 
-Das Folgeticket darf erst nach separatem ChatGPT-Review gestartet werden.
+Nächster Roadmap-Schritt:
+`FS-020` – World Source Consolidation.
