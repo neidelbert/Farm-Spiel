@@ -9,17 +9,22 @@
 ---
 
 # Aktuelles Ticket
+Kein Ticket in Umsetzung.
+
+Zuletzt abgeschlossen:
 `FS-024` – Tutorial Target Quick Focus
 
 Status:
-`READY_FOR_REVIEW`
+`APPROVED`
 
-Ausgangs-SHA:
-`db3b652095ee49df019a4a153b3dc9985b3357bf`
+Implementierungs-Commit:
+`a287357238d53abbe786eda66192d3fa02f1182d`
 
-Hinweis:
-Das aktuelle Tutorialziel kann bewusst angewählt und weich mit der Kamera fokussiert werden.
-Kein Folgeticket vor dem Review starten.
+Review:
+`APPROVED` by ChatGPT
+
+Tests:
+`PASS` – 185/185
 
 ---
 
@@ -316,11 +321,29 @@ Tests:
 `PASS` – 177/177
 
 
+
+## `FS-024` – Tutorial Target Quick Focus
+Status:
+`APPROVED`
+
+Implementierungs-Commit:
+`a287357238d53abbe786eda66192d3fa02f1182d`
+
+Review:
+`APPROVED` by ChatGPT
+
+Tests:
+`PASS` – 185/185
+
+
 ---
 
 # Geplante Reihenfolge
-- FS-024 Review abschließen
-- Danach nächstes Ticket aus aktuellem Stand festlegen
+- `FS-025` – Tutorial Objective HUD
+
+## FS-025 – Vorschau
+Das aktive Tutorialziel wird zusätzlich als kompakter Auftrag direkt im HUD angezeigt.
+Titel und nächster Schritt bleiben sichtbar, ohne die Spielwelt zu verdecken.
 
 ---
 
