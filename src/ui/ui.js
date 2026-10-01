@@ -6,6 +6,7 @@ export class UI {
       level: document.querySelector("#hudLevel"),
       xp: document.querySelector("#hudXp"),
       money: document.querySelector("#hudMoney"),
+      tutorialFocus: document.querySelector("#tutorialFocusBtn"),
       menuBtn: document.querySelector("#menuBtn"),
       sheet: document.querySelector("#sheet"),
       sheetEyebrow: document.querySelector("#sheetEyebrow"),
@@ -36,6 +37,7 @@ export class UI {
     const pct = Math.max(0,Math.min(100,(state.xp/state.xpNeeded)*100));
     this.el.xp.style.width = `${pct}%`;
     this.el.devBadge.classList.toggle("hidden", !state.settings.dev);
+    this.el.tutorialFocus?.classList.toggle("hidden", state.tutorialComplete === true);
   }
 
   panel({eyebrow="",title,body="",actions=[]}) {

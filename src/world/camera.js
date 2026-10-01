@@ -12,6 +12,7 @@ export class Camera {
     this.viewportHeight = 1;
     this.vx = 0;
     this.vy = 0;
+    this.focusTarget = null;
   }
 
   getEffectiveMinZoom() {
@@ -30,6 +31,7 @@ export class Camera {
 
   panScreen(dx, dy) {
     if (!Number.isFinite(dx) || !Number.isFinite(dy)) return;
+    this.focusTarget = null;
     this.x -= dx / this.zoom;
     this.y -= dy / this.zoom;
     this.clamp();
@@ -47,10 +49,29 @@ export class Camera {
   stop() {
     this.vx = 0;
     this.vy = 0;
+    this.focusTarget = null;
   }
 
   update(dt) {
     if (!Number.isFinite(dt) || dt <= 0) return;
+
+    if (this.focusTarget) {
+      const step = Math.min(dt, 0.05);
+      const dx = this.focusTarget.x - this.x;
+      const dy = this.focusTarget.y - this.y;
+      if (Math.hypot(dx, dy) < 1) {
+        this.x = this.focusTarget.x;
+        this.y = this.focusTarget.y;
+        this.focusTarget = null;
+        this.clamp();
+        return;
+      }
+      const blend = 1 - Math.exp(-8 * step);
+      this.x += dx * blend;
+      this.y += dy * blend;
+      this.clamp();
+      return;
+    }
 
     if (Math.abs(this.vx) < 4) this.vx = 0;
     if (Math.abs(this.vy) < 4) this.vy = 0;
@@ -71,6 +92,7 @@ export class Camera {
     if (!Number.isFinite(screenX) || !Number.isFinite(screenY) || !Number.isFinite(target)) {
       return;
     }
+    this.focusTarget = null;
 
     const next = clamp(target, this.getEffectiveMinZoom(), this.maxZoom);
     if (Math.abs(next - this.zoom) < 0.0001) return;
@@ -96,6 +118,25 @@ export class Camera {
       x: (x - this.x) * this.zoom + this.viewportWidth / 2,
       y: (y - this.y) * this.zoom + this.viewportHeight / 2,
     };
+  }
+
+  focusSmooth(x, y) {
+    if (!Number.isFinite(x) || !Number.isFinite(y)) return false;
+
+    const halfWidth = this.viewportWidth / (2 * this.zoom);
+    const halfHeight = this.viewportHeight / (2 * this.zoom);
+    const minX = halfWidth;
+    const maxX = this.worldWidth - halfWidth;
+    const minY = halfHeight;
+    const maxY = this.worldHeight - halfHeight;
+
+    this.focusTarget = {
+      x: minX >= maxX ? this.worldWidth / 2 : clamp(x, minX, maxX),
+      y: minY >= maxY ? this.worldHeight / 2 : clamp(y, minY, maxY),
+    };
+    this.vx = 0;
+    this.vy = 0;
+    return true;
   }
 
   focus(x, y) {

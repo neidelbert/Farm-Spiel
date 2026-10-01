@@ -8,6 +8,7 @@ import { UI } from "./ui/ui.js";
 import { Game } from "./Game.js";
 import { MODULAR_WORLD } from "./data/modularWorld.js";
 import { createWorldFocusDestinations } from "./world/worldUi.js";
+import { getTutorialTarget } from "./systems/tutorialGuidance.js";
 
 const canvas = document.querySelector("#game");
 const ui = new UI();
@@ -53,6 +54,14 @@ window.addEventListener("visibilitychange", () => {
 window.addEventListener("beforeunload", () => save.save(state));
 
 document.querySelector("#menuBtn").addEventListener("click", () => ui.showMenu(true));
+document.querySelector("#tutorialFocusBtn").addEventListener("click", () => {
+  const target = getTutorialTarget(state);
+  if (!target) return;
+  const interaction = renderer.interactions.get(target.id);
+  if (!interaction) return;
+  camera.focusSmooth(interaction.x, interaction.y);
+  ui.toast(`★ Ziel: ${target.label}`);
+});
 
 document.querySelectorAll("[data-menu]").forEach(btn => {
   btn.addEventListener("click", () => {

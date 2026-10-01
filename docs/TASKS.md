@@ -9,22 +9,17 @@
 ---
 
 # Aktuelles Ticket
-Kein Ticket in Umsetzung.
-
-Zuletzt abgeschlossen:
-`FS-023` – Tutorial Mission Guidance
+`FS-024` – Tutorial Target Quick Focus
 
 Status:
-`APPROVED`
+`READY_FOR_REVIEW`
 
-Implementierungs-Commit:
-`2ec0e91105263767729d540a65ad7203a2c29206`
+Ausgangs-SHA:
+`db3b652095ee49df019a4a153b3dc9985b3357bf`
 
-Review:
-`APPROVED` by ChatGPT
-
-Tests:
-`PASS` – 177/177
+Hinweis:
+Das aktuelle Tutorialziel kann bewusst angewählt und weich mit der Kamera fokussiert werden.
+Kein Folgeticket vor dem Review starten.
 
 ---
 
@@ -324,11 +319,8 @@ Tests:
 ---
 
 # Geplante Reihenfolge
-- `FS-024` – Tutorial Target Quick Focus
-
-## FS-024 – Vorschau
-Der aktive Tutorial-Zielmarker erhält eine direkte Funktion zum Anzeigen des Zielorts.
-Der Spieler kann das aktuelle Ziel bewusst anwählen und die Kamera weich dorthin führen lassen, ohne automatisches Kameraspringen.
+- FS-024 Review abschließen
+- Danach nächstes Ticket aus aktuellem Stand festlegen
 
 ---
 

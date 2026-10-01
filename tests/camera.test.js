@@ -103,3 +103,53 @@ test("focus stops inertia and stays inside valid bounds", () => {
   assert.equal(c.vx, 0);
   assert.equal(c.vy, 0);
 });
+
+
+test("smooth focus moves toward a valid target without jumping", () => {
+  const c = camera();
+  c.focus(500, 1000);
+  assert.equal(c.focusSmooth(550, 1100), true);
+  assert.equal(c.x, 500);
+  assert.equal(c.y, 1000);
+
+  c.update(0.05);
+  assert.ok(c.x > 500 && c.x < 550);
+  assert.ok(c.y > 1000 && c.y < 1100);
+
+  for (let i = 0; i < 200; i++) c.update(0.05);
+  assert.equal(c.x, 550);
+  assert.equal(c.y, 1100);
+  assert.equal(c.focusTarget, null);
+});
+
+test("manual stop cancels an active smooth focus", () => {
+  const c = camera();
+  c.focus(500, 1000);
+  c.focusSmooth(550, 1100);
+  c.stop();
+  c.update(0.05);
+  assert.equal(c.x, 500);
+  assert.equal(c.y, 1000);
+  assert.equal(c.focusTarget, null);
+});
+
+test("manual pan cancels an active smooth focus", () => {
+  const c = camera();
+  c.focusSmooth(550, 1100);
+  c.panScreen(10, 0);
+  assert.equal(c.focusTarget, null);
+});
+
+test("manual zoom cancels an active smooth focus", () => {
+  const c = camera();
+  c.focusSmooth(550, 1100);
+  c.zoomAt(200, 400, 0.75);
+  assert.equal(c.focusTarget, null);
+});
+
+test("smooth focus rejects invalid coordinates", () => {
+  const c = camera();
+  assert.equal(c.focusSmooth(Number.NaN, 1000), false);
+  assert.equal(c.focusSmooth(500, Infinity), false);
+  assert.equal(c.focusTarget, null);
+});
