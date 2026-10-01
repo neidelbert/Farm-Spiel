@@ -9,15 +9,15 @@
 ---
 
 # Aktuelles Ticket
-`FS-007` – Field System Core
+`FS-008` – Crop System
 
 Status:
 `READY_FOR_REVIEW`
 
 Hinweis:
-Field System Core implementiert und wartet nach dem Commit auf externes ChatGPT-Review.
+Crop System implementiert und wartet nach dem Commit auf externes ChatGPT-Review.
 
-FS-008 ist noch nicht freigegeben.
+FS-009 ist bereits vorbereitet, aber noch nicht freigegeben und darf erst nach dem FS-008-Review gestartet werden.
 
 ---
 
@@ -86,10 +86,19 @@ Implementierungs-Commit:
 Review:
 `APPROVED` by ChatGPT
 
+## `FS-007` – Field System Core
+Status:
+`APPROVED`
+
+Implementierungs-Commit:
+`90c88257f77ba6b97c98ef58cac2bcfa6da21880`
+
+Review:
+`APPROVED` by ChatGPT
+
 ---
 
 # Geplante Reihenfolge
-- `FS-008` – Crop System
 - `FS-009` – Planting Flow
 - `FS-010` – Growth + Offline
 - `FS-011` – Harvest Core

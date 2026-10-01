@@ -1,18 +1,19 @@
 # FS-007 – Field System Core
 
 ## Status
-`READY_FOR_REVIEW`
+`APPROVED`
 
 ## Ausgangs-SHA
 `b1dc4fda48642452defa8cfa6a9b1b4a3b98b9bd`
+
+## Implementierungs-Commit
+`90c88257f77ba6b97c98ef58cac2bcfa6da21880`
 
 ## Version
 `0.3.0-dev`
 
 ## Ziel
 Einen kleinen, testbaren `FieldSystem`-Kern für den bestehenden einzelnen Feldzustand einführen, ohne den aktuellen Tutorial-, Vehicle-, Save-, Growth-, Harvest- oder Renderer-Ablauf bereits umzubauen.
-
-FS-007 schafft damit die zentrale Domain-API, auf die die Folgetickets Crop System, Planting Flow, Growth + Offline und Harvest Core aufbauen können.
 
 ## Geänderte Source-Dateien
 - `src/systems/fields.js` – neu
@@ -35,36 +36,6 @@ FS-007 schafft damit die zentrale Domain-API, auf die die Folgetickets Crop Syst
 - `resetPrepared()`
 
 ## Feldzustände
-Bestehende Runtime-Bezeichnungen bleiben erhalten:
-
-- `prepared`
-- `sowing`
-- `growing`
-- `ready`
-- `harvest_starting`
-- `harvesting`
-- `harvested`
-
-## Persistenter Zustand
-FS-007 verändert das Save-Schema bewusst noch nicht.
-
-Der bestehende Zustand bleibt:
-
-```js
-state.field = {
-  status,
-  crop,
-  plantedAt,
-  readyAt,
-  harvestProgress
-}
-```
-
-Damit bleiben vorhandene Spielstände und der aktuelle Runtime-Code kompatibel.
-
-## Übergangsregeln
-Der neue Core erlaubt nur die fachlich definierte Reihenfolge:
-
 `prepared`
 → `sowing`
 → `growing`
@@ -74,57 +45,42 @@ Der neue Core erlaubt nur die fachlich definierte Reihenfolge:
 → `harvested`
 → `prepared`
 
-Ungültige Übergänge verändern den Feldzustand nicht und liefern `false`.
+Ungültige Übergänge verändern den Feldzustand nicht.
 
-## Zeitregel
-`startGrowing()` akzeptiert nur:
-- einen nichtleeren Crop-Key
-- endliche Zeitstempel
-- `readyAt > plantedAt`
+## Save-Kompatibilität
+Das bestehende `state.field`-Schema blieb unverändert.
 
-Die eigentliche Berechnung der Wachstumsdauer und Offline-Fortschritt bleiben ausdrücklich FS-010 vorbehalten.
-
-## Bewusst noch nicht integriert
-FS-007 verändert den aktuellen sichtbaren Spielablauf noch nicht.
-
-Insbesondere nicht verändert:
+## Bewusst nicht verändert
 - `src/Game.js`
 - `src/core/save.js`
 - `src/systems/timeSystems.js`
-- Saatgutkauf oder Saatgutverbrauch
-- Crop-Daten und Crop-Balancing
-- Weizen-Wachstumszeit
-- Offline-Wachstum
+- Saatgutkauf / Saatgutverbrauch
+- Crop-Daten
+- Wachstumszeit / Offline-Fortschritt
 - Dünger
 - Fahrzeugrouten
-- Ernteertrag
-- Silo-Verhalten
+- Ernteertrag / Silo
 - Missionen
 - Renderer / UI
 - Kamera / Welt / Assets
-- Farmercoins / Economy
-- Inventory
+- Economy / Inventory
 
-Die Integration in echte Gameplay-Flows erfolgt schrittweise in:
-- `FS-008` – Crop System
-- `FS-009` – Planting Flow
-- `FS-010` – Growth + Offline
-- `FS-011` – Harvest Core
+## Tests des echten Installer-Runs
+- insgesamt 20 Node-Subtests: `PASS`
+- davon FieldSystem: 10/10 `PASS`
+- Economy: 4/4 `PASS`
+- Inventory: 6/6 `PASS`
+- Installer Scope-/Hash-/Base-SHA-Prüfung: `PASS`
+- Remote-Push-Verifikation: `PASS`
+- Browser: `NOT TESTED`
+- Gameplay: `NOT TESTED`
+- Mobile: `NOT TESTED`
 
-## Tests
-Vor dem Installer-Push vorgesehen:
-- neuer FieldSystem-Unit-Test: 10 Subtests
-- vorhandene Economy-/Inventory-Tests erneut
-- JavaScript-Syntax aller Module
-- JSON-Validierung
-- Installer Scope-/Hash-/Base-SHA-Prüfung
+## Review
+Durchgeführt durch:
+ChatGPT
 
-Browser: `NOT TESTED`
-Gameplay: `NOT TESTED`
-Mobile: `NOT TESTED`
+Ergebnis:
+`APPROVED`
 
-## STOP
-Nach dem Implementierungs-Commit:
-`READY_FOR_REVIEW`
-
-FS-008 darf nicht automatisch begonnen werden.
+FS-008 wurde nach diesem Review freigegeben.
