@@ -12,14 +12,17 @@
 `FS-011` – Harvest Core
 
 Status:
-`READY_FOR_REVIEW`
+`APPROVED`
 
-Ausgangs-SHA:
-`46fbd9c002e0073fd590375ff3fdd64178f1366f`
+Implementierungs-Commit:
+`aacdfa225c138ba06aa966d415accee52ac1f82e`
+
+Review:
+`APPROVED` by ChatGPT
 
 Hinweis:
-Harvest Core ist für den Installer vorbereitet. Nach erfolgreichem Commit wartet FS-011 auf ChatGPT-Review.
-FS-012 darf vorher nicht gestartet werden.
+FS-011 ist nach Implementierung und Review abgeschlossen.
+FS-012 ist vorbereitet, wurde aber nicht gestartet und benötigt eine separate Freigabe von Lukas.
 
 ---
 

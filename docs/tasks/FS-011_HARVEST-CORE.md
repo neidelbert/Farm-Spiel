@@ -1,10 +1,13 @@
 # FS-011 – Harvest Core
 
 ## Status
-`READY_FOR_REVIEW`
+`APPROVED`
 
 ## Ausgangs-SHA
 `46fbd9c002e0073fd590375ff3fdd64178f1366f`
+
+## Implementierungs-Commit
+`aacdfa225c138ba06aa966d415accee52ac1f82e`
 
 ## Version
 `0.3.0-dev`
@@ -23,49 +26,39 @@ Reifer Weizen kann unabhängig vom Tutorial geerntet werden. Der Mähdrescher st
 ## Neue Tests
 - `tests/harvest.test.js`
 
-## HarvestSystem API
-- `getPlan()`
-- `canStartHarvest()`
-- `startHarvest()`
-- `markHarvesting()`
-- `finishCutting()`
-- `canStoreHarvest()`
-- `storeHarvest()`
+## Review
+Durchgeführt durch:
+ChatGPT
 
-## Technische Anforderungen
-- HarvestSystem kennt keine Mission-IDs.
-- Ernte kann bei Feldstatus `ready` unabhängig vom Tutorial gestartet werden.
-- Mähdrescher muss im Maschinen-State verfügbar sein.
-- Ertrag, Ernte-Item und Ziel-Lager kommen aus `CropSystem`.
-- Feldübergänge laufen über `FieldSystem`.
-- Lagerkapazität wird über `InventorySystem` geprüft.
-- Die komplette Erntemenge muss vor Erntestart ins Ziel-Lager passen.
-- Kein Teil-Ertrag und kein stilles Verwerfen bei zu wenig Lagerplatz.
-- Falls der Lagerplatz zwischen Erntestart und Abladen unerwartet belegt wird, bleibt der Feldstatus `harvested` mit Crop-Daten erhalten und die Ernte kann nach Freimachen von Lagerplatz nachträglich eingelagert werden.
-- Nach erfolgreichem Einlagern wird das Feld über `FieldSystem.resetPrepared()` auf `prepared` zurückgesetzt.
-- Tutorial-Fortschritt bleibt eine optionale Reaktion in `Game.js`.
-- Der Fahrzeug-Eventname wird von tutorialgebundenem `first_harvest` auf `harvest_wheat` umgestellt.
-- Der doppelte `CONFIG.economy.wheatYield`-Wert wird entfernt; CropSystem ist alleinige Quelle für den Weizenertrag.
+Ergebnis:
+`APPROVED`
 
-## Bewusst nicht umgesetzt
-- kein Selling-Core; das gehört zu FS-012
-- kein Dünger-Gameplay
-- keine neuen Crop-Arten
-- keine neuen Maschinen
-- keine Save-Schema-Änderung
-- keine Renderer-/Kamera-/Weltänderung
-- keine Änderung der Erntefahrzeit oder Animationen
-- keine Teilernte/Overflow-Box
+Geprüft:
+- Implementierungs-Commit ist direkter Nachfolger des FS-010-Abschluss-SHA.
+- Commit-Nachricht entspricht dem Ticket.
+- Exakt die sieben vorgesehenen Dateien wurden verändert bzw. neu angelegt.
+- HarvestSystem enthält keine Mission-IDs.
+- Ernte kann außerhalb des Tutorials gestartet werden.
+- Mähdrescher-Verfügbarkeit wird vor dem Start geprüft.
+- CropSystem liefert Ertrag, Ernte-Item und Ziel-Lager.
+- InventorySystem prüft vollständige Lagerkapazität.
+- FieldSystem übernimmt Ernte- und Reset-Übergänge.
+- Kein Teil-Ertrag und kein stilles Verwerfen bei vollem Silo.
+- Bereits geschnittene Ernte bleibt bei nachträglich fehlendem Lagerplatz erhalten.
+- Nach erfolgreicher Einlagerung wird das Feld wieder `prepared`.
+- Der generische Eventname `harvest_wheat` ersetzt den tutorialgebundenen `first_harvest`-Fahrzeugpfad.
+- `CONFIG.economy.wheatYield` wurde entfernt; CropSystem ist die zentrale Ertragsquelle.
+- Kein Selling-Core oder anderer Folgescope wurde vorgezogen.
 
 ## Tests
-Vor dem Payload lokal reproduziert:
-- JavaScript-Syntax `src/config.js`: `PASS`
-- JavaScript-Syntax `src/Game.js`: `PASS`
-- JavaScript-Syntax `src/systems/harvest.js`: `PASS`
-- HarvestSystem: 10/10 `PASS`
-- vorhandene + neue Node-Test-Suite: 58/58 `PASS`
+HarvestSystem:
+`PASS` – 10/10 Subtests
 
-Installer muss zusätzlich den vollständigen Repository-Stand erneut prüfen und testen.
+Vorhandene + neue lokale Node-Test-Suite vor Installer:
+`PASS` – 58/58 Subtests
+
+Installer-Commit-Gate:
+`PASS` – der erwartete Commit wurde auf `develop` erzeugt.
 
 Browser:
 `NOT TESTED`
@@ -76,11 +69,16 @@ Gameplay auf Gerät:
 Mobile/Touch:
 `NOT TESTED`
 
-## Commit-Nachricht
-`FS-011: Decouple and secure harvest flow`
+## Bewusst nicht umgesetzt
+- kein Selling-Core
+- kein Dünger-Gameplay
+- keine neuen Crop-Arten
+- keine neuen Maschinen
+- keine Save-Schema-Änderung
+- keine Renderer-/Kamera-/Weltänderung
+- keine Teilernte/Overflow-Box
 
-## STOP
-Nach erfolgreichem Installer-Commit:
-`READY_FOR_REVIEW`
+## Abschluss
+FS-011 ist abgeschlossen und `APPROVED`.
 
-FS-012 darf erst nach separatem ChatGPT-Review von FS-011 gestartet werden.
+FS-012 wurde nicht automatisch gestartet und benötigt eine separate Freigabe von Lukas.
