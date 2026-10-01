@@ -1,3 +1,12 @@
+import { MISSION_TEXT } from "../data/missions.js";
+
+export function getTutorialObjective(state) {
+  if (!state || state.tutorialComplete === true) return null;
+  const mission = MISSION_TEXT[state.missionId];
+  if (!mission) return null;
+  return Object.freeze({ title: mission.title, step: mission.goal });
+}
+
 export function getTutorialTarget(state) {
   if (!state || state.tutorialComplete === true) return null;
 

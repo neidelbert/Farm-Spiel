@@ -48,6 +48,45 @@ button { font: inherit; }
 .icon-btn { width: 48px; height: 48px; font-size: 22px; }
 .icon-btn:active, button:active { transform: scale(.97); }
 
+.tutorial-objective {
+  position: absolute;
+  z-index: 18;
+  top: calc(66px + var(--safe-top));
+  left: calc(10px + var(--safe-left));
+  width: min(430px, calc(100vw - 84px - var(--safe-left) - var(--safe-right)));
+  padding: 9px 12px 10px;
+  border: 1px solid rgba(87,76,43,.12);
+  border-radius: 15px;
+  background: rgba(255,249,231,.94);
+  box-shadow: 0 7px 20px rgba(19,30,21,.18);
+  pointer-events: none;
+}
+.tutorial-objective-kicker {
+  display: block;
+  margin-bottom: 2px;
+  color: #75806d;
+  font-size: 9px;
+  font-weight: 850;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+.tutorial-objective strong {
+  display: block;
+  color: #2f4935;
+  font-size: 13px;
+  line-height: 1.2;
+}
+#tutorialObjectiveStep {
+  display: -webkit-box;
+  margin-top: 2px;
+  overflow: hidden;
+  color: #566354;
+  font-size: 11px;
+  line-height: 1.25;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
 .sheet {
   position: absolute;
   z-index: 35;

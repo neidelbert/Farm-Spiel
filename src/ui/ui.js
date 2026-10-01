@@ -1,4 +1,5 @@
 import { CONFIG } from "../config.js";
+import { getTutorialObjective } from "../systems/tutorialGuidance.js";
 
 export class UI {
   constructor() {
@@ -7,6 +8,9 @@ export class UI {
       xp: document.querySelector("#hudXp"),
       money: document.querySelector("#hudMoney"),
       tutorialFocus: document.querySelector("#tutorialFocusBtn"),
+      tutorialObjective: document.querySelector("#tutorialObjective"),
+      tutorialObjectiveTitle: document.querySelector("#tutorialObjectiveTitle"),
+      tutorialObjectiveStep: document.querySelector("#tutorialObjectiveStep"),
       menuBtn: document.querySelector("#menuBtn"),
       sheet: document.querySelector("#sheet"),
       sheetEyebrow: document.querySelector("#sheetEyebrow"),
@@ -38,6 +42,12 @@ export class UI {
     this.el.xp.style.width = `${pct}%`;
     this.el.devBadge.classList.toggle("hidden", !state.settings.dev);
     this.el.tutorialFocus?.classList.toggle("hidden", state.tutorialComplete === true);
+    const objective = getTutorialObjective(state);
+    this.el.tutorialObjective?.classList.toggle("hidden", !objective);
+    if (objective) {
+      this.el.tutorialObjectiveTitle.textContent = objective.title;
+      this.el.tutorialObjectiveStep.textContent = objective.step;
+    }
   }
 
   panel({eyebrow="",title,body="",actions=[]}) {

@@ -9,22 +9,17 @@
 ---
 
 # Aktuelles Ticket
-Kein Ticket in Umsetzung.
-
-Zuletzt abgeschlossen:
-`FS-024` – Tutorial Target Quick Focus
+`FS-025` – Tutorial Objective HUD
 
 Status:
-`APPROVED`
+`READY_FOR_REVIEW`
 
-Implementierungs-Commit:
-`a287357238d53abbe786eda66192d3fa02f1182d`
+Ausgangs-SHA:
+`29c59184900bd96724e4ba606b210ef9baad79a3`
 
-Review:
-`APPROVED` by ChatGPT
-
-Tests:
-`PASS` – 185/185
+Hinweis:
+Das aktive Tutorialziel wird kompakt im HUD angezeigt und aktualisiert sich mit der Mission.
+Kein Folgeticket vor dem Review starten.
 
 ---
 
@@ -339,11 +334,8 @@ Tests:
 ---
 
 # Geplante Reihenfolge
-- `FS-025` – Tutorial Objective HUD
-
-## FS-025 – Vorschau
-Das aktive Tutorialziel wird zusätzlich als kompakter Auftrag direkt im HUD angezeigt.
-Titel und nächster Schritt bleiben sichtbar, ohne die Spielwelt zu verdecken.
+- FS-025 Review abschließen
+- Danach nächstes Ticket aus aktuellem Stand festlegen
 
 ---
 

@@ -1,7 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 
-import { getTutorialTarget } from "../src/systems/tutorialGuidance.js";
+import { getTutorialObjective, getTutorialTarget } from "../src/systems/tutorialGuidance.js";
 
 function state(overrides = {}) {
   const base = {
@@ -69,4 +69,23 @@ test("cow mission guides delivery cowpen flour and baker stages", () => {
 
 test("unknown mission fails closed without a marker", () => {
   assert.equal(getTutorialTarget(state({ missionId:"unknown" })), null);
+});
+
+test("objective exposes the current mission title and goal", () => {
+  assert.deepEqual(getTutorialObjective(state({ missionId:"first_seed" })), {
+    title:"Die erste Saat",
+    step:"Bestelle Weizensaat und säe dein erstes Feld mit dem Traktor.",
+  });
+});
+
+test("objective follows mission changes automatically", () => {
+  assert.deepEqual(getTutorialObjective(state({ missionId:"storage_upgrade" })), {
+    title:"Mehr Platz",
+    step:"Verbessere das Silo auf Level 2. Ein Handwerkerfahrzeug baut es sichtbar aus.",
+  });
+});
+
+test("objective is hidden for completed or unknown tutorial states", () => {
+  assert.equal(getTutorialObjective(state({ tutorialComplete:true })), null);
+  assert.equal(getTutorialObjective(state({ missionId:"unknown" })), null);
 });
