@@ -9,17 +9,22 @@
 ---
 
 # Aktuelles Ticket
+Kein Ticket in Umsetzung.
+
+Zuletzt abgeschlossen:
 `FS-023` – Tutorial Mission Guidance
 
 Status:
-`READY_FOR_REVIEW`
+`APPROVED`
 
-Ausgangs-SHA:
-`d72584ec0a647acd6a430d87faf0907420270c7e`
+Implementierungs-Commit:
+`2ec0e91105263767729d540a65ad7203a2c29206`
 
-Hinweis:
-Das aktive Tutorialziel wird direkt in der Spielwelt sichtbar markiert.
-Kein Folgeticket vor dem Review starten.
+Review:
+`APPROVED` by ChatGPT
+
+Tests:
+`PASS` – 177/177
 
 ---
 
@@ -301,11 +306,29 @@ Tests:
 `PASS` – 169/169
 
 
+
+## `FS-023` – Tutorial Mission Guidance
+Status:
+`APPROVED`
+
+Implementierungs-Commit:
+`2ec0e91105263767729d540a65ad7203a2c29206`
+
+Review:
+`APPROVED` by ChatGPT
+
+Tests:
+`PASS` – 177/177
+
+
 ---
 
 # Geplante Reihenfolge
-- FS-023 Review abschließen
-- Danach nächstes Ticket aus aktuellem Stand festlegen
+- `FS-024` – Tutorial Target Quick Focus
+
+## FS-024 – Vorschau
+Der aktive Tutorial-Zielmarker erhält eine direkte Funktion zum Anzeigen des Zielorts.
+Der Spieler kann das aktuelle Ziel bewusst anwählen und die Kamera weich dorthin führen lassen, ohne automatisches Kameraspringen.
 
 ---
 
