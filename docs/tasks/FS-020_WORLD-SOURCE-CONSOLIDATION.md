@@ -1,10 +1,13 @@
 # FS-020 – World Source Consolidation
 
 ## Status
-`READY_FOR_REVIEW`
+`APPROVED`
 
 ## Ausgangs-SHA
 `d58b8e954b3c127be391d3f636c25156d56c13a8`
+
+## Implementierungs-Commit
+`deacfb96a1178ced263be7964df36f16f22877e2`
 
 ## Version
 `0.3.0-dev`
@@ -13,77 +16,48 @@
 Die noch verbliebenen aktuellen Laufzeit-Zugriffe auf `POINTS`, `ROAD_PATHS` und einzelne Renderer-Koordinaten auf eine gemeinsame Runtime-Weltquelle konsolidieren.
 
 ## Was ändert sich im Spiel?
-Fahrzeuge, Maschinen, Feldziele, Lagerziele und sichtbare Hofdetails verwenden dieselben aktuellen Weltpositionen. Dadurch sollen Traktor, Mähdrescher, Lieferfahrzeuge und Verkaufspunkt nicht mehr auf ältere Positionsdaten zurückfallen.
+Fahrzeuge, Maschinen, Feldziele, Lagerziele und sichtbare Hofdetails verwenden dieselben aktuellen Weltpositionen. Traktor, Mähdrescher, Lieferfahrzeuge und Verkaufspunkt greifen damit nicht mehr auf ältere Laufzeit-Positionsquellen zurück.
 
-## Geänderte Source-Dateien
-- `src/Game.js`
-- `src/systems/vehicles.js`
-- `src/world/renderer.js`
-- `src/data/worldRuntime.js` – neu
+## Review
+Durchgeführt durch:
+ChatGPT
 
-## Neue Tests
-- `tests/world-runtime.test.js`
-- `tests/world-runtime-source.test.js`
+Ergebnis:
+`APPROVED`
 
-## Technische Anforderungen
-- Neues `worldRuntime`-Modul ist die zentrale Laufzeitquelle für Gameplay-/Vehicle-/Renderer-Weltanker.
-- Sichtbare Gebäudeziele werden aus `MODULAR_WORLD.objects` abgeleitet:
-  - Garage
-  - Silo
-  - Hühnerstall
-  - Kuhbereich
-  - Bäckerei
-  - Mühle
+Geprüft:
+- Implementierungs-Commit ist direkter Nachfolger des FS-019-Abschluss-SHA.
+- Commit-Nachricht entspricht dem Ticket.
+- Exakt neun vorgesehene Dateien wurden geändert bzw. neu angelegt.
+- Neues `worldRuntime`-Modul ist vorhanden.
+- Gebäudeziele werden aus `MODULAR_WORLD.objects` abgeleitet.
 - Feld 1 wird aus `MODULAR_WORLD.fields` abgeleitet.
-- Haupt-Straßenanker werden aus `MODULAR_WORLD.roads` abgeleitet.
-- `WORLD_ROADS` ist eine unveränderliche Kopie der modularen Straßen.
-- Runtime-Sonderpunkte werden genau einmal zentral definiert:
-  - Off-map Vehicle-Spawn
-  - Verkaufstruck/Loading
-  - Field-/Silo-/Garage-Approach
-  - Mähdrescher-Parkplatz
-  - sichtbare Schrottdetails
-- `Game.js` importiert keine `POINTS` mehr aus `worldData.js`.
-- `VehicleSystem` importiert keine `POINTS` mehr aus `worldData.js`.
-- Der aktuelle `renderer.js` importiert weder `POINTS` noch `ROAD_PATHS` aus `worldData.js`.
-- Renderer-Straßen verwenden `MODULAR_WORLD.roads` über `WORLD_ROADS`.
-- Idle-Traktor verwendet die aktuelle modulare Garage.
-- Idle-Mähdrescher verwendet den zentralen Runtime-Parkplatz.
-- Verkaufstruck und dessen Interaction verwenden denselben zentralen Loading-Punkt.
-- Sichtbare Schrottobjekte verwenden zentrale Runtime-Punkte.
-- Fahrzeugrouten zu Silo, Garage, Hühnerstall, Kuhbereich, Bäckerei und Mühle verwenden die aktuellen modularen Zielpositionen.
-- Bestehende Vehicle-Route-Struktur und Event-Tags bleiben erhalten.
-- Kein Map-Layout, Asset, Gameplay-State, Economy-, Save-, Kamera- oder Interaktionsverhalten wird neu gestaltet.
+- Straßenanker und Renderer-Straßen werden aus `MODULAR_WORLD.roads` abgeleitet.
+- Runtime-Sonderpunkte sind zentral gebündelt.
+- `Game.js`, `VehicleSystem` und aktueller Renderer verwenden keine `worldData.js`-POINTS mehr.
+- Renderer-Hardcodes für Mähdrescher-Parkplatz und Schrottdetails wurden zentralisiert.
+- Fahrzeugrouten zu aktuellen sichtbaren Gebäuden enden an den modularen Zielpositionen.
+- `worldData.js` und `LegacyRenderer` wurden bewusst nicht gelöscht.
+- Keine Map-, Gameplay-, Economy-, Save-, Kamera- oder Interaction-Neugestaltung wurde vorgezogen.
 
-## Bewusst nicht umgesetzt
-- `worldData.js` wird nicht gelöscht; LegacyRenderer kann es weiterhin als Legacy-Quelle verwenden.
-- keine vollständige LegacyRenderer-Ablösung
-- keine neue Weltgeometrie
-- keine Straßenverschiebung
-- keine neuen Gebäude oder Felder
-- keine Multi-Field-Gameplay-Erweiterung
-- keine Placement-/Collision-Logik
-- keine Vehicle-AI-Neuentwicklung
-- keine Save-Migration
-
-## Tests vor Payload
-JavaScript-Syntax:
-`PASS`
-- `src/Game.js`
-- `src/systems/vehicles.js`
-- `src/data/worldRuntime.js`
-- `src/world/renderer.js`
-- `tests/world-runtime.test.js`
-- `tests/world-runtime-source.test.js`
-
+## Tests
 World-Runtime-Fokustests:
 `PASS` – 13/13 Subtests
 
-Quellabgleich:
-`PASS` – `vehicles.js` entspricht bis auf den beabsichtigten Weltimport exakt dem aktuellen Repository-Stand.
+Komplette Node-Test-Suite im Installer:
+`PASS` – 156/156 Subtests
 
-Vollständige Repository-Test-Suite:
-`NOT TESTED` – wird vom GitHub Ticket Installer ausgeführt.
+Automatisierte Testdateien:
+`PASS` – 18 Dateien
+
+Installer-Workflow:
+`PASS`
+
+Push:
+`PASS`
+
+Remote-Verifikation:
+`PASS`
 
 Browser:
 `NOT TESTED`
@@ -94,11 +68,13 @@ Gameplay auf Gerät:
 Mobile/Touch:
 `NOT TESTED`
 
-## Commit-Nachricht
-`FS-020: Consolidate runtime world sources`
+## Bekannte Grenzen
+- `LegacyRenderer` und `worldData.js` bestehen weiterhin für ältere geerbte Pfade.
+- Einige Route-Approach-Punkte bleiben bewusst zentral definierte Runtime-Sonderpunkte.
+- Die Welt besitzt visuell drei Felder, der persistente Gameplay-State aber weiterhin nur ein vollwertiges Feld.
 
-## STOP
-Nach erfolgreichem Installer-Commit:
-`READY_FOR_REVIEW`
+## Abschluss
+FS-020 ist abgeschlossen und `APPROVED`.
 
-Das Folgeticket wird erst nach separatem ChatGPT-Review aus dem dann aktuellen Repository-Stand festgelegt.
+Nächster Roadmap-Schritt:
+`FS-021` – Multi-Field Core.

@@ -12,14 +12,21 @@
 `FS-020` – World Source Consolidation
 
 Status:
-`READY_FOR_REVIEW`
+`APPROVED`
 
-Ausgangs-SHA:
-`d58b8e954b3c127be391d3f636c25156d56c13a8`
+Implementierungs-Commit:
+`deacfb96a1178ced263be7964df36f16f22877e2`
+
+Review:
+`APPROVED` by ChatGPT
 
 Hinweis:
-World Source Consolidation ist für den Installer vorbereitet. Nach erfolgreichem Commit wartet FS-020 auf ChatGPT-Review.
-Ein Folgeticket darf vorher nicht gestartet werden.
+FS-020 ist nach Implementierung und Review abgeschlossen.
+
+Als nächster Roadmap-Schritt ist vorgesehen:
+`FS-021` – Multi-Field Core
+
+FS-021 wurde noch nicht gestartet.
 
 ---
 
@@ -260,7 +267,7 @@ Review:
 ---
 
 # Geplante Reihenfolge
-Nach FS-020 wird das nächste Ticket separat aus dem dann aktuellen Repository-Stand geplant.
+- `FS-021` – Multi-Field Core
 
 ---
 
