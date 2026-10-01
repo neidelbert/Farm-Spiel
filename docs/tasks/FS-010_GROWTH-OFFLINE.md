@@ -1,10 +1,13 @@
 # FS-010 – Growth + Offline
 
 ## Status
-`READY_FOR_REVIEW`
+`APPROVED`
 
 ## Ausgangs-SHA
 `4083558069a87209ba9114f446c2eaa7cedbf453`
+
+## Implementierungs-Commit
+`835f16b645f24c7f3f88e7f4ec1d94f2cf03edc7`
 
 ## Version
 `0.3.0-dev`
@@ -23,40 +26,41 @@ Pflanzen, Mühle, Tiere und Bauzeiten laufen nach dem Schließen oder Hintergrun
 ## Neue Tests
 - `tests/timeSystems.test.js`
 
-## Technische Anforderungen
-- Offline-Fortschritt ist zentral auf exakt 24 Stunden begrenzt.
-- `lastSavedAt` bleibt die Basis für die Offline-Dauer.
-- Feldwachstum verwendet weiterhin die in FS-008/FS-009 gesetzten absoluten `plantedAt`-/`readyAt`-Zeitpunkte.
-- Feldstatus `growing -> ready` läuft über `FieldSystem`.
-- Mühle, Hühner, Kühe und Construction werden beim Reload/Hintergrundbetrieb korrekt abgeschlossen, wenn ihre Timer innerhalb des erlaubten Offline-Fensters enden.
-- Timer, die nach 24 Stunden noch nicht fertig wären, behalten ihre Restzeit; überschüssige Offline-Zeit darf sie nicht künstlich abschließen.
-- Fahrzeuge bewegen sich offline nicht.
-- Waypoint-Wartezeiten von Fahrzeugen pausieren offline ebenfalls, damit Fahrzeugbewegung und Wartezeit dieselbe Offline-Semantik besitzen.
-- Beim Zurückkehren aus dem Browser-/App-Hintergrund wird der Offline-Abgleich erneut ausgeführt.
-- DEV `timeScale` beschleunigt neben Tageszeit und Fahrzeugbewegung auch Feld-, Produktions-, Tier-, Bau- und aktive Fahrzeug-Warte-Timer.
-- Der alte `CONFIG.timings.wheatGrowthMs` wird entfernt; die Weizen-Wachstumsdauer bleibt ausschließlich in der zentralen Crop-Definition.
-- Bestehender Save-Key und `saveVersion: 1` bleiben unverändert.
+## Review
+Durchgeführt durch:
+ChatGPT
 
-## Bewusst nicht umgesetzt
-- keine wiederholten Offline-Produktionszyklen
-- keine Offline-Fahrzeugsimulation oder Teleportation
-- keine neue Harvest-Logik
-- kein Feld-Reset nach Ernte
-- kein Verkaufssystem
-- kein sichtbares Dünger-Gameplay
-- keine Save-Schema-v2-Migration
-- keine Renderer-/Kamera-/Weltänderung
-- keine neuen Crop-Arten
+Ergebnis:
+`APPROVED`
+
+Geprüft:
+- Implementierungs-Commit ist direkter Nachfolger des FS-009-Abschluss-SHA.
+- Commit-Nachricht entspricht dem Ticket.
+- Exakt die sieben vorgesehenen Dateien wurden verändert bzw. neu angelegt.
+- Offline-Cap ist zentral auf 24 Stunden gesetzt.
+- Feld-Reife läuft über `FieldSystem`.
+- Mühle, Hühner, Kühe und Construction werden innerhalb des Offline-Fensters korrekt abgeschlossen.
+- Restzeit bleibt erhalten, wenn eine Aktivität nach 24 Stunden noch nicht fertig wäre.
+- Fahrzeuge bewegen sich offline nicht.
+- Fahrzeug-Wartezeiten pausieren offline.
+- Rückkehr aus dem Hintergrund löst `reconcileState()` erneut aus.
+- DEV `timeScale` beschleunigt absolute Gameplay-Timer konsistent.
+- Der alte `CONFIG.timings.wheatGrowthMs` wurde entfernt.
+- Weizen nutzt weiterhin die zentrale 5-Minuten-Crop-Definition.
+- Kein Harvest-, Selling- oder Save-v2-Scope wurde vorgezogen.
 
 ## Tests
-Vor dem Payload lokal reproduziert:
-- JavaScript-Syntax `src/config.js`: `PASS`
-- JavaScript-Syntax `src/systems/timeSystems.js`: `PASS`
-- JavaScript-Syntax `src/main.js`: `PASS`
-- TimeSystems: 8/8 `PASS`
-- vorhandene + neue Node-Test-Suite: 48/48 `PASS`
+JavaScript-Syntax:
+`PASS`
 
-Installer muss zusätzlich den vollständigen Repository-Stand erneut prüfen und testen.
+TimeSystems:
+`PASS` – 8/8 Subtests
+
+Vorhandene + neue lokale Node-Test-Suite:
+`PASS` – 48/48 Subtests
+
+Installer-Commit-Gate:
+`PASS` – der erwartete Commit wurde auf `develop` erzeugt.
 
 Browser:
 `NOT TESTED`
@@ -67,11 +71,17 @@ Gameplay auf Gerät:
 Mobile/Touch:
 `NOT TESTED`
 
-## Commit-Nachricht
-`FS-010: Stabilize growth and offline time`
+## Bewusst nicht umgesetzt
+- keine wiederholten Offline-Produktionszyklen
+- keine Offline-Fahrzeugsimulation
+- keine neue Harvest-Logik
+- kein Feld-Reset nach Ernte
+- kein Verkaufssystem
+- kein sichtbares Dünger-Gameplay
+- keine Save-Schema-v2-Migration
+- keine Renderer-/Kamera-/Weltänderung
 
-## STOP
-Nach erfolgreichem Installer-Commit:
-`READY_FOR_REVIEW`
+## Abschluss
+FS-010 ist abgeschlossen und `APPROVED`.
 
-FS-011 darf erst nach separatem ChatGPT-Review von FS-010 gestartet werden.
+FS-011 wurde nicht automatisch gestartet und benötigt eine separate Freigabe von Lukas.
