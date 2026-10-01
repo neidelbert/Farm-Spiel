@@ -2,5 +2,8 @@
   "name": "farm-spiel",
   "version": "0.3.0-dev",
   "type": "module",
-  "private": true
+  "private": true,
+  "scripts": {
+    "test": "node --test"
+  }
 }

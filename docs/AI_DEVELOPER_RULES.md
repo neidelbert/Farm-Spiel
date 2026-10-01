@@ -49,17 +49,20 @@ Aufgaben:
 - ausschließlich deklarierte Dateien schreiben oder löschen
 - Datei-Hashes prüfen
 - freigegebene automatische Prüfungen ausführen
-- exakt einen Ticket-Commit erzeugen
+- vorhandene Node-Tests vor dem Push ausführen
+- exakt einen Commit erzeugen
 - nicht erzwungen auf `develop` pushen
 
 Der Installer entscheidet nicht über Features oder Ticket-Inhalte.
 
 ## iPhone-Kurzbefehl
-Der Kurzbefehl dient nur als Transporthilfe:
-- Payload-Datei auswählen
+Der Kurzbefehl ist Transport- und Startwerkzeug.
+
+Er darf:
+- Payload-Datei auswählen oder empfangen
 - Dateiinhalt als Text lesen
-- Payload in die Zwischenablage kopieren
-- GitHub-Workflow-Seite öffnen
+- den freigegebenen GitHub-Workflow per REST API starten
+- den resultierenden Workflow-Run öffnen oder anzeigen
 
 Der Kurzbefehl enthält keine fachliche Entwicklungslogik und ersetzt keine Installer-Prüfung.
 
@@ -104,11 +107,19 @@ Gameplay-Tickets werden nicht direkt auf `main` entwickelt.
 ---
 
 # Ticket-Regeln
-Tickets erhalten IDs:
+
+Gameplay- und Produkt-Tickets:
 `FS-001`
 `FS-002`
 `FS-003`
 usw.
+
+Werkzeug-, Test- und Infrastruktur-Tickets:
+`TOOLS-001`
+`TOOLS-002`
+usw.
+
+`TOOLS`-Tickets dürfen keine versteckten Gameplay-Änderungen enthalten.
 
 Ein Ticket muss mindestens enthalten:
 - Ausgangslage
@@ -152,6 +163,7 @@ Ticket kann technisch aktuell nicht abgeschlossen werden.
 ---
 
 # Test-Regel
+
 Tests dürfen ausschließlich mit folgenden Ergebnissen dokumentiert werden:
 
 `PASS`
@@ -165,9 +177,20 @@ nicht zuverlässig ausführbar.
 
 Niemals einen Test als PASS bezeichnen, wenn er nicht wirklich ausgeführt wurde.
 
+Vor einem Installer-Push müssen mindestens:
+- Payload-/Scope-Prüfung
+- JavaScript-Syntax
+- JSON-Validierung
+- vorhandene Node-Tests
+
+erfolgreich durchlaufen.
+
+Browser-, Touch- und visuelle Tests bleiben separat, solange sie nicht zuverlässig automatisiert sind.
+
 ---
 
 # Architektur-Regeln
+
 Keine Komplett-Rewrites ohne eigenes freigegebenes Ticket.
 Bestehende funktionierende Systeme zuerst verstehen.
 Dann möglichst kleine, kontrollierte Änderungen durchführen.
@@ -180,12 +203,14 @@ Renderer und UI dürfen Zustand darstellen und Aktionen auslösen, aber keine ne
 ---
 
 # Daten-Regel
+
 Langfristig soll jede wichtige Information genau eine zentrale Quelle besitzen.
 Nicht dieselben Werte unabhängig in mehreren Dateien pflegen.
 
 ---
 
 # Gameplay-Regel
+
 Missionen erklären Gameplay.
 Missionen ersetzen Gameplay nicht.
 Kernmechaniken müssen auch außerhalb einer Mission funktionieren.
@@ -193,6 +218,7 @@ Kernmechaniken müssen auch außerhalb einer Mission funktionieren.
 ---
 
 # Stabilitätsregel
+
 Priorität:
 1. Stabilität
 2. Gameplay
@@ -206,6 +232,7 @@ Priorität:
 ---
 
 # Abschlussbericht
+
 Nach jedem Entwicklungsticket muss ein Report entstehen.
 
 Report enthält:
@@ -220,9 +247,10 @@ Report enthält:
 - bewusst nicht umgesetzte Dinge
 
 Danach STOP.
-Kein nächstes Ticket selbstständig beginnen.
+Kein nächstes Gameplay-Ticket selbstständig beginnen.
 
 ---
 
 # Grundsatz
+
 **Lieber eine kleine Funktion vollständig stabil als zehn Funktionen halb fertig.**
