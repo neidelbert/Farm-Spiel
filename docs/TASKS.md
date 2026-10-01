@@ -9,20 +9,17 @@
 ---
 
 # Aktuelles Ticket
-`FS-009` – Planting Flow
+`FS-010` – Growth + Offline
 
 Status:
-`APPROVED`
+`READY_FOR_REVIEW`
 
-Implementierungs-Commit:
-`fce6174e8082422e5145036d6d024b02f1e0c76d`
-
-Review:
-`APPROVED` by ChatGPT
+Ausgangs-SHA:
+`4083558069a87209ba9114f446c2eaa7cedbf453`
 
 Hinweis:
-FS-009 ist nach Implementierung und Review abgeschlossen.
-FS-010 ist vorbereitet, wurde aber nicht gestartet und benötigt eine separate Freigabe von Lukas.
+Growth + Offline ist für den Installer vorbereitet. Nach erfolgreichem Commit wartet FS-010 auf ChatGPT-Review.
+FS-011 darf vorher nicht gestartet werden.
 
 ---
 
@@ -117,10 +114,22 @@ Review-Abschluss:
 Review:
 `APPROVED` by ChatGPT
 
+## `FS-009` – Planting Flow
+Status:
+`APPROVED`
+
+Implementierungs-Commit:
+`fce6174e8082422e5145036d6d024b02f1e0c76d`
+
+Review-Abschluss:
+`4083558069a87209ba9114f446c2eaa7cedbf453`
+
+Review:
+`APPROVED` by ChatGPT
+
 ---
 
 # Geplante Reihenfolge
-- `FS-010` – Growth + Offline
 - `FS-011` – Harvest Core
 - `FS-012` – Selling Core
 

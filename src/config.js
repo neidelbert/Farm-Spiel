@@ -22,7 +22,7 @@ export const CONFIG = Object.freeze({
   },
 
   timings: {
-    wheatGrowthMs: 4 * 60 * 1000,
+    offlineCapMs: 24 * 60 * 60 * 1000,
     sowWaitMs: 12000,
     harvestWaitMs: 20000,
     unloadWaitMs: 4500,

@@ -43,7 +43,11 @@ window.addEventListener("resize", () => renderer.resize(), { passive:true });
 window.addEventListener("orientationchange", () => setTimeout(()=>renderer.resize(),100), { passive:true });
 
 window.addEventListener("visibilitychange", () => {
-  if (document.visibilityState === "hidden") save.save(state);
+  if (document.visibilityState === "hidden") {
+    save.save(state);
+  } else {
+    game.reconcileState();
+  }
 });
 
 window.addEventListener("beforeunload", () => save.save(state));
