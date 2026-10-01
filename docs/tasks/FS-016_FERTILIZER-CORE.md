@@ -1,10 +1,13 @@
 # FS-016 – Fertilizer Core
 
 ## Status
-`READY_FOR_REVIEW`
+`APPROVED`
 
 ## Ausgangs-SHA
 `52492a49b70ae062b63e8b68450b869dc7949913`
+
+## Implementierungs-Commit
+`2a2fb3f2379e0e26c1beae39f5de4041c6619927`
 
 ## Version
 `0.3.0-dev`
@@ -15,72 +18,53 @@ Dünger als echten, missionsunabhängigen Bestandteil des Farming-Loops einführ
 ## Was ändert sich im Spiel?
 Ab Level 4 kann der Spieler im Hofkatalog 2 Säcke Dünger für 15 F kaufen. Ein wachsendes Weizenfeld kann einmal mit 1 Sack gedüngt werden. Dadurch sinkt die verbleibende Wachstumszeit auf 2:00 Minuten. Bei 2:20 Restzeit oder weniger ist Düngen gesperrt.
 
-## Geänderte Source-Dateien
-- `src/Game.js`
-- `src/config.js`
-- `src/core/save.js`
-- `src/data/crops.js`
-- `src/systems/fields.js`
-- `src/systems/fertilizer.js` – neu
+## Review
+Durchgeführt durch:
+ChatGPT
+
+Ergebnis:
+`APPROVED`
+
+Geprüft:
+- Implementierungs-Commit ist direkter Nachfolger des FS-015-Abschluss-SHA.
+- Commit-Nachricht entspricht dem Ticket.
+- Exakt 14 erwartete Dateien wurden geändert bzw. neu angelegt.
+- Neues `FertilizerSystem` enthält keine Mission-IDs.
+- Dünger wird ab Level 4 freigeschaltet.
+- Packgröße bleibt 2 Säcke für 15 F.
+- Pro Feldanwendung wird 1 Sack verbraucht.
+- Weizen-Basiswachstum bleibt 5:00 Minuten.
+- Gedüngtes Wachstum wird auf 2:00 Minuten Restzeit gesetzt.
+- Bei exakt 2:20 Restzeit oder weniger wird Düngen blockiert.
+- Feld kann pro Wachstumszyklus nur einmal gedüngt werden.
+- Feld-Reset entfernt den Düngezustand für die nächste Aussaat.
+- Katalog und Feldpanel zeigen den neuen Düngerzustand.
+- Save-v3 speichert Düngerbestand und Düngezustand rückwärtskompatibel.
+- Bestehende Crop-, Field- und Harvest-Tests wurden nur an die bewusst erweiterten Datenstrukturen angepasst.
+- Kein Multi-Field-, Maschinen-, Welt-, Renderer- oder Kamera-Scope wurde vorgezogen.
+
+## Installer-Verlauf
+Erster Versuch:
+`FAIL` – 97/100 Tests; drei bestehende Tests erwarteten noch die alten Datenstrukturen. Kein Commit wurde gepusht.
+
+Korrigierter Versuch:
+`PASS`
 
 ## Tests
-- `tests/fertilizer.test.js` – neu
-- `tests/save.test.js` – erweitert
+FertilizerSystem:
+`PASS` – 13/13 Subtests
 
-## Technische Anforderungen
-- Neues `FertilizerSystem` bündelt Kauf, Unlock, Feldprüfung und Anwendung.
-- FertilizerSystem enthält keine Mission-IDs.
-- Dünger wird ab Level 4 freigeschaltet.
-- Packgröße: 2 Säcke.
-- Preis: 15 F.
-- 1 Sack wird pro Feldanwendung verbraucht.
-- Weizen-Basiswachstum bleibt 5:00 Minuten.
-- Düngen setzt die verbleibende Zeit auf höchstens 2:00 Minuten ab Anwendung.
-- Bei exakt 2:20 Restzeit oder weniger ist Düngen nicht mehr erlaubt.
-- Ein Feld kann pro Wachstumszyklus nur einmal gedüngt werden.
-- Kauf läuft atomar über EconomySystem + InventorySystem.
-- Anwendung läuft über InventorySystem + FieldSystem und rollt den Sack bei einem Feldfehler zurück.
-- `FieldSystem` verwaltet `fertilized` und `fertilizedAt`.
-- Beim neuen Aussaatzyklus und nach Feld-Reset werden Düngewerte zurückgesetzt.
-- Hofkatalog zeigt Saatgut und ab Level 4 Dünger.
-- Feldpanel zeigt Düngerbestand bzw. `Gedüngt ✓`.
-- Sichtbare Reaktion: Toast + sofort sichtbar reduzierte Restzeit.
-- Persistenter State erhält `inventory.fertilizer`, `field.fertilized` und `field.fertilizedAt`.
-- Save-Schema bleibt v3, da die neuen Felder additive Defaults sind und bestehende v3-Saves sicher ergänzt werden.
-- Bestehende Save-v1/v2/v3-Migrationen bleiben unverändert.
+Komplette Node-Test-Suite im korrigierten Installer:
+`PASS` – 100/100 Subtests
 
-## Bewusst nicht umgesetzt
-- kein Düngerstreuer / Traktor-Anbaugerät
-- keine Fahrzeugfahrt für Dünger
-- keine weiteren Düngersorten
-- keine weiteren Crop-Arten
-- keine Multi-Field-Erweiterung
-- keine neuen Missionen
-- keine Welt-/Renderer-/Kameraänderung
-
-## Tests vor Payload
-JavaScript-Syntax:
+Installer-Workflow:
 `PASS`
-- `src/Game.js`
-- `src/config.js`
-- `src/core/save.js`
-- `src/data/crops.js`
-- `src/systems/fields.js`
-- `src/systems/fertilizer.js`
-- `tests/fertilizer.test.js`
-- `tests/save.test.js`
 
-Lokaler Regressionstest für Dünger, Save, Crop, Field und Harvest:
-`PASS` – 64/64 Subtests
+Push:
+`PASS`
 
-Erster Installer-Versuch:
-`FAIL` – 3 veraltete Test-Erwartungen in `crops.test.js`, `fields.test.js` und `harvest.test.js`; kein Commit wurde gepusht.
-
-Korrigierter Payload:
-Die drei bestehenden Tests wurden ausschließlich an die bewusst erweiterten Datenstrukturen angepasst.
-
-Vollständige Repository-Test-Suite nach Korrektur:
-`NOT TESTED` – wird vom GitHub Ticket Installer erneut ausgeführt.
+Remote-Verifikation:
+`PASS`
 
 Browser:
 `NOT TESTED`
@@ -91,11 +75,8 @@ Gameplay auf Gerät:
 Mobile/Touch:
 `NOT TESTED`
 
-## Commit-Nachricht
-`FS-016: Add fertilizer core`
+## Abschluss
+FS-016 ist abgeschlossen und `APPROVED`.
 
-## STOP
-Nach erfolgreichem Installer-Commit:
-`READY_FOR_REVIEW`
-
-Ein Folgeticket darf erst nach separatem ChatGPT-Review von FS-016 gestartet werden.
+Nächster Roadmap-Schritt:
+`FS-017` – Camera Stabilization.
