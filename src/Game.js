@@ -665,7 +665,7 @@ export class Game {
         break;
       case "baker_milk":
         this.economy.credit(this.economy.getValue("bakerMilkReward"));
-        this.state.level=10;this.state.xp=0;this.state.missionId="tutorial_done";this.state.tutorialComplete=true;this.state.achievements.tutorialDone=true;
+        this.missions.advanceTo(10,"tutorial_done");this.state.achievements.tutorialDone=true;
         this.ui.toast("⭐ Level 10 – Die Einführung ist abgeschlossen!",4200);
         break;
     }
@@ -676,7 +676,7 @@ export class Game {
     if(c.building==="silo"){
       this.state.silo.level=2;this.state.silo.capacity=60;
       if(this.state.missionId==="storage_upgrade"){
-        this.state.missionId="miller_intro";this.state.missionStep=0;
+        this.missions.set("miller_intro",0);
         this.ui.toast("✅ Silo Level 2 fertig. Der Müller meldet sich.");
       }
     }
@@ -698,7 +698,7 @@ export class Game {
   }
 
   advanceTo(level,missionId,message) {
-    this.state.level=level;this.state.xp=0;this.state.xpNeeded=Math.round(100+(level-1)*35);this.state.missionId=missionId;this.state.missionStep=0;
+    if(!this.missions.advanceTo(level,missionId)){this.ui.toast("⚠️ Tutorial-Fortschritt konnte nicht übernommen werden.");return false;}
     this.ui.closeSheet();this.ui.toast(`⭐ Level ${level} · ${message}`,3200);this.save.save(this.state);
   }
 

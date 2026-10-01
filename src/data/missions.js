@@ -55,3 +55,22 @@ export const MISSION_TEXT = Object.freeze({
     goal: "Freies Spiel ab Level 10. Weitere Talbereiche werden in späteren Versionen ausgebaut.",
   },
 });
+
+
+export const TUTORIAL_FLOW = Object.freeze([
+  Object.freeze({ missionId: "scrap_sale", level: 1 }),
+  Object.freeze({ missionId: "friend_gift", level: 2 }),
+  Object.freeze({ missionId: "first_seed", level: 3 }),
+  Object.freeze({ missionId: "first_harvest", level: 4 }),
+  Object.freeze({ missionId: "first_order", level: 5 }),
+  Object.freeze({ missionId: "storage_upgrade", level: 6 }),
+  Object.freeze({ missionId: "miller_intro", level: 6 }),
+  Object.freeze({ missionId: "workshop_chickens", level: 7 }),
+  Object.freeze({ missionId: "eggs_baker", level: 8 }),
+  Object.freeze({ missionId: "cows_milk", level: 9 }),
+  Object.freeze({ missionId: "tutorial_done", level: 10 }),
+]);
+
+export const TUTORIAL_MISSION_IDS = Object.freeze(
+  TUTORIAL_FLOW.map(entry => entry.missionId),
+);

@@ -9,22 +9,17 @@
 ---
 
 # Aktuelles Ticket
-Kein Ticket in Umsetzung.
-
-Zuletzt abgeschlossen:
-`FS-021` – Multi-Field Core
+`FS-022` – Tutorial/Core Progression Audit
 
 Status:
-`APPROVED`
+`READY_FOR_REVIEW`
 
-Implementierungs-Commit:
-`c0bb4ad35a2a912bfa2cc3eab2a34eaab638f607`
+Ausgangs-SHA:
+`fe12410377d65a312d120551cc5ba078b3415c6a`
 
-Review:
-`APPROVED` by ChatGPT
-
-Tests:
-`PASS` – 163/163
+Hinweis:
+Level-1-bis-10-Progression wird gegen die stabilisierten Core-Systeme abgesichert.
+Kein Folgeticket vor dem Review starten.
 
 ---
 
@@ -294,11 +289,8 @@ Tests:
 ---
 
 # Geplante Reihenfolge
-- `FS-022` – Tutorial/Core Progression Audit
-
-## FS-022 – Vorschau
-Der bestehende Level-1-bis-10-Tutorialfluss wird gegen die stabilisierten Core-Systeme geprüft.
-Missionen sollen Gameplay verwenden und beobachten, nicht Kernmechaniken ersetzen.
+- FS-022 Review abschließen
+- Danach nächstes Ticket aus aktuellem Stand festlegen
 
 ---
 
