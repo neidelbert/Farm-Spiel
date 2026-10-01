@@ -5,6 +5,9 @@ import { VehicleSystem, routeTo, farmMachineRoute } from "./systems/vehicles.js"
 import { TimeSystems } from "./systems/timeSystems.js";
 import { EconomySystem } from "./systems/economy.js";
 import { InventorySystem } from "./systems/inventory.js";
+import { FieldSystem } from "./systems/fields.js";
+import { CropSystem } from "./systems/crops.js";
+import { PlantingSystem } from "./systems/planting.js";
 
 export class Game {
   constructor({ state, save, events, camera, renderer, ui }) {
@@ -20,6 +23,9 @@ export class Game {
     this.timeSystems = new TimeSystems(state,events);
     this.economy = new EconomySystem(state);
     this.inventory = new InventorySystem(state);
+    this.fields = new FieldSystem(state);
+    this.crops = new CropSystem();
+    this.planting = new PlantingSystem({ state, economy: this.economy, inventory: this.inventory, fields: this.fields, crops: this.crops });
 
     this.lastAutosave = performance.now();
     this.lastFrame = performance.now();
@@ -132,6 +138,8 @@ export class Game {
       else actions.push({label:canBaker?"Zum Bäcker":"Zur Kuhweide",onClick:()=>{this.ui.closeSheet();this.camera.focus(canBaker?POINTS.bakery.x:POINTS.cowpen.x,canBaker?POINTS.bakery.y:POINTS.cowpen.y);}});
     }
 
+    if (!(this.state.missionId==="first_seed" && this.state.missionStep===0)) actions.push({label:"Hofkatalog",secondary:true,onClick:()=>this.openCatalog()});
+
     const doneAchievements = Object.values(this.state.achievements || {}).filter(Boolean).length;
     const body=`
       <p>${m.desc}</p>
@@ -162,19 +170,20 @@ export class Game {
   }
 
   openCatalog() {
-    const price=this.economy.getValue("wheatSeedPrice");
-    const can=this.economy.canAfford(price) && !this.vehicles.hasEvent("seed_delivery");
+    const crop=this.crops.get("wheat");
+    const price=this.planting.getSeedPrice("wheat");
+    const deliveryPending=this.vehicles.hasEvent("seed_delivery");
+    const can=this.planting.canBuySeed("wheat") && !deliveryPending;
     this.ui.panel({
-      eyebrow:"Hofkatalog",title:"Weizensaatgut",
-      body:`<p>Ein Sack reicht für dein erstes Feld.</p><div class="status">Preis: <strong>${price} F</strong><br>Lieferung: sofort per Postauto</div>`,
-      actions:[{label:can?`Für ${price} F bestellen`:"Nicht genug Geld",disabled:!can,onClick:()=>this.buyWheatSeed()}]
+      eyebrow:"Hofkatalog",title:`${crop.name}saatgut`,
+      body:`<p>Ein Sack reicht für ein Feld.</p><div class="status">Preis: <strong>${price} F</strong><br>Bestand: ${this.inventory.getQuantity("inventory",crop.seedItem)} Sack<br>Lieferung: sofort per Postauto</div>`,
+      actions:[{label:deliveryPending?"Lieferung unterwegs":can?`Für ${price} F bestellen`:"Nicht genug Geld",disabled:!can,onClick:()=>this.buyWheatSeed()}]
     });
   }
 
   buyWheatSeed() {
-    const price=this.economy.getValue("wheatSeedPrice");
-    if(this.vehicles.hasEvent("seed_delivery") || !this.economy.spend(price))return;
-    this.state.missionStep=0.5;
+    if(this.vehicles.hasEvent("seed_delivery") || !this.planting.buySeed("wheat"))return;
+    if(this.state.missionId==="first_seed") this.state.missionStep=0.5;
     this.vehicles.spawn({
       id:uid("post"),type:"post_van",eventId:"seed_delivery",
       route:routeTo(POINTS.loading,{tag:"seed_delivery",waitMs:3500})
@@ -200,7 +209,7 @@ export class Game {
 
   openField() {
     const f=this.state.field;
-    if(this.state.missionId==="first_seed" && this.inventory.has("inventory","wheatSeed",1) && f.status==="prepared"){
+    if(this.planting.canStartSowing("wheat")){
       return this.ui.panel({
         eyebrow:"Feld 1",title:"Weizen aussäen",
         body:`<p>Der Traktor holt die Sämaschine aus der Werkstatt und fährt selbstständig zum Feld.</p>`,
@@ -218,8 +227,7 @@ export class Game {
   }
 
   startSowing() {
-    if(this.state.field.status!=="prepared"||!this.inventory.has("inventory","wheatSeed",1))return;
-    this.state.field.status="sowing";
+    if(!this.planting.startSowing("wheat"))return;
     const p=POINTS;
     const route=farmMachineRoute([
       {x:p.garage.x,y:p.garage.y},
@@ -443,8 +451,9 @@ export class Game {
       this.state.world.scrapVisible=false;this.inventory.remove("inventory","scrap",1);this.ui.toast("🧹 Der Hof wird sichtbar aufgeräumt.");
     }
     if(tag==="seed_delivery"){
-      if(!this.inventory.has("inventory","wheatSeed",1)) this.inventory.add("inventory","wheatSeed",1);
-      this.state.missionStep=1;this.ui.toast("📦 Weizensaatgut ist angekommen.");
+      this.planting.receiveSeed("wheat",1);
+      if(this.state.missionId==="first_seed") this.state.missionStep=1;
+      this.ui.toast("📦 Weizensaatgut ist angekommen.");
     }
     if(tag==="miller_arrive"){
       this.state.mill.unlocked=true;this.state.missionStep=1;this.ui.toast("🌾 Die Mühle ist jetzt aktiv.");
@@ -468,8 +477,11 @@ export class Game {
       this.state.machines.tractor=true;this.state.machines.seeder=true;this.ui.toast("🚜 Alter Traktor + Sämaschine erhalten.");
     }
     if(tag==="sow"){
-      this.inventory.remove("inventory","wheatSeed",1);
-      this.state.field.status="growing";this.state.field.crop="wheat";this.state.field.plantedAt=Date.now();this.state.field.readyAt=Date.now()+CONFIG.timings.wheatGrowthMs;
+      const plantedAt=Date.now();
+      if(!this.planting.completeSowing("wheat",plantedAt)){
+        this.ui.toast("⚠️ Aussaat konnte nicht abgeschlossen werden.");
+        return;
+      }
       if(this.state.missionId==="first_seed") this.advanceTo(4,"first_harvest","Erste Aussaat geschafft.");
     }
     if(tag==="harvest"){

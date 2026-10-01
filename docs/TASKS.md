@@ -9,23 +9,17 @@
 ---
 
 # Aktuelles Ticket
-`FS-008` – Crop System
+`FS-009` – Planting Flow
 
 Status:
-`APPROVED`
+`READY_FOR_REVIEW`
 
-Implementierungs-Commit:
-`974c7f296917b88ffa974be5ec22c4f9dc8f42ba`
-
-Korrektur-Commit:
-`bdecda772a65448cb7f8109ab59dc85d1718d337`
-
-Review:
-`APPROVED` by ChatGPT
+Ausgangs-SHA:
+`aca0c62905c69a58f9b9fcc29c0a10cb0682cb3e`
 
 Hinweis:
-FS-008 ist nach Korrektur und erneutem Review abgeschlossen.
-FS-009 ist vorbereitet, wurde aber nicht gestartet und benötigt eine ausdrückliche Freigabe von Lukas.
+Planting Flow ist für den Installer vorbereitet. Nach erfolgreichem Commit wartet FS-009 auf ChatGPT-Review.
+FS-010 darf vorher nicht gestartet werden.
 
 ---
 
@@ -104,10 +98,25 @@ Implementierungs-Commit:
 Review:
 `APPROVED` by ChatGPT
 
+## `FS-008` – Crop System
+Status:
+`APPROVED`
+
+Erstimplementierung:
+`974c7f296917b88ffa974be5ec22c4f9dc8f42ba`
+
+Korrektur-Commit:
+`bdecda772a65448cb7f8109ab59dc85d1718d337`
+
+Review-Abschluss:
+`aca0c62905c69a58f9b9fcc29c0a10cb0682cb3e`
+
+Review:
+`APPROVED` by ChatGPT
+
 ---
 
 # Geplante Reihenfolge
-- `FS-009` – Planting Flow
 - `FS-010` – Growth + Offline
 - `FS-011` – Harvest Core
 - `FS-012` – Selling Core
