@@ -12,14 +12,17 @@
 `FS-012` – Selling Core
 
 Status:
-`READY_FOR_REVIEW`
+`APPROVED`
 
-Ausgangs-SHA:
-`ffbbbeb78d38308914112b10ac93bd36d588c617`
+Implementierungs-Commit:
+`cce69a1a16b0efec7e333a8c101945f3dbfdc543`
+
+Review:
+`APPROVED` by ChatGPT
 
 Hinweis:
-Selling Core ist für den Installer vorbereitet. Nach erfolgreichem Commit wartet FS-012 auf ChatGPT-Review.
-Ein Folgeticket darf vorher nicht gestartet werden.
+FS-012 ist nach Implementierung und Review abgeschlossen.
+FS-013 ist vorbereitet, wurde aber nicht gestartet und benötigt eine separate Freigabe von Lukas.
 
 ---
 
@@ -156,7 +159,9 @@ Review:
 ---
 
 # Geplante Reihenfolge
-Nach FS-012 wird das nächste Ticket separat aus dem aktuellen Repository-Stand geplant.
+- `FS-013` – Save Schema v2 / Migration Core
+- `FS-014` – Save Migration Hardening
+- `FS-015` – Save/Visual Migration Cleanup
 
 ---
 
