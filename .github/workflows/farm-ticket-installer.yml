@@ -1,0 +1,141 @@
+name: Farm-Spiel Mega Ticket Installer
+run-name: "${{ inputs.self_test && 'Installer isolation self-test' || 'Farm-Spiel ticket installation' }}"
+
+"on":
+  workflow_dispatch:
+    inputs:
+      payload:
+        description: "Farm-Spiel ticket payload (empty for self-test)"
+        required: false
+        type: string
+      self_test:
+        description: "Only run isolation self-test; never install or push a ticket"
+        required: false
+        default: false
+        type: boolean
+
+permissions: {}
+
+concurrency:
+  group: farm-spiel-ticket-installer-develop
+  cancel-in-progress: false
+
+jobs:
+  self-test:
+    name: Verify installer isolation (no repository writes)
+    if: >-
+      github.repository == 'neidelbert/Farm-Spiel' &&
+      github.actor == 'neidelbert' &&
+      github.ref == 'refs/heads/main'
+    permissions:
+      contents: read
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Clone exact trusted installer revision
+        shell: bash
+        run: |
+          set -euo pipefail
+          git clone --quiet --branch main --single-branch \
+            "https://github.com/${GITHUB_REPOSITORY}.git" repo
+          test "$(git -C repo rev-parse HEAD)" = "${GITHUB_SHA}"
+      - name: Resolve official Node image to immutable digest
+        shell: bash
+        run: |
+          set -euo pipefail
+          docker pull node:22-bookworm-slim
+          IMAGE="$(docker image inspect node:22-bookworm-slim --format '{{index .RepoDigests 0}}')"
+          [[ "$IMAGE" =~ ^node@sha256:[0-9a-f]{64}$ ]]
+          echo "FARM_TEST_IMAGE=$IMAGE" >> "$GITHUB_ENV"
+      - name: Test only disposable local repositories
+        working-directory: repo
+        shell: bash
+        run: |
+          set -euo pipefail
+          marker="$(cat /proc/sys/kernel/random/uuid)"
+          echo "::stop-commands::$marker"
+          trap 'echo "::$marker::"' EXIT
+          python3 .github/scripts/farm_ticket_installer.py --self-test
+
+  install:
+    name: Verify, test and install ticket
+    needs: self-test
+    if: ${{ !inputs.self_test && inputs.payload != '' }}
+    permissions:
+      contents: write
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Clone exact trusted installer revision
+        shell: bash
+        run: |
+          set -euo pipefail
+          git clone --quiet --branch main --single-branch \
+            "https://github.com/${GITHUB_REPOSITORY}.git" repo
+          test "$(git -C repo rev-parse HEAD)" = "${GITHUB_SHA}"
+          test -f repo/.github/scripts/farm_ticket_installer.py
+      - name: Resolve official Node image to immutable digest
+        shell: bash
+        run: |
+          set -euo pipefail
+          docker pull node:22-bookworm-slim
+          IMAGE="$(docker image inspect node:22-bookworm-slim --format '{{index .RepoDigests 0}}')"
+          [[ "$IMAGE" =~ ^node@sha256:[0-9a-f]{64}$ ]]
+          echo "FARM_TEST_IMAGE=$IMAGE" >> "$GITHUB_ENV"
+      - name: Verify payload, apply changes and run tests
+        id: install
+        working-directory: repo
+        shell: bash
+        env:
+          FARM_PAYLOAD: ${{ inputs.payload }}
+          FARM_REPOSITORY: ${{ github.repository }}
+          FARM_ACTOR: ${{ github.actor }}
+          FARM_TARGET_BRANCH: develop
+        run: |
+          set -euo pipefail
+          marker="$(cat /proc/sys/kernel/random/uuid)"
+          echo "::stop-commands::$marker"
+          trap 'echo "::$marker::"' EXIT
+          python3 .github/scripts/farm_ticket_installer.py
+      - name: Push verified commit
+        working-directory: repo
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RESULT_SHA: ${{ steps.install.outputs.result_sha }}
+        run: |
+          set -euo pipefail
+          test -n "${RESULT_SHA}"
+          test "$(git rev-parse HEAD)" = "${RESULT_SHA}"
+          clean_remote() {
+            git remote set-url origin \
+              "https://github.com/${GITHUB_REPOSITORY}.git" || true
+          }
+          trap clean_remote EXIT
+          git remote set-url origin \
+            "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
+          git push --porcelain origin "${RESULT_SHA}:refs/heads/develop"
+      - name: Verify remote result
+        working-directory: repo
+        shell: bash
+        env:
+          RESULT_SHA: ${{ steps.install.outputs.result_sha }}
+          TICKET: ${{ steps.install.outputs.ticket }}
+          TEST_RESULT: ${{ steps.install.outputs.test_result }}
+          PAYLOAD_SCHEMA: ${{ steps.install.outputs.schema }}
+        run: |
+          set -euo pipefail
+          REMOTE_SHA="$(git ls-remote \
+            "https://github.com/${GITHUB_REPOSITORY}.git" \
+            refs/heads/develop | awk '{print $1}')"
+          test "${REMOTE_SHA}" = "${RESULT_SHA}"
+          {
+            echo "## Farm-Spiel ticket installed"
+            echo ""
+            echo "- Ticket: ${TICKET}"
+            echo "- Payload schema: ${PAYLOAD_SCHEMA}"
+            echo "- Result SHA: ${RESULT_SHA}"
+            echo "- Automated tests: ${TEST_RESULT}"
+            echo "- Target branch: develop"
+            echo "- Push mode: non-force"
+          } >> "${GITHUB_STEP_SUMMARY}"
