@@ -2,6 +2,18 @@ import { CONFIG } from "../config.js";
 
 export const CURRENT_SAVE_VERSION = 2;
 
+const FIELD_STATUSES = new Set([
+  "prepared",
+  "sowing",
+  "growing",
+  "ready",
+  "harvest_starting",
+  "harvesting",
+  "harvested",
+]);
+
+const WEATHER_VALUES = new Set(["sunny", "rain", "fog"]);
+
 export function createInitialState() {
   return {
     saveVersion: CURRENT_SAVE_VERSION,
@@ -89,7 +101,7 @@ export class SaveManager {
   }
 
   save(state) {
-    const copy = structuredCloneSafe(state);
+    const copy = sanitizeState(structuredCloneSafe(state));
     copy.saveVersion = CURRENT_SAVE_VERSION;
     copy.gameVersion = CONFIG.version;
     copy.lastSavedAt = Date.now();
@@ -98,9 +110,7 @@ export class SaveManager {
     if (existing) localStorage.setItem(CONFIG.backupKey, existing);
     localStorage.setItem(CONFIG.saveKey, JSON.stringify(copy));
 
-    state.saveVersion = copy.saveVersion;
-    state.gameVersion = copy.gameVersion;
-    state.lastSavedAt = copy.lastSavedAt;
+    syncState(state, copy);
   }
 
   reset() {
@@ -110,7 +120,7 @@ export class SaveManager {
 }
 
 export function migrateAndSanitize(input) {
-  if (!input || typeof input !== "object" || Array.isArray(input)) {
+  if (!isPlainObject(input)) {
     throw new Error("Save payload must be an object.");
   }
 
@@ -135,12 +145,7 @@ export function migrateAndSanitize(input) {
     version = nextVersion;
   }
 
-  const base = createInitialState();
-  const merged = deepMerge(base, working);
-  merged.gameVersion = CONFIG.version;
-  merged.saveVersion = CURRENT_SAVE_VERSION;
-  if (!Array.isArray(merged.vehicles)) merged.vehicles = [];
-  return merged;
+  return sanitizeState(working);
 }
 
 function migrateV1ToV2(input) {
@@ -148,6 +153,156 @@ function migrateV1ToV2(input) {
     ...input,
     saveVersion: 2,
   };
+}
+
+function sanitizeState(input) {
+  const base = createInitialState();
+  const out = sanitizeTemplate(base, input, "");
+  out.saveVersion = CURRENT_SAVE_VERSION;
+  out.gameVersion = CONFIG.version;
+
+  out.lastSavedAt = finiteNonNegative(input.lastSavedAt, base.lastSavedAt);
+  out.level = integerAtLeast(input.level, 1, base.level);
+  out.xp = finiteNonNegative(input.xp, base.xp);
+  out.xpNeeded = positiveFinite(input.xpNeeded, base.xpNeeded);
+  out.money = finiteNonNegative(input.money, base.money);
+  out.missionStep = finiteNonNegative(input.missionStep, base.missionStep);
+
+  out.inventory.scrap = integerNonNegative(input.inventory?.scrap, base.inventory.scrap);
+  out.inventory.wheatSeed = integerNonNegative(input.inventory?.wheatSeed, base.inventory.wheatSeed);
+
+  out.silo.level = integerAtLeast(input.silo?.level, 1, base.silo.level);
+  out.silo.capacity = integerAtLeast(input.silo?.capacity, 1, base.silo.capacity);
+  out.silo.items.wheat = integerNonNegative(input.silo?.items?.wheat, base.silo.items.wheat);
+
+  out.barn.level = integerAtLeast(input.barn?.level, 1, base.barn.level);
+  out.barn.capacity = integerAtLeast(input.barn?.capacity, 1, base.barn.capacity);
+  out.barn.items.flour = integerNonNegative(input.barn?.items?.flour, base.barn.items.flour);
+  out.barn.items.eggs = integerNonNegative(input.barn?.items?.eggs, base.barn.items.eggs);
+  out.barn.items.milk = integerNonNegative(input.barn?.items?.milk, base.barn.items.milk);
+
+  out.garage.level = integerAtLeast(input.garage?.level, 1, base.garage.level);
+
+  out.field.status = FIELD_STATUSES.has(input.field?.status)
+    ? input.field.status
+    : base.field.status;
+  out.field.crop = input.field?.crop === null || typeof input.field?.crop === "string"
+    ? input.field.crop
+    : base.field.crop;
+  out.field.plantedAt = nullableFiniteNonNegative(input.field?.plantedAt);
+  out.field.readyAt = nullableFiniteNonNegative(input.field?.readyAt);
+  out.field.harvestProgress = clampFinite(input.field?.harvestProgress, 0, 1, base.field.harvestProgress);
+
+  out.mill.readyAt = nullableFiniteNonNegative(input.mill?.readyAt);
+  out.mill.outputReady = integerNonNegative(input.mill?.outputReady, base.mill.outputReady);
+
+  out.chickens.count = integerNonNegative(input.chickens?.count, base.chickens.count);
+  out.chickens.readyAt = nullableFiniteNonNegative(input.chickens?.readyAt);
+  out.chickens.eggsReady = integerNonNegative(input.chickens?.eggsReady, base.chickens.eggsReady);
+
+  out.cows.count = integerNonNegative(input.cows?.count, base.cows.count);
+  out.cows.readyAt = nullableFiniteNonNegative(input.cows?.readyAt);
+  out.cows.milkReady = integerNonNegative(input.cows?.milkReady, base.cows.milkReady);
+
+  out.world.weather = WEATHER_VALUES.has(input.world?.weather)
+    ? input.world.weather
+    : base.world.weather;
+  out.world.timeOfDay = clampFinite(input.world?.timeOfDay, 0, 1, base.world.timeOfDay);
+  out.world.timeScale = positiveFinite(input.world?.timeScale, base.world.timeScale);
+
+  // visualVersion is intentionally preserved until FS-015 moves this migration
+  // into the save migration pipeline. Dropping it here would re-scale vehicles
+  // on every reload.
+  if (Number.isInteger(input.world?.visualVersion) && input.world.visualVersion >= 1) {
+    out.world.visualVersion = input.world.visualVersion;
+  }
+
+  out.construction = sanitizeNullableObject(input.construction);
+  out.sideOrder = sanitizeNullableObject(input.sideOrder);
+  out.vehicles = sanitizeVehicles(input.vehicles);
+
+  return out;
+}
+
+function sanitizeTemplate(base, extra, path) {
+  if (Array.isArray(base)) return Array.isArray(extra) ? structuredCloneSafe(extra) : [];
+
+  if (isPlainObject(base)) {
+    const source = isPlainObject(extra) ? extra : {};
+    const out = {};
+    for (const key of Object.keys(base)) {
+      const childPath = path ? `${path}.${key}` : key;
+      out[key] = sanitizeTemplate(base[key], source[key], childPath);
+    }
+    return out;
+  }
+
+  if (typeof base === "boolean") return typeof extra === "boolean" ? extra : base;
+  if (typeof base === "string") return typeof extra === "string" ? extra : base;
+  if (typeof base === "number") return Number.isFinite(extra) ? extra : base;
+  if (base === null) return extra === null || extra === undefined ? null : extra;
+
+  return base;
+}
+
+function sanitizeVehicles(value) {
+  if (!Array.isArray(value)) return [];
+  return value.map(sanitizeVehicle).filter(Boolean);
+}
+
+function sanitizeVehicle(vehicle) {
+  if (!isPlainObject(vehicle)) return null;
+  if (typeof vehicle.id !== "string" || vehicle.id.length === 0) return null;
+  if (typeof vehicle.type !== "string" || vehicle.type.length === 0) return null;
+  if (typeof vehicle.eventId !== "string" || vehicle.eventId.length === 0) return null;
+  if (!Number.isFinite(vehicle.x) || !Number.isFinite(vehicle.y)) return null;
+  if (!Number.isFinite(vehicle.speed) || vehicle.speed <= 0) return null;
+  if (!Array.isArray(vehicle.route) || vehicle.route.length === 0) return null;
+
+  const route = vehicle.route.map(sanitizeRoutePoint).filter(Boolean);
+  if (route.length !== vehicle.route.length || route.length === 0) return null;
+
+  const routeIndex = Number.isInteger(vehicle.routeIndex) && vehicle.routeIndex >= 0
+    ? Math.min(vehicle.routeIndex, route.length)
+    : 1;
+
+  return {
+    id: vehicle.id,
+    type: vehicle.type,
+    label: typeof vehicle.label === "string" ? vehicle.label : vehicle.type,
+    eventId: vehicle.eventId,
+    x: vehicle.x,
+    y: vehicle.y,
+    route,
+    routeIndex,
+    speed: vehicle.speed,
+    waitingUntil: nullableFiniteNonNegative(vehicle.waitingUntil),
+    waitStartedAt: nullableFiniteNonNegative(vehicle.waitStartedAt),
+    waitDuration: finiteNonNegative(vehicle.waitDuration, 0),
+    currentTag: vehicle.currentTag === null || typeof vehicle.currentTag === "string"
+      ? vehicle.currentTag
+      : null,
+    heading: Number.isFinite(vehicle.heading) ? vehicle.heading : 0,
+  };
+}
+
+function sanitizeRoutePoint(point) {
+  if (!isPlainObject(point) || !Number.isFinite(point.x) || !Number.isFinite(point.y)) {
+    return null;
+  }
+
+  const out = { x: point.x, y: point.y };
+  if (typeof point.tag === "string" && point.tag.length > 0) out.tag = point.tag;
+  if (Number.isFinite(point.waitMs) && point.waitMs > 0) out.waitMs = point.waitMs;
+  return out;
+}
+
+function sanitizeNullableObject(value) {
+  return value === null || value === undefined
+    ? null
+    : isPlainObject(value)
+      ? structuredCloneSafe(value)
+      : null;
 }
 
 function getSaveVersion(input) {
@@ -169,20 +324,46 @@ function readStoredSave(key) {
   }
 }
 
-function deepMerge(base, extra) {
-  if (Array.isArray(base)) return Array.isArray(extra) ? extra : base;
-  if (base && typeof base === "object") {
-    const out = { ...base };
-    for (const [key, value] of Object.entries(extra || {})) {
-      if (key in base && base[key] && typeof base[key] === "object" && !Array.isArray(base[key])) {
-        out[key] = deepMerge(base[key], value);
-      } else {
-        out[key] = value;
-      }
-    }
-    return out;
+function syncState(target, source) {
+  for (const key of Object.keys(target)) {
+    if (!(key in source)) delete target[key];
   }
-  return extra ?? base;
+  for (const [key, value] of Object.entries(source)) {
+    target[key] = structuredCloneSafe(value);
+  }
+}
+
+function finiteNonNegative(value, fallback) {
+  return Number.isFinite(value) && value >= 0 ? value : fallback;
+}
+
+function integerNonNegative(value, fallback) {
+  return Number.isInteger(value) && value >= 0 ? value : fallback;
+}
+
+function integerAtLeast(value, min, fallback) {
+  return Number.isInteger(value) && value >= min ? value : fallback;
+}
+
+function positiveFinite(value, fallback) {
+  return Number.isFinite(value) && value > 0 ? value : fallback;
+}
+
+function nullableFiniteNonNegative(value) {
+  return value === null || value === undefined
+    ? null
+    : Number.isFinite(value) && value >= 0
+      ? value
+      : null;
+}
+
+function clampFinite(value, min, max, fallback) {
+  if (!Number.isFinite(value)) return fallback;
+  return Math.max(min, Math.min(max, value));
+}
+
+function isPlainObject(value) {
+  return Boolean(value) && typeof value === "object" && !Array.isArray(value);
 }
 
 function structuredCloneSafe(value) {
