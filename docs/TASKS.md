@@ -9,26 +9,17 @@
 ---
 
 # Aktuelles Ticket
-`FS-016` – Fertilizer Core
-
-Status:
-`APPROVED`
-
-Implementierungs-Commit:
-`2a2fb3f2379e0e26c1beae39f5de4041c6619927`
-
-Review:
-`APPROVED` by ChatGPT
-
-Hinweis:
-FS-016 ist nach korrigierter Implementierung und Review abgeschlossen.
-Der erste Installer-Versuch wurde vor dem Push durch drei veraltete Test-Erwartungen korrekt blockiert.
-Der korrigierte Installer-Run bestand anschließend vollständig.
-
-Als nächster Roadmap-Schritt ist vorgesehen:
 `FS-017` – Camera Stabilization
 
-FS-017 wurde noch nicht gestartet.
+Status:
+`READY_FOR_REVIEW`
+
+Ausgangs-SHA:
+`df3ce739098fc1d811df465673bf5628cb223f36`
+
+Hinweis:
+Camera Stabilization ist für den Installer vorbereitet. Nach erfolgreichem Commit wartet FS-017 auf ChatGPT-Review.
+Ein Folgeticket darf vorher nicht gestartet werden.
 
 ---
 
@@ -214,10 +205,23 @@ Review-Abschluss:
 Review:
 `APPROVED` by ChatGPT
 
+## `FS-016` – Fertilizer Core
+Status:
+`APPROVED`
+
+Implementierungs-Commit:
+`2a2fb3f2379e0e26c1beae39f5de4041c6619927`
+
+Review-Abschluss:
+`df3ce739098fc1d811df465673bf5628cb223f36`
+
+Review:
+`APPROVED` by ChatGPT
+
 ---
 
 # Geplante Reihenfolge
-- `FS-017` – Camera Stabilization
+Nach FS-017 wird das nächste Ticket separat aus dem dann aktuellen Repository-Stand geplant.
 
 ---
 

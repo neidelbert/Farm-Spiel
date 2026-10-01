@@ -14,43 +14,71 @@ export class Camera {
     this.vy = 0;
   }
 
+  getEffectiveMinZoom() {
+    const fitX = this.viewportWidth / Math.max(1, this.worldWidth);
+    const fitY = this.viewportHeight / Math.max(1, this.worldHeight);
+    return Math.min(this.maxZoom, Math.max(this.minZoom, fitX, fitY));
+  }
+
   setViewport(w, h) {
+    if (!Number.isFinite(w) || !Number.isFinite(h)) return;
     this.viewportWidth = Math.max(1, w);
     this.viewportHeight = Math.max(1, h);
+    this.zoom = clamp(this.zoom, this.getEffectiveMinZoom(), this.maxZoom);
     this.clamp();
   }
 
   panScreen(dx, dy) {
+    if (!Number.isFinite(dx) || !Number.isFinite(dy)) return;
     this.x -= dx / this.zoom;
     this.y -= dy / this.zoom;
     this.clamp();
   }
 
   setVelocityScreen(vx, vy) {
+    if (!Number.isFinite(vx) || !Number.isFinite(vy)) {
+      this.stop();
+      return;
+    }
     this.vx = -vx / this.zoom;
     this.vy = -vy / this.zoom;
   }
 
-  stop() { this.vx = this.vy = 0; }
+  stop() {
+    this.vx = 0;
+    this.vy = 0;
+  }
 
   update(dt) {
+    if (!Number.isFinite(dt) || dt <= 0) return;
+
     if (Math.abs(this.vx) < 4) this.vx = 0;
     if (Math.abs(this.vy) < 4) this.vy = 0;
     if (!this.vx && !this.vy) return;
-    this.x += this.vx * dt;
-    this.y += this.vy * dt;
-    const d = Math.exp(-this.inertia * dt);
-    this.vx *= d;
-    this.vy *= d;
+
+    // Limit single-frame movement after a slow frame or tab hiccup.
+    const step = Math.min(dt, 0.05);
+    this.x += this.vx * step;
+    this.y += this.vy * step;
+
+    const damping = Math.exp(-this.inertia * step);
+    this.vx *= damping;
+    this.vy *= damping;
     this.clamp();
   }
 
   zoomAt(screenX, screenY, target) {
-    const next = clamp(target, this.minZoom, this.maxZoom);
+    if (!Number.isFinite(screenX) || !Number.isFinite(screenY) || !Number.isFinite(target)) {
+      return;
+    }
+
+    const next = clamp(target, this.getEffectiveMinZoom(), this.maxZoom);
     if (Math.abs(next - this.zoom) < 0.0001) return;
+
     const before = this.screenToWorld(screenX, screenY);
     this.zoom = next;
     const after = this.screenToWorld(screenX, screenY);
+
     this.x += before.x - after.x;
     this.y += before.y - after.y;
     this.clamp();
@@ -71,14 +99,49 @@ export class Camera {
   }
 
   focus(x, y) {
-    this.x = x; this.y = y; this.stop(); this.clamp();
+    if (!Number.isFinite(x) || !Number.isFinite(y)) return;
+    this.x = x;
+    this.y = y;
+    this.stop();
+    this.clamp();
   }
 
   clamp() {
-    const hw = this.viewportWidth / (2 * this.zoom);
-    const hh = this.viewportHeight / (2 * this.zoom);
-    this.x = hw * 2 >= this.worldWidth ? this.worldWidth / 2 : clamp(this.x, hw, this.worldWidth - hw);
-    this.y = hh * 2 >= this.worldHeight ? this.worldHeight / 2 : clamp(this.y, hh, this.worldHeight - hh);
+    this.zoom = clamp(this.zoom, this.getEffectiveMinZoom(), this.maxZoom);
+
+    const halfWidth = this.viewportWidth / (2 * this.zoom);
+    const halfHeight = this.viewportHeight / (2 * this.zoom);
+
+    const minX = halfWidth;
+    const maxX = this.worldWidth - halfWidth;
+    const minY = halfHeight;
+    const maxY = this.worldHeight - halfHeight;
+
+    const oldX = this.x;
+    const oldY = this.y;
+
+    this.x = minX >= maxX
+      ? this.worldWidth / 2
+      : clamp(this.x, minX, maxX);
+
+    this.y = minY >= maxY
+      ? this.worldHeight / 2
+      : clamp(this.y, minY, maxY);
+
+    // Do not keep invisible inertia pushing into a hard world boundary.
+    if (this.x !== oldX) {
+      if ((this.x <= minX && this.vx < 0) || (this.x >= maxX && this.vx > 0)) {
+        this.vx = 0;
+      }
+    }
+    if (this.y !== oldY) {
+      if ((this.y <= minY && this.vy < 0) || (this.y >= maxY && this.vy > 0)) {
+        this.vy = 0;
+      }
+    }
   }
 }
-function clamp(v, min, max) { return Math.max(min, Math.min(max, v)); }
+
+function clamp(value, min, max) {
+  return Math.max(min, Math.min(max, value));
+}
