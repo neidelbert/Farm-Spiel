@@ -1,7 +1,7 @@
 # FS-008 – Crop System
 
 ## Status
-`READY_FOR_REVIEW`
+`APPROVED`
 
 ## Ausgangs-SHA
 `90c88257f77ba6b97c98ef58cac2bcfa6da21880`
@@ -11,6 +11,9 @@
 
 ## Korrektur-Basis
 `974c7f296917b88ffa974be5ec22c4f9dc8f42ba`
+
+## Korrektur-Commit
+`bdecda772a65448cb7f8109ab59dc85d1718d337`
 
 ## Version
 `0.3.0-dev`
@@ -69,13 +72,27 @@ Renderer und Ernte verwendet. FS-008 selbst verändert noch kein sichtbares Game
 - Kamera / Welt / Assets
 - sichtbarer Spielablauf
 
-## Review-Hinweis
-Die Erstimplementierung bestand alle technischen Tests, war gegenüber dem bestehenden
-State-Audit aber zu schmal. Diese Korrektur ergänzt die dort geforderten zentralen
-Crop-Werte, ohne Folgetickets funktional vorwegzunehmen.
+## Review
+Durchgeführt durch:
+ChatGPT
 
-## STOP
-Nach dem Korrektur-Commit erneut:
-`READY_FOR_REVIEW`
+Ergebnis:
+`APPROVED`
 
-FS-009 darf erst nach erfolgreichem Review gestartet werden.
+Geprüft:
+- zentrale Crop-Definition deckt die Anforderungen des State-Audits für `cropId`, Seed-Item, Growth-Duration, Yield, Fertilizer-Behavior und Visual-Stages ab
+- Weizenwerte und vier Visual-Stufen sind im Crop-Katalog vorhanden
+- Asset-Katalog-Einträge 134 bis 137 entsprechen den vier Weizen-Wachstumsstufen
+- unbekannte Crop-IDs erhalten keinen stillen Fallback
+- verschachtelte Crop-Regeln bleiben unveränderlich
+- FS-008 zieht keine Gameplay-, Save-, Growth-, Harvest-, Economy-, Renderer- oder UI-Integration vor
+- lokale Node-Prüfung der vorhandenen Repository-Testdateien: 32/32 `PASS`, davon CropSystem 12/12 `PASS`
+- Browser: `NOT TESTED`
+- Gameplay: `NOT TESTED`
+- Mobile: `NOT TESTED`
+- GitHub-Actions-Run direkt für den Korrektur-SHA: `NOT TESTED` (kein zugeordneter Run über die verfügbare GitHub-Abfrage nachweisbar)
+
+## Abschluss
+FS-008 ist abgeschlossen.
+
+FS-009 wurde nicht automatisch gestartet und benötigt eine separate Freigabe von Lukas.
