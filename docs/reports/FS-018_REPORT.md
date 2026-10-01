@@ -1,47 +1,57 @@
-# FS-018 – Development Report
+# FS-018 – Review Report
 
 ## Ticket
 `FS-018` – World Interaction Core
 
 ## Status
-`READY_FOR_REVIEW`
+`APPROVED`
 
 ## Ausgangs-SHA
 `f1ebabee0955141362993dae4fa7dcae6a7300d5`
 
-## Ergebnis-SHA / Implementierungs-Commit
-`PENDING_INSTALLER_RESULT`
+## Implementierungs-Commit / Ergebnis-SHA
+`b79c6256672b416092e9bd1bf709fb40a9e7f5c5`
 
-## Ergebnis
-Die sichtbare modulare Welt und die Tap-/Hitbox-Logik nutzen für interaktive Objekte jetzt dieselben Positionen.
+## Review
+Durchgeführt durch:
+ChatGPT
+
+Ergebnis:
+`APPROVED`
 
 ## Was ändert sich im Spiel?
-Ein Tap auf ein Gebäude trifft dessen tatsächliche sichtbare Position statt eine ältere, separat gepflegte Hitbox.
+Sichtbare Gebäude und ihre Tap-Flächen verwenden jetzt dieselben aktuellen Weltpositionen.
 
-## Wichtige Änderungen
-- Neuer `WorldInteractionCore`.
-- Interaktive Gebäude werden aus den bereits angepassten modularen Renderobjekten abgeleitet.
-- Feld 1 verwendet die gerenderte Feldposition.
-- Verkaufstruck und Hafen besitzen explizite Sonderinteraktionen.
-- Dekorationsobjekte bleiben nicht interaktiv.
-- Bounds folgen Sprite-Breite, Höhe und Anchor.
-- Overlap-Auflösung folgt Layer und Y-Sortierung.
-- `Renderer.objectAt()` nutzt keine Legacy-`WORLD_OBJECTS` mehr.
-- Construction- und DEV-Debug-Bounds folgen dem Interaction-Core.
-- Auswahlmarkierung folgt den neuen Bounds.
+## Review-Ergebnis
+Geprüft wurde:
+- korrekter Parent-SHA
+- korrekte Commit-Nachricht
+- exakt sieben erwartete Ticket-Dateien
+- modular abgeleitete Gebäudeinteraktionen
+- gerenderte Feld-1-Position als Interaction-Quelle
+- explizite Verkaufstruck-/Hafen-Sonderfälle
+- keine automatische Interaktion für Dekoration
+- anchor-basierte Interaction-Bounds
+- Layer-/Y-basierte Overlap-Auflösung
+- keine Legacy-`WORLD_OBJECTS`-Hit Detection mehr in `renderer.js`
+- Construction, Auswahl und DEV-Debug auf neuem Interaction-Modell
+- keine Scope-Ausweitung
 
-## Tests vor Installer-Ausführung
+## Tests
 World-Interaction-Fokustests:
 `PASS` – 15/15 Subtests
 
-JavaScript-Syntax:
+Installer Node-Test-Suite:
+`PASS` – 130/130 Subtests
+
+Installer-Workflow:
 `PASS`
 
-Vollständige Repository-Test-Suite:
-`NOT TESTED` – wird vom Installer ausgeführt.
+Push:
+`PASS`
 
-GitHub Ticket Installer:
-`NOT TESTED`
+Remote-Verifikation:
+`PASS`
 
 Browser:
 `NOT TESTED`
@@ -53,18 +63,12 @@ Mobile/Touch:
 `NOT TESTED`
 
 ## Bekannte Grenzen
-- Die geerbte Event-Icon-Darstellung aus `LegacyRenderer` besitzt weiterhin ältere Positionsquellen und ist nicht Teil von FS-018.
-- `harbor` ist bewusst eine Bereichsinteraktion, kein einzelnes Sprite.
-- Es existiert noch kein vollständiges gemeinsames Placement-/Visual-/Interaction-Bounds-Schema für alle ~995 Weltobjekte.
-- Echte Geräte-Taptests bleiben `NOT TESTED`.
-
-## Bewusst nicht umgesetzt
-- keine Weltverschiebungen
-- keine Multi-Field-Gameplay-Erweiterung
-- keine Placement-Validierung
-- keine Renderer-Ablösung
-- keine Asset-Änderung
+- Die geerbten Event-Icons verwenden weiterhin ältere Objektpositionen.
+- Die Welt besitzt weiterhin mehrere Datenquellen für unterschiedliche Aufgaben.
+- Vollständige Placement-/Visual-/Interaction-Vereinheitlichung ist noch nicht abgeschlossen.
 
 ## Abschluss
-Nach erfolgreichem Installer-Run wartet FS-018 auf ChatGPT-Review.
-Das Folgeticket wurde nicht begonnen.
+FS-018 ist abgeschlossen und `APPROVED`.
+
+Nächster Roadmap-Schritt:
+`FS-019` – World UI Position Alignment.
