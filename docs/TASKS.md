@@ -12,14 +12,18 @@
 `FS-015` – Save/Visual Migration Cleanup
 
 Status:
-`READY_FOR_REVIEW`
+`APPROVED`
 
-Ausgangs-SHA:
-`4ef2ef3a807e59f8114318a0658f6b395d708b69`
+Implementierungs-Commit:
+`f8e7323547a5674a8592ac16925fcc0466c7b763`
+
+Review:
+`APPROVED` by ChatGPT
 
 Hinweis:
-Save/Visual Migration Cleanup ist für den Installer vorbereitet. Nach erfolgreichem Commit wartet FS-015 auf ChatGPT-Review.
-Ein Folgeticket darf vorher nicht gestartet werden.
+FS-015 ist nach Implementierung und Review abgeschlossen.
+Als nächster sinnvoller Core-Schritt ist FS-016 vorgesehen.
+FS-016 wurde noch nicht gestartet und benötigt eine separate Freigabe von Lukas.
 
 ---
 
@@ -195,7 +199,7 @@ Review:
 ---
 
 # Geplante Reihenfolge
-Nach FS-015 wird das nächste Ticket separat aus dem aktuellen Repository-Stand geplant.
+- `FS-016` – Fertilizer Core
 
 ---
 

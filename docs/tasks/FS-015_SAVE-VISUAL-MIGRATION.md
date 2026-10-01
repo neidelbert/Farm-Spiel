@@ -1,10 +1,13 @@
 # FS-015 – Save/Visual Migration Cleanup
 
 ## Status
-`READY_FOR_REVIEW`
+`APPROVED`
 
 ## Ausgangs-SHA
 `4ef2ef3a807e59f8114318a0658f6b395d708b69`
+
+## Implementierungs-Commit
+`f8e7323547a5674a8592ac16925fcc0466c7b763`
 
 ## Version
 `0.3.0-dev`
@@ -15,48 +18,40 @@ Die alte einmalige Fahrzeug-/Kartenkoordinaten-Migration aus `main.js` entfernen
 ## Was ändert sich im Spiel?
 Bestehende ältere Spielstände werden beim Laden genau einmal auf die aktuelle Kartenkoordinaten-Struktur gebracht. Bereits migrierte Fahrzeuge werden nicht doppelt skaliert.
 
-## Geänderte Source-Dateien
-- `src/core/save.js`
-- `src/main.js`
+## Review
+Durchgeführt durch:
+ChatGPT
 
-## Geänderte Tests
-- `tests/save.test.js`
+Ergebnis:
+`APPROVED`
 
-## Technische Anforderungen
-- `CURRENT_SAVE_VERSION` steigt auf 3.
-- Migrationskette: Legacy/v1 → v2 → v3.
-- v2→v3 übernimmt die bisherige Skalierung aus `main.js`:
-  - Fahrzeug x × 3.4
-  - Fahrzeug y × 3.23
-  - Fahrzeug speed × 3.2
-  - Route x × 3.4
-  - Route y × 3.23
-- Ein v2-Spielstand mit `world.visualVersion === 2` gilt als bereits migriert und wird nicht erneut skaliert.
-- Ein v2-Spielstand ohne diesen Marker wird einmalig skaliert.
-- Nach v2→v3 wird `world.visualVersion` entfernt.
-- Save-v3 besitzt keinen Visual-Migrationsmarker mehr.
-- Wiederholtes Laden eines v3-Spielstands darf keine erneute Skalierung auslösen.
-- `main.js` enthält keine Save-/Koordinatenmigration mehr.
-- Save-Hardening und Backup-Fallback aus FS-013/014 bleiben erhalten.
-- LocalStorage-Key bleibt zur Abwärtskompatibilität unverändert.
-- Kein Gameplay oder Rendering-Verhalten außerhalb der Save-Migration wird verändert.
-
-## Bewusst nicht umgesetzt
-- keine Änderung des LocalStorage-Keys
-- keine neue Weltgeometrie
-- keine Kameraänderung
-- keine Renderer-Änderung
-- keine Gameplay-Änderung
-- keine neue Vehicle-Route-Logik
+Geprüft:
+- Implementierungs-Commit ist direkter Nachfolger des FS-014-Abschluss-SHA.
+- Commit-Nachricht entspricht dem Ticket.
+- Exakt die sechs vorgesehenen Dateien wurden verändert bzw. neu angelegt.
+- Save-Schema wurde auf v3 erhöht.
+- Migrationskette v1 → v2 → v3 ist vorhanden.
+- v2→v3 übernimmt die bisherigen Fahrzeug-/Routen-Skalierungsfaktoren.
+- Bereits mit `visualVersion: 2` migrierte v2-Saves werden nicht erneut skaliert.
+- Unmarkierte v2-Saves werden genau einmal skaliert.
+- `visualVersion` wird nach der Migration entfernt.
+- Wiederholtes Laden von v3-Saves ist idempotent.
+- `main.js` enthält keine Koordinatenmigration mehr.
+- Save-Hardening und Backup-Fallback bleiben erhalten.
+- Kein Gameplay-, Welt-, Renderer- oder Kamera-Scope wurde vorgezogen.
 
 ## Tests
-Vor Payload:
-- JavaScript-Syntax `src/core/save.js`: `PASS`
-- JavaScript-Syntax `src/main.js`: `PASS`
-- JavaScript-Syntax `tests/save.test.js`: `PASS`
-- Save/Visual-Migration-Tests: `PASS`
+Save/Visual-Migration:
+`PASS` – 17/17 Subtests
 
-Die vollständige Repository-Test-Suite muss der Installer erneut ausführen.
+Komplette Node-Test-Suite im Installer:
+`PASS` – 85/85 Subtests
+
+Installer-Workflow:
+`PASS`
+
+Remote-Push-Verifikation:
+`PASS`
 
 Browser:
 `NOT TESTED`
@@ -67,11 +62,12 @@ Gameplay auf Gerät:
 Mobile/Touch:
 `NOT TESTED`
 
-## Commit-Nachricht
-`FS-015: Centralize visual save migration`
+## Bekannte Grenzen
+- Der LocalStorage-Key bleibt zur Kompatibilität `farm-spiel-save-v1`.
+- Echte iPhone-Runtime-Migration ist weiterhin `NOT TESTED`.
+- Andere Welt-/Interaktions-Source-of-Truth-Probleme sind nicht Bestandteil von FS-015.
 
-## STOP
-Nach erfolgreichem Installer-Commit:
-`READY_FOR_REVIEW`
+## Abschluss
+FS-015 ist abgeschlossen und `APPROVED`.
 
-Das nächste Ticket wird nach dem FS-015-Review separat aus dem aktuellen Repository-Stand geplant.
+Als nächster Core-Schritt ist FS-016 – Fertilizer Core vorgesehen.
