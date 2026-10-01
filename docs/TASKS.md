@@ -12,14 +12,21 @@
 `FS-017` – Camera Stabilization
 
 Status:
-`READY_FOR_REVIEW`
+`APPROVED`
 
-Ausgangs-SHA:
-`df3ce739098fc1d811df465673bf5628cb223f36`
+Implementierungs-Commit:
+`b8b79bfbef7afcfbbf14d0623113b52d18f2eecb`
+
+Review:
+`APPROVED` by ChatGPT
 
 Hinweis:
-Camera Stabilization ist für den Installer vorbereitet. Nach erfolgreichem Commit wartet FS-017 auf ChatGPT-Review.
-Ein Folgeticket darf vorher nicht gestartet werden.
+FS-017 ist nach Implementierung und Review abgeschlossen.
+
+Als nächster Roadmap-Schritt ist vorgesehen:
+`FS-018` – World Interaction Core
+
+FS-018 wurde noch nicht gestartet.
 
 ---
 
@@ -221,7 +228,7 @@ Review:
 ---
 
 # Geplante Reihenfolge
-Nach FS-017 wird das nächste Ticket separat aus dem dann aktuellen Repository-Stand geplant.
+- `FS-018` – World Interaction Core
 
 ---
 
