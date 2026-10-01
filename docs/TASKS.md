@@ -9,20 +9,17 @@
 ---
 
 # Aktuelles Ticket
-`FS-010` – Growth + Offline
+`FS-011` – Harvest Core
 
 Status:
-`APPROVED`
+`READY_FOR_REVIEW`
 
-Implementierungs-Commit:
-`835f16b645f24c7f3f88e7f4ec1d94f2cf03edc7`
-
-Review:
-`APPROVED` by ChatGPT
+Ausgangs-SHA:
+`46fbd9c002e0073fd590375ff3fdd64178f1366f`
 
 Hinweis:
-FS-010 ist nach Implementierung und Review abgeschlossen.
-FS-011 ist vorbereitet, wurde aber nicht gestartet und benötigt eine separate Freigabe von Lukas.
+Harvest Core ist für den Installer vorbereitet. Nach erfolgreichem Commit wartet FS-011 auf ChatGPT-Review.
+FS-012 darf vorher nicht gestartet werden.
 
 ---
 
@@ -130,10 +127,22 @@ Review-Abschluss:
 Review:
 `APPROVED` by ChatGPT
 
+## `FS-010` – Growth + Offline
+Status:
+`APPROVED`
+
+Implementierungs-Commit:
+`835f16b645f24c7f3f88e7f4ec1d94f2cf03edc7`
+
+Review-Abschluss:
+`46fbd9c002e0073fd590375ff3fdd64178f1366f`
+
+Review:
+`APPROVED` by ChatGPT
+
 ---
 
 # Geplante Reihenfolge
-- `FS-011` – Harvest Core
 - `FS-012` – Selling Core
 
 ---

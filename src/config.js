@@ -35,7 +35,6 @@ export const CONFIG = Object.freeze({
   economy: {
     scrapReward: 100,
     wheatSeedPrice: 10,
-    wheatYield: 10,
     firstOrderReward: 35,
     siloUpgrade: 60,
     millerReward: 100,

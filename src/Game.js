@@ -8,6 +8,7 @@ import { InventorySystem } from "./systems/inventory.js";
 import { FieldSystem } from "./systems/fields.js";
 import { CropSystem } from "./systems/crops.js";
 import { PlantingSystem } from "./systems/planting.js";
+import { HarvestSystem } from "./systems/harvest.js";
 
 export class Game {
   constructor({ state, save, events, camera, renderer, ui }) {
@@ -26,6 +27,7 @@ export class Game {
     this.fields = new FieldSystem(state);
     this.crops = new CropSystem();
     this.planting = new PlantingSystem({ state, economy: this.economy, inventory: this.inventory, fields: this.fields, crops: this.crops });
+    this.harvest = new HarvestSystem({ state, inventory: this.inventory, fields: this.fields, crops: this.crops });
 
     this.lastAutosave = performance.now();
     this.lastFrame = performance.now();
@@ -221,7 +223,33 @@ export class Game {
       return this.ui.panel({eyebrow:"Feld 1",title:"Weizen wächst",body:`<div class="status">Restzeit: <strong>${formatTime(sec)}</strong></div>`,actions:[]});
     }
     if(f.status==="ready"){
-      return this.ui.panel({eyebrow:"Feld 1",title:"Weizen ist reif",body:`<p>Der alte Mähdrescher kann jetzt ernten.</p>`,actions:[{label:"Ernte starten",onClick:()=>this.startHarvest()}]});
+      const plan=this.harvest.getPlan();
+      const active=this.vehicles.hasEvent("harvest_wheat");
+      const can=this.harvest.canStartHarvest()&&!active;
+      const label=active
+        ?"Mähdrescher unterwegs"
+        :!plan?.machineAvailable
+          ?"Mähdrescher nicht verfügbar"
+          :!plan?.storageFits
+            ?`Silo: ${plan?.yieldAmount||0} freie Plätze benötigt`
+            :"Ernte starten";
+      return this.ui.panel({
+        eyebrow:"Feld 1",
+        title:"Weizen ist reif",
+        body:`<p>Der Mähdrescher erntet nur, wenn die komplette Ernte ins Silo passt.</p><div class="status">Ertrag: <strong>${plan?.yieldAmount||0} Weizen</strong><br>Freier Siloplatz: ${plan?.freeSpace??0}</div>`,
+        actions:[{label,disabled:!can,onClick:()=>this.startHarvest()}]
+      });
+    }
+    if(f.status==="harvested"){
+      const plan=this.harvest.getPlan();
+      const active=this.vehicles.hasEvent("harvest_wheat");
+      const can=this.harvest.canStoreHarvest()&&!active;
+      return this.ui.panel({
+        eyebrow:"Feld 1",
+        title:"Ernte wartet auf Lagerplatz",
+        body:`<p>${active?"Der Mähdrescher bringt die Ernte zum Silo.":"Die geschnittene Ernte bleibt erhalten, bis genug Platz im Silo frei ist."}</p><div class="status">Ernte: <strong>${plan?.yieldAmount||0} Weizen</strong><br>Freier Siloplatz: ${plan?.freeSpace??0}</div>`,
+        actions:active?[]:[{label:can?"Ernte einlagern":"Silo voll",disabled:!can,onClick:()=>this.completeHarvestStorage(true)}]
+      });
     }
     this.ui.panel({eyebrow:"Feld 1",title:"Acker",body:`<div class="status">Status: ${statusName(f.status)}</div>`,actions:[]});
   }
@@ -241,8 +269,7 @@ export class Game {
   }
 
   startHarvest() {
-    if(this.state.field.status!=="ready"||this.vehicles.hasEvent("first_harvest"))return;
-    this.state.field.status="harvest_starting";
+    if(this.vehicles.hasEvent("harvest_wheat")||!this.harvest.startHarvest())return;
     const p=POINTS;
     const route=farmMachineRoute([
       {x:p.garage.x,y:p.garage.y},
@@ -253,8 +280,27 @@ export class Game {
       {...p.garageApproach},
       {x:p.garage.x,y:p.garage.y},
     ]);
-    this.vehicles.spawn({id:uid("combine"),type:"combine",eventId:"first_harvest",route});
+    this.vehicles.spawn({id:uid("combine"),type:"combine",eventId:"harvest_wheat",route});
     this.ui.closeSheet();this.ui.toast("🌾 Der Mähdrescher fährt zum Feld.");
+  }
+
+  completeHarvestStorage(closeSheet=false) {
+    const plan=this.harvest.getPlan();
+    if(!plan||!this.harvest.storeHarvest()){
+      this.ui.toast("📦 Silo voll – die Ernte bleibt erhalten.");
+      return false;
+    }
+
+    this.state.achievements.firstHarvest=true;
+    if(closeSheet) this.ui.closeSheet();
+    this.ui.toast(`🌾 +${plan.yieldAmount} ${this.crops.get(plan.cropId).name} im Silo`);
+
+    if(this.state.missionId==="first_harvest"){
+      this.advanceTo(5,"first_order","Erste Ernte eingelagert.");
+    }else{
+      this.save.save(this.state);
+    }
+    return true;
   }
 
   startFirstOrder() {
@@ -465,7 +511,7 @@ export class Game {
       this.state.construction={building:"garage",startAt:Date.now(),endAt:Date.now()+CONFIG.timings.constructionMs};
     }
     if(tag==="harvest"){
-      this.state.field.status="harvesting";this.state.field.harvestProgress=0;
+      this.harvest.markHarvesting();
     }
     if(tag==="cows_unload"){
       this.state.cows.unlocked=true;this.state.cows.count=2;this.state.missionStep=1;
@@ -485,15 +531,10 @@ export class Game {
       if(this.state.missionId==="first_seed") this.advanceTo(4,"first_harvest","Erste Aussaat geschafft.");
     }
     if(tag==="harvest"){
-      this.state.field.status="harvested";this.state.field.harvestProgress=1;
+      this.harvest.finishCutting();
     }
     if(tag==="unload_wheat"){
-      const yieldQty=CONFIG.economy.wheatYield;
-      if(this.inventory.add("silo","wheat",yieldQty)){
-        this.state.achievements.firstHarvest=true;this.ui.toast(`🌾 +${yieldQty} Weizen im Silo`);
-      }else{
-        this.ui.toast("📦 Silo voll – Ernte konnte nicht eingelagert werden.");
-      }
+      this.completeHarvestStorage();
     }
     if(tag==="chickens_unload"){
       this.state.chickens.unlocked=true;this.state.chickens.count=4;
@@ -508,9 +549,6 @@ export class Game {
         break;
       case "friend_gift":
         this.advanceTo(3,"first_seed","Deine ersten Maschinen sind da.");
-        break;
-      case "first_harvest":
-        this.advanceTo(5,"first_order","Erste Ernte eingelagert.");
         break;
       case "first_order":
         this.economy.credit(this.economy.getValue("firstOrderReward"));
