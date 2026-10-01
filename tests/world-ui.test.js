@@ -33,10 +33,10 @@ function state(overrides = {}) {
   };
 }
 
-test("tutorial icon targets farmhouse through the world UI model", () => {
+test("tutorial target marker replaces the generic farmhouse icon", () => {
   assert.deepEqual(
-    collectWorldEventIcons(state({tutorialComplete:false})),
-    [{id:"farmhouse",icon:"!"}],
+    collectWorldEventIcons(state({tutorialComplete:false,missionId:"scrap_sale"})),
+    [{id:"farmhouse",label:"Hof",icon:"★",kind:"tutorial"}],
   );
 });
 

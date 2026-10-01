@@ -1,8 +1,10 @@
 import { FIELD_IDS } from "../data/fields.js";
+import { getTutorialTarget } from "../systems/tutorialGuidance.js";
 
 export function collectWorldEventIcons(state) {
   const icons = [];
-  if (!state.tutorialComplete) icons.push({ id:"farmhouse", icon:"!" });
+  const tutorialTarget = getTutorialTarget(state);
+  if (tutorialTarget) icons.push({ ...tutorialTarget, icon:"★", kind:"tutorial" });
 
   for (const fieldId of FIELD_IDS) {
     const field = state.fields?.[fieldId] ?? (fieldId === "field1" ? state.field : null);

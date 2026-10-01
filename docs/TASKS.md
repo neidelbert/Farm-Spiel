@@ -9,22 +9,17 @@
 ---
 
 # Aktuelles Ticket
-Kein Ticket in Umsetzung.
-
-Zuletzt abgeschlossen:
-`FS-022` – Tutorial/Core Progression Audit
+`FS-023` – Tutorial Mission Guidance
 
 Status:
-`APPROVED`
+`READY_FOR_REVIEW`
 
-Implementierungs-Commit:
-`26506e748264126aa35add1a4d25c928c928ae86`
+Ausgangs-SHA:
+`d72584ec0a647acd6a430d87faf0907420270c7e`
 
-Review:
-`APPROVED` by ChatGPT
-
-Tests:
-`PASS` – 169/169
+Hinweis:
+Das aktive Tutorialziel wird direkt in der Spielwelt sichtbar markiert.
+Kein Folgeticket vor dem Review starten.
 
 ---
 
@@ -309,11 +304,8 @@ Tests:
 ---
 
 # Geplante Reihenfolge
-- `FS-023` – Tutorial Mission Guidance
-
-## FS-023 – Vorschau
-Aktive Tutorialziele werden in der Spielwelt klarer sichtbar gemacht.
-Missionen erhalten einen eindeutigen Zielpunkt, damit der Spieler sofort erkennt, welches Gebäude, Feld oder Fahrzeug als Nächstes relevant ist.
+- FS-023 Review abschließen
+- Danach nächstes Ticket aus aktuellem Stand festlegen
 
 ---
 
