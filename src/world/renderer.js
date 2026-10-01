@@ -23,7 +23,7 @@ export class Renderer extends LegacyRenderer {
  render(s,now){const c=this.ctx,{width:w,height:h}=this.viewport,z=this.camera.zoom;c.setTransform(this.dpr,0,0,this.dpr,0,0);c.fillStyle='#158ba5';c.fillRect(0,0,w,h);c.save();c.translate(w/2,h/2);c.scale(z,z);c.translate(-this.camera.x,-this.camera.y);c.imageSmoothingEnabled=true;c.imageSmoothingQuality='high';
  const box={l:this.camera.x-w/(2*z),r:this.camera.x+w/(2*z),t:this.camera.y-h/(2*z),b:this.camera.y+h/(2*z)};
  this.terrain(c,box,now);const objects=this.visible(box).filter(o=>this.show(o,s,z)).map(o=>({...o}));
- for(const f of WORLD.fields){const no=f.id==='field1'?fieldNo(s,now):f.id==='field2'?140:142;objects.push(this.sprite(ID(no),f.x,f.y,240,{id:f.id,layer:3}));}
+ for(const f of WORLD.fields){const stateField=s.fields?.[f.id]??(f.id==='field1'?s.field:null);const unlocked=stateField&&(!('unlocked' in stateField)||stateField.unlocked===true);const no=unlocked?fieldNo(stateField,now):lockedFieldNo(f.id);objects.push(this.sprite(ID(no),f.x,f.y,240,{id:f.id,layer:3}));}
  for(const v of s.vehicles){let n=VEHICLES[v.type]||177;if(v.type==='tractor'&&s.machines.tractorRestored)n=171;if(v.type==='combine'&&s.machines.combineRestored)n=173;objects.push(this.sprite(ID(n),v.x,v.y,v.type==='combine'?115:95,{layer:10,flip:Math.cos(v.heading)>0,id:v.id}));if(v.type==='tractor'&&v.eventId==='first_sow')objects.push(this.sprite(ID(174),v.x+60,v.y-10,70,{layer:10}));}
  if(s.machines.tractor&&!s.vehicles.some(v=>v.type==='tractor'))objects.push(this.sprite(ID(s.machines.tractorRestored?171:170),POINTS.garage.x,POINTS.garage.y,83,{layer:10}));
  if(s.level>=4&&!s.vehicles.some(v=>v.type==='combine')){const p=WORLD_RUNTIME.parking.combine;objects.push(this.sprite(ID(s.machines.combineRestored?173:172),p.x,p.y,110,{layer:10}));}
@@ -47,4 +47,5 @@ export class Renderer extends LegacyRenderer {
 }
 function drawWorldPin(ctx,x,y,icon){ctx.save();ctx.font='14px sans-serif';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillStyle='rgba(255,250,229,.97)';ctx.beginPath();ctx.arc(x,y,13,0,Math.PI*2);ctx.fill();ctx.strokeStyle='rgba(40,50,35,.35)';ctx.lineWidth=1.5;ctx.stroke();ctx.fillStyle='#29452f';ctx.fillText(icon,x,y+.5);ctx.restore();}
 function inBox(o,b){return o.x+o.width/2>b.l&&o.x-o.width/2<b.r&&o.y+30>b.t&&o.y-o.height<b.b;}
-function fieldNo(s,now){const f=s.field;if(f.status==='harvested')return 139;if(['ready','harvesting','harvest_starting'].includes(f.status))return 138;if(f.status==='sowing')return 133;if(f.status==='growing'){const p=(now-f.plantedAt)/Math.max(1,f.readyAt-f.plantedAt);return p<.2?134:p<.45?135:p<.7?136:137;}return f.status==='prepared'?132:131;}
+function fieldNo(f,now){if(f.status==='harvested')return 139;if(['ready','harvesting','harvest_starting'].includes(f.status))return 138;if(f.status==='sowing')return 133;if(f.status==='growing'){const p=(now-f.plantedAt)/Math.max(1,f.readyAt-f.plantedAt);return p<.2?134:p<.45?135:p<.7?136:137;}return f.status==='prepared'?132:131;}
+function lockedFieldNo(fieldId){return fieldId==='field2'?140:fieldId==='field3'?142:132;}

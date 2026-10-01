@@ -1,9 +1,15 @@
+import { FIELD_IDS } from "../data/fields.js";
+
 export function collectWorldEventIcons(state) {
   const icons = [];
   if (!state.tutorialComplete) icons.push({ id:"farmhouse", icon:"!" });
 
-  if (state.field.status === "ready") icons.push({ id:"field1", icon:"🌾" });
-  else if (state.field.status === "growing") icons.push({ id:"field1", icon:"⏱" });
+  for (const fieldId of FIELD_IDS) {
+    const field = state.fields?.[fieldId] ?? (fieldId === "field1" ? state.field : null);
+    if (!field || ("unlocked" in field && field.unlocked !== true)) continue;
+    if (field.status === "ready") icons.push({ id:fieldId, icon:"🌾" });
+    else if (field.status === "growing") icons.push({ id:fieldId, icon:"⏱" });
+  }
 
   if (state.mill.outputReady > 0) icons.push({ id:"mill", icon:"📦" });
 

@@ -48,12 +48,7 @@ export class FertilizerSystem {
 
     if (!this.economy.spend(offer.price)) return false;
     if (this.inventory.add("inventory", offer.item, offer.packSize)) {
-      return {
-        item: offer.item,
-        amount: offer.packSize,
-        cost: offer.price,
-        balance: this.economy.getBalance(),
-      };
+      return { item: offer.item, amount: offer.packSize, cost: offer.price, balance: this.economy.getBalance() };
     }
 
     this.economy.credit(offer.price);
@@ -61,6 +56,7 @@ export class FertilizerSystem {
   }
 
   getFieldStatus(now = Date.now()) {
+    const field = this.fields.getField();
     const cropId = this.fields.getCrop();
     if (!cropId || !this.crops.has(cropId)) {
       return {
@@ -76,18 +72,17 @@ export class FertilizerSystem {
     }
 
     const rules = this.getRules(cropId);
-    const remainingMs = Number.isFinite(this.state.field.readyAt)
-      ? Math.max(0, this.state.field.readyAt - now)
-      : 0;
+    const remainingMs = Number.isFinite(field.readyAt) ? Math.max(0, field.readyAt - now) : 0;
     const available = this.inventory.getQuantity("inventory", rules.item);
     const unlocked = this.isUnlocked(cropId);
-    const fertilized = this.state.field.fertilized === true;
+    const fertilized = field.fertilized === true;
 
     let reason = "ready";
-    if (!unlocked) reason = "locked";
+    if (!this.fields.isUnlocked()) reason = "locked";
+    else if (!unlocked) reason = "locked";
     else if (!this.fields.is("growing")) reason = "not_growing";
     else if (fertilized) reason = "already_fertilized";
-    else if (!Number.isFinite(this.state.field.readyAt)) reason = "no_timer";
+    else if (!Number.isFinite(field.readyAt)) reason = "no_timer";
     else if (remainingMs <= rules.cutoffRemainingMs) reason = "too_late";
     else if (available < 1) reason = "no_fertilizer";
 
@@ -112,7 +107,8 @@ export class FertilizerSystem {
     if (!status.canApply) return false;
 
     const rules = this.getRules(status.cropId);
-    const oldReadyAt = this.state.field.readyAt;
+    const field = this.fields.getField();
+    const oldReadyAt = field.readyAt;
     const newReadyAt = Math.min(oldReadyAt, now + rules.growthMs);
 
     if (!this.inventory.remove("inventory", rules.item, 1)) return false;

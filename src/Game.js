@@ -1,5 +1,6 @@
 import { CONFIG } from "./config.js";
 import { RUNTIME_POINTS as POINTS } from "./data/worldRuntime.js";
+import { FIELD_DEFINITIONS } from "./data/fields.js";
 import { MissionSystem } from "./systems/missions.js";
 import { VehicleSystem, routeTo, farmMachineRoute } from "./systems/vehicles.js";
 import { TimeSystems } from "./systems/timeSystems.js";
@@ -99,7 +100,9 @@ export class Game {
   openObject(id) {
     switch(id){
       case "farmhouse": return this.openFarmhouse();
-      case "field1": return this.openField();
+      case "field1":
+      case "field2":
+      case "field3": return this.openField(id);
       case "silo": return this.openSilo();
       case "barn": return this.openBarn();
       case "garage": return this.openGarage();
@@ -161,9 +164,9 @@ export class Game {
       case "scrap_sale": return `Schrott: ${this.inventory.has("inventory","scrap",1) ? "bereit" : "abgeholt"}`;
       case "friend_gift": return s.machines.tractor ? "Traktor und Sämaschine angekommen ✓" : "Lieferung steht aus";
       case "first_seed":
-        return `Saatgut: ${this.inventory.getQuantity("inventory","wheatSeed")} · Feld: ${statusName(s.field.status)}`;
+        return `Saatgut: ${this.inventory.getQuantity("inventory","wheatSeed")} · Feld: ${statusName(s.fields.field1.status)}`;
       case "first_harvest":
-        return `Feld: ${statusName(s.field.status)} · Silo: ${this.inventory.getQuantity("silo","wheat")}/${this.inventory.getCapacity("silo")} Weizen`;
+        return `Feld: ${statusName(s.fields.field1.status)} · Silo: ${this.inventory.getQuantity("silo","wheat")}/${this.inventory.getCapacity("silo")} Weizen`;
       case "first_order": return `Weizen: ${this.inventory.getQuantity("silo","wheat")}/5`;
       case "storage_upgrade": return `Silo Level ${s.silo.level} · Kapazität ${s.silo.capacity}`;
       case "miller_intro": return `Weizen: ${this.inventory.getQuantity("silo","wheat")} · Mehl: ${this.inventory.getQuantity("barn","flour")}`;
@@ -236,8 +239,19 @@ export class Game {
     this.ui.closeSheet();this.ui.toast("🚜 Der Tieflader kommt zum Hof.");
   }
 
-  openField() {
-    const f=this.state.field;
+  openField(fieldId="field1") {
+    const f=this.state.fields?.[fieldId];
+    const fieldName=FIELD_DEFINITIONS[fieldId]?.name || fieldId;
+    if(!f) return;
+    if(!f.unlocked){
+      return this.ui.panel({
+        eyebrow:fieldName,
+        title:"Noch nicht freigeschaltet",
+        body:"<p>Dieses Feld besitzt bereits einen eigenen Spielzustand, wird aber erst in einem späteren Fortschrittsschritt freigeschaltet.</p>",
+        actions:[]
+      });
+    }
+    if(fieldId!=="field1") return;
     if(this.planting.canStartSowing("wheat")){
       return this.ui.panel({
         eyebrow:"Feld 1",title:"Weizen aussäen",
@@ -692,7 +706,7 @@ export class Game {
     const s=this.state;
     if(action==="money") this.economy.credit(1000);
     if(action==="xp") s.xp=Math.min(s.xpNeeded,s.xp+100);
-    if(action==="grow" && ["growing","sowing"].includes(s.field.status)){s.field.status="ready";s.field.readyAt=null;}
+    if(action==="grow" && ["growing","sowing"].includes(s.fields.field1.status)){s.fields.field1.status="ready";s.fields.field1.readyAt=null;}
     if(action==="finish") this.timeSystems.forceFinishAll();
     if(action==="sunny") s.world.weather="sunny";
     if(action==="rain") s.world.weather="rain";

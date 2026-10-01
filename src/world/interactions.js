@@ -1,6 +1,8 @@
 export const INTERACTIVE_WORLD_IDS = Object.freeze([
   "farmhouse",
   "field1",
+  "field2",
+  "field3",
   "silo",
   "barn",
   "garage",
@@ -41,7 +43,7 @@ export class WorldInteractionCore {
       const source = objectsById.get(id);
       if (!source) continue;
 
-      if (id === "field1") {
+      if (id.startsWith("field")) {
         const renderedField = fieldById.get(id);
         items.push(toInteraction({
           ...source,

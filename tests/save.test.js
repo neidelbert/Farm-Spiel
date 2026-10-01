@@ -48,15 +48,20 @@ function activeVehicle(overrides = {}) {
   };
 }
 
-test("new games use save schema version 3", () => {
+test("new games use save schema version 4 with three field states", () => {
   const state = createInitialState();
-  assert.equal(CURRENT_SAVE_VERSION, 3);
-  assert.equal(state.saveVersion, 3);
+  assert.equal(CURRENT_SAVE_VERSION, 4);
+  assert.equal(state.saveVersion, 4);
   assert.equal(state.gameVersion, CONFIG.version);
   assert.equal("visualVersion" in state.world, false);
+  assert.equal("field" in state, false);
+  assert.deepEqual(Object.keys(state.fields), ["field1", "field2", "field3"]);
+  assert.equal(state.fields.field1.unlocked, true);
+  assert.equal(state.fields.field2.unlocked, false);
+  assert.equal(state.fields.field3.unlocked, false);
 });
 
-test("legacy v1 save migrates through v2 to v3 and scales unmarked vehicle coordinates once", () => {
+test("legacy v1 save migrates through v2 v3 to v4 and scales unmarked vehicle coordinates once", () => {
   const migrated = migrateAndSanitize({
     saveVersion: 1,
     gameVersion: "0.2.0",
@@ -69,7 +74,7 @@ test("legacy v1 save migrates through v2 to v3 and scales unmarked vehicle coord
     vehicles: [activeVehicle()],
   });
 
-  assert.equal(migrated.saveVersion, 3);
+  assert.equal(migrated.saveVersion, 4);
   assert.equal(migrated.level, 7);
   assert.equal(migrated.money, 321);
   assert.equal(migrated.inventory.wheatSeed, 3);
@@ -96,7 +101,7 @@ test("v2 save already marked visualVersion 2 is not scaled again", () => {
     vehicles: [vehicle],
   });
 
-  assert.equal(migrated.saveVersion, 3);
+  assert.equal(migrated.saveVersion, 4);
   assert.equal(migrated.vehicles[0].x, 340);
   assert.equal(migrated.vehicles[0].y, 646);
   assert.equal(migrated.vehicles[0].speed, 281.6);
@@ -119,7 +124,39 @@ test("v2 save without visual marker receives the legacy coordinate migration", (
   assert.equal(migrated.vehicles[0].route[0].y, 646);
 });
 
-test("v3 saves are idempotent and never rescale vehicles on repeated loads", () => {
+test("v3 field migrates losslessly to fields.field1 and creates locked siblings", () => {
+  const migrated = migrateAndSanitize({
+    saveVersion: 3,
+    level: 4,
+    inventory: { fertilizer: 2 },
+    field: {
+      status: "growing",
+      crop: "wheat",
+      plantedAt: 5000,
+      readyAt: 125000,
+      harvestProgress: 0.25,
+      fertilized: true,
+      fertilizedAt: 6000,
+    },
+  });
+
+  assert.equal(migrated.saveVersion, 4);
+  assert.deepEqual(migrated.fields.field1, {
+    unlocked: true,
+    status: "growing",
+    crop: "wheat",
+    plantedAt: 5000,
+    readyAt: 125000,
+    harvestProgress: 0.25,
+    fertilized: true,
+    fertilizedAt: 6000,
+  });
+  assert.equal(migrated.fields.field2.unlocked, false);
+  assert.equal(migrated.fields.field3.unlocked, false);
+  assert.equal("field" in migrated, false);
+});
+
+test("v4 saves are idempotent and never rescale vehicles on repeated loads", () => {
   const input = createInitialState();
   input.vehicles = [activeVehicle({ x: 340, y: 646, speed: 281.6 })];
   input.vehicles[0].route = [
@@ -130,8 +167,8 @@ test("v3 saves are idempotent and never rescale vehicles on repeated loads", () 
   const once = migrateAndSanitize(input);
   const twice = migrateAndSanitize(once);
 
-  assert.equal(once.saveVersion, 3);
-  assert.equal(twice.saveVersion, 3);
+  assert.equal(once.saveVersion, 4);
+  assert.equal(twice.saveVersion, 4);
   assert.equal(twice.vehicles[0].x, 340);
   assert.equal(twice.vehicles[0].y, 646);
   assert.equal(twice.vehicles[0].speed, 281.6);
@@ -139,14 +176,14 @@ test("v3 saves are idempotent and never rescale vehicles on repeated loads", () 
   assert.equal(twice.vehicles[0].route[1].y, 1292);
 });
 
-test("pre-versioned legacy saves are treated as v1 and reach v3", () => {
+test("pre-versioned legacy saves are treated as v1 and reach v4", () => {
   const migrated = migrateAndSanitize({
     level: 4,
     money: 80,
     silo: { items: { wheat: 10 } },
   });
 
-  assert.equal(migrated.saveVersion, 3);
+  assert.equal(migrated.saveVersion, 4);
   assert.equal(migrated.level, 4);
   assert.equal(migrated.money, 80);
   assert.equal(migrated.silo.items.wheat, 10);
@@ -154,14 +191,14 @@ test("pre-versioned legacy saves are treated as v1 and reach v3", () => {
 
 test("future save versions are rejected instead of being silently downgraded", () => {
   assert.throws(
-    () => migrateAndSanitize({ saveVersion: 4, level: 99 }),
-    /Unsupported future save version: 4/,
+    () => migrateAndSanitize({ saveVersion: 5, level: 99 }),
+    /Unsupported future save version: 5/,
   );
 });
 
 test("invalid save version values are rejected", () => {
   assert.throws(
-    () => migrateAndSanitize({ saveVersion: "3", level: 3 }),
+    () => migrateAndSanitize({ saveVersion: "4", level: 3 }),
     /Invalid save version/,
   );
   assert.throws(
@@ -193,6 +230,16 @@ test("unknown root and nested fields are removed", () => {
   assert.equal("corn" in migrated.silo.items, false);
   assert.equal("hiddenFlag" in migrated.world, false);
   assert.equal("visualVersion" in migrated.world, false);
+});
+
+test("v4 removes unknown field ids and nested field properties", () => {
+  const input = createInitialState();
+  input.fields.field4 = { unlocked: true, status: "ready" };
+  input.fields.field1.hidden = true;
+
+  const migrated = migrateAndSanitize(input);
+  assert.equal("field4" in migrated.fields, false);
+  assert.equal("hidden" in migrated.fields.field1, false);
 });
 
 test("invalid primitive types fall back to safe defaults", () => {
@@ -232,11 +279,14 @@ test("field and world values are clamped or reset to valid ranges", () => {
     },
   });
 
-  assert.equal(migrated.field.status, "prepared");
-  assert.equal(migrated.field.crop, null);
-  assert.equal(migrated.field.plantedAt, null);
-  assert.equal(migrated.field.readyAt, null);
-  assert.equal(migrated.field.harvestProgress, 1);
+  assert.equal(migrated.fields.field1.status, "prepared");
+  assert.equal(migrated.fields.field1.crop, null);
+  assert.equal(migrated.fields.field1.plantedAt, null);
+  assert.equal(migrated.fields.field1.readyAt, null);
+  assert.equal(migrated.fields.field1.harvestProgress, 1);
+  assert.equal(migrated.fields.field1.unlocked, true);
+  assert.equal(migrated.fields.field2.unlocked, false);
+  assert.equal(migrated.fields.field3.unlocked, false);
   assert.equal(migrated.world.weather, "sunny");
   assert.equal(migrated.world.timeOfDay, 1);
   assert.equal(migrated.world.timeScale, 1);
@@ -282,7 +332,7 @@ test("construction and sideOrder accept only objects or null", () => {
   assert.equal(migrated.sideOrder, null);
 });
 
-test("SaveManager.save writes schema v3 without the old visual marker", () => {
+test("SaveManager.save writes schema v4 without the old visual marker or legacy field", () => {
   const oldPrimary = JSON.stringify({ saveVersion: 2, level: 3, money: 50, world: { visualVersion: 2 } });
   const store = installLocalStorage({ [CONFIG.saveKey]: oldPrimary });
   const manager = new SaveManager();
@@ -293,16 +343,20 @@ test("SaveManager.save writes schema v3 without the old visual marker", () => {
   state.unknownRoot = "drop";
   state.silo.items.wheat = -10;
   state.world.visualVersion = 2;
+  state.fields.field1.status = "ready";
 
   manager.save(state);
 
   const saved = JSON.parse(store.get(CONFIG.saveKey));
-  assert.equal(saved.saveVersion, 3);
+  assert.equal(saved.saveVersion, 4);
   assert.equal(saved.level, 8);
   assert.equal(saved.money, 400);
   assert.equal(saved.silo.items.wheat, 0);
   assert.equal("visualVersion" in saved.world, false);
   assert.equal("visualVersion" in state.world, false);
+  assert.equal("field" in saved, false);
+  assert.equal(saved.fields.field1.status, "ready");
+  assert.equal(saved.fields.field2.unlocked, false);
   assert.equal("unknownRoot" in saved, false);
   assert.equal(store.get(CONFIG.backupKey), oldPrimary);
 });
@@ -316,7 +370,7 @@ test("SaveManager.load falls back to backup when primary uses unsupported future
   const manager = new SaveManager();
   const state = manager.load();
 
-  assert.equal(state.saveVersion, 3);
+  assert.equal(state.saveVersion, 4);
   assert.equal(state.level, 6);
   assert.equal(state.money, 210);
 });
@@ -330,13 +384,13 @@ test("SaveManager.load falls back to a new game when both save slots are unusabl
   const manager = new SaveManager();
   const state = manager.load();
 
-  assert.equal(state.saveVersion, 3);
+  assert.equal(state.saveVersion, 4);
   assert.equal(state.level, 1);
   assert.equal(state.money, 0);
 });
 
 
-test("schema v3 adds fertilizer defaults to older current saves", () => {
+test("v3 to v4 migration adds fertilizer defaults to older current saves", () => {
   const migrated = migrateAndSanitize({
     saveVersion: 3,
     level: 4,
@@ -351,11 +405,11 @@ test("schema v3 adds fertilizer defaults to older current saves", () => {
   });
 
   assert.equal(migrated.inventory.fertilizer, 0);
-  assert.equal(migrated.field.fertilized, false);
-  assert.equal(migrated.field.fertilizedAt, null);
+  assert.equal(migrated.fields.field1.fertilized, false);
+  assert.equal(migrated.fields.field1.fertilizedAt, null);
 });
 
-test("schema v3 preserves valid fertilizer inventory and field application state", () => {
+test("v3 to v4 migration preserves valid fertilizer inventory and field application state", () => {
   const migrated = migrateAndSanitize({
     saveVersion: 3,
     level: 4,
@@ -372,6 +426,6 @@ test("schema v3 preserves valid fertilizer inventory and field application state
   });
 
   assert.equal(migrated.inventory.fertilizer, 3);
-  assert.equal(migrated.field.fertilized, true);
-  assert.equal(migrated.field.fertilizedAt, 1000);
+  assert.equal(migrated.fields.field1.fertilized, true);
+  assert.equal(migrated.fields.field1.fertilizedAt, 1000);
 });

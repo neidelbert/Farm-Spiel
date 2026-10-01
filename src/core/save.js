@@ -1,6 +1,7 @@
 import { CONFIG } from "../config.js";
+import { FIELD_DEFINITIONS, FIELD_IDS } from "../data/fields.js";
 
-export const CURRENT_SAVE_VERSION = 3;
+export const CURRENT_SAVE_VERSION = 4;
 
 const FIELD_STATUSES = new Set([
   "prepared",
@@ -47,15 +48,12 @@ export function createInitialState() {
       combineRestored: false,
     },
 
-    field: {
-      status: "prepared",
-      crop: null,
-      plantedAt: null,
-      readyAt: null,
-      harvestProgress: 0,
-      fertilized: false,
-      fertilizedAt: null,
-    },
+    fields: Object.fromEntries(
+      FIELD_IDS.map(fieldId => [
+        fieldId,
+        createFieldState(FIELD_DEFINITIONS[fieldId].unlockedAtStart),
+      ]),
+    ),
 
     mill: { unlocked: false, busy: false, readyAt: null, outputReady: 0 },
     bakery: { unlocked: false },
@@ -84,6 +82,7 @@ export function createInitialState() {
 const MIGRATIONS = Object.freeze({
   1: migrateV1ToV2,
   2: migrateV2ToV3,
+  3: migrateV3ToV4,
 });
 
 export class SaveManager {
@@ -179,6 +178,34 @@ function migrateV2ToV3(input) {
   };
 }
 
+function migrateV3ToV4(input) {
+  const legacyField = isPlainObject(input.field) ? input.field : {};
+  const migrated = {
+    ...input,
+    saveVersion: 4,
+    fields: {
+      field1: { ...createFieldState(true), ...legacyField, unlocked: true },
+      field2: createFieldState(false),
+      field3: createFieldState(false),
+    },
+  };
+  delete migrated.field;
+  return migrated;
+}
+
+function createFieldState(unlocked) {
+  return {
+    unlocked: unlocked === true,
+    status: "prepared",
+    crop: null,
+    plantedAt: null,
+    readyAt: null,
+    harvestProgress: 0,
+    fertilized: false,
+    fertilizedAt: null,
+  };
+}
+
 function migrateLegacyVehicleCoordinates(vehicles) {
   if (!Array.isArray(vehicles)) return [];
   return vehicles.map(vehicle => {
@@ -233,19 +260,13 @@ function sanitizeState(input) {
 
   out.garage.level = integerAtLeast(input.garage?.level, 1, base.garage.level);
 
-  out.field.status = FIELD_STATUSES.has(input.field?.status)
-    ? input.field.status
-    : base.field.status;
-  out.field.crop = input.field?.crop === null || typeof input.field?.crop === "string"
-    ? input.field.crop
-    : base.field.crop;
-  out.field.plantedAt = nullableFiniteNonNegative(input.field?.plantedAt);
-  out.field.readyAt = nullableFiniteNonNegative(input.field?.readyAt);
-  out.field.harvestProgress = clampFinite(input.field?.harvestProgress, 0, 1, base.field.harvestProgress);
-  out.field.fertilized = typeof input.field?.fertilized === "boolean"
-    ? input.field.fertilized
-    : base.field.fertilized;
-  out.field.fertilizedAt = nullableFiniteNonNegative(input.field?.fertilizedAt);
+  for (const fieldId of FIELD_IDS) {
+    out.fields[fieldId] = sanitizeFieldState(
+      input.fields?.[fieldId],
+      base.fields[fieldId],
+      FIELD_DEFINITIONS[fieldId].unlockedAtStart,
+    );
+  }
 
   out.mill.readyAt = nullableFiniteNonNegative(input.mill?.readyAt);
   out.mill.outputReady = integerNonNegative(input.mill?.outputReady, base.mill.outputReady);
@@ -268,6 +289,20 @@ function sanitizeState(input) {
   out.sideOrder = sanitizeNullableObject(input.sideOrder);
   out.vehicles = sanitizeVehicles(input.vehicles);
 
+  return out;
+}
+
+function sanitizeFieldState(value, base, unlockedAtStart) {
+  const input = isPlainObject(value) ? value : {};
+  const out = sanitizeTemplate(base, input);
+  out.unlocked = unlockedAtStart === true;
+  out.status = FIELD_STATUSES.has(input.status) ? input.status : base.status;
+  out.crop = input.crop === null || typeof input.crop === "string" ? input.crop : base.crop;
+  out.plantedAt = nullableFiniteNonNegative(input.plantedAt);
+  out.readyAt = nullableFiniteNonNegative(input.readyAt);
+  out.harvestProgress = clampFinite(input.harvestProgress, 0, 1, base.harvestProgress);
+  out.fertilized = typeof input.fertilized === "boolean" ? input.fertilized : base.fertilized;
+  out.fertilizedAt = nullableFiniteNonNegative(input.fertilizedAt);
   return out;
 }
 

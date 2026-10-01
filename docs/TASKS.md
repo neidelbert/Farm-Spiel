@@ -9,24 +9,17 @@
 ---
 
 # Aktuelles Ticket
-`FS-020` – World Source Consolidation
-
-Status:
-`APPROVED`
-
-Implementierungs-Commit:
-`deacfb96a1178ced263be7964df36f16f22877e2`
-
-Review:
-`APPROVED` by ChatGPT
-
-Hinweis:
-FS-020 ist nach Implementierung und Review abgeschlossen.
-
-Als nächster Roadmap-Schritt ist vorgesehen:
 `FS-021` – Multi-Field Core
 
-FS-021 wurde noch nicht gestartet.
+Status:
+`READY_FOR_REVIEW`
+
+Ausgangs-SHA:
+`d92afe34be0a196c2495d6b8a4f1314f0973eddf`
+
+Hinweis:
+FS-021 wurde umgesetzt und wartet nach dem Installer-Commit auf ChatGPT-Review.
+Kein Folgeticket vor dem Review starten.
 
 ---
 
@@ -264,10 +257,24 @@ Review-Abschluss:
 Review:
 `APPROVED` by ChatGPT
 
+
+## `FS-020` – World Source Consolidation
+Status:
+`APPROVED`
+
+Implementierungs-Commit:
+`deacfb96a1178ced263be7964df36f16f22877e2`
+
+Review-Abschluss:
+`d92afe34be0a196c2495d6b8a4f1314f0973eddf`
+
+Review:
+`APPROVED` by ChatGPT
+
 ---
 
 # Geplante Reihenfolge
-- `FS-021` – Multi-Field Core
+- Nach FS-021 Review aus aktuellem Stand festlegen
 
 ---
 
