@@ -9,17 +9,22 @@
 ---
 
 # Aktuelles Ticket
+Kein Ticket in Umsetzung.
+
+Zuletzt abgeschlossen:
 `FS-025` – Tutorial Objective HUD
 
 Status:
-`READY_FOR_REVIEW`
+`APPROVED`
 
-Ausgangs-SHA:
-`29c59184900bd96724e4ba606b210ef9baad79a3`
+Implementierungs-Commit:
+`cceb280a011de6e523094e5825bcaf776979d5fd`
 
-Hinweis:
-Das aktive Tutorialziel wird kompakt im HUD angezeigt und aktualisiert sich mit der Mission.
-Kein Folgeticket vor dem Review starten.
+Review:
+`APPROVED` by ChatGPT
+
+Tests:
+`PASS` – 191/191
 
 ---
 
@@ -331,11 +336,29 @@ Tests:
 `PASS` – 185/185
 
 
+
+## `FS-025` – Tutorial Objective HUD
+Status:
+`APPROVED`
+
+Implementierungs-Commit:
+`cceb280a011de6e523094e5825bcaf776979d5fd`
+
+Review:
+`APPROVED` by ChatGPT
+
+Tests:
+`PASS` – 191/191
+
+
 ---
 
 # Geplante Reihenfolge
-- FS-025 Review abschließen
-- Danach nächstes Ticket aus aktuellem Stand festlegen
+- `FS-026` – Field 2 Unlock Flow
+
+## FS-026 – Vorschau
+Nach dem Tutorial wird Feld 2 erstmals wirklich Teil des Spielablaufs.
+Das bisher gesperrte zweite Feld erhält einen sichtbaren Freischaltzustand und kann anschließend wie Feld 1 genutzt werden.
 
 ---
 
